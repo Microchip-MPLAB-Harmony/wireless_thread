@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Module name="replaceme" id="9ccd3e1c-77b5-4417-b1c6-f3d3cdb35262" version="1.0.0">
+<Module name="wireless_thread" id="9ccd3e1c-77b5-4417-b1c6-f3d3cdb35262" version="1.0.0">
     <ConfigRoot path="config/module.py"/>
 </Module>
