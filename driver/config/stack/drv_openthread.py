@@ -770,6 +770,7 @@ def instantiateComponent(openthread):
     openthreadloglevelconfig.addKey("OT_LOG_LEVEL_WARN", "OT_LOG_LEVEL_WARN", "OT_LOG_LEVEL_WARN")
     openthreadloglevelconfig.addKey("OT_LOG_LEVEL_NOTE", "OT_LOG_LEVEL_NOTE", "OT_LOG_LEVEL_NOTE")
     openthreadloglevelconfig.addKey("OT_LOG_LEVEL_INFO", "OT_LOG_LEVEL_INFO", "OT_LOG_LEVEL_INFO")
+    openthreadloglevelconfig.addKey("OT_LOG_LEVEL_DEBG", "OT_LOG_LEVEL_DEBG", "OT_LOG_LEVEL_DEBG")
     openthreadloglevelconfig.setDefaultValue(0)
     openthreadloglevelconfig.setOutputMode("Value")
     openthreadloglevelconfig.setDisplayMode("Description")
