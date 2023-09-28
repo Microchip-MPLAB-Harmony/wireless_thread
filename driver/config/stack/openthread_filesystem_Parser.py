@@ -1,25 +1,24 @@
-# coding: utf-8
 ##############################################################################
-# Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
-#
-# Subject to your compliance with these terms, you may use Microchip software
-# and any derivatives exclusively with Microchip products. It is your
-# responsibility to comply with third party license terms applicable to your
-# use of third party software (including open source software) that may
-# accompany Microchip software.
-#
-# THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
-# EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
-# WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
-# PARTICULAR PURPOSE.
-#
-# IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
-# INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
-# WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
-# BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
-# FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
-# ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
-# THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+# Copyright (C) [2023], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+  
+# The software and documentation is provided by Microchip and its contributors 
+# "as is" and any express, implied or statutory warranties, including, but not 
+# limited to, the implied warranties of merchantability, fitness for a particular 
+# purpose and non-infringement of third party intellectual property rights are 
+# disclaimed to the fullest extent permitted by law. In no event shall Microchip 
+# or its contributors be liable for any direct, indirect, incidental, special,
+# exemplary, or consequential damages (including, but not limited to, procurement 
+# of substitute goods or services; loss of use, data, or profits; or business 
+# interruption) however caused and on any theory of liability, whether in contract, 
+# strict liability, or tort (including negligence or otherwise) arising in any way 
+# out of the use of the software and documentation, even if advised of the 
+# possibility of such damage.
+# 
+# Except as expressly permitted hereunder and subject to the applicable license terms 
+# for any third-party software incorporated in the software and any applicable open 
+# source software license terms, no license or other rights, whether express or 
+# implied, are granted under any patent or other intellectual property rights of 
+# Microchip or any third party.
 ##############################################################################
 import os
 
@@ -34,11 +33,13 @@ abs_paths = ['openthread\include','openthread\src','openthread'+'\\'+'third_part
 folderpathpos = 0
 fileslistpos  = 1
 
-def Traversebyonefolder():
-    m = os.getcwd()
+def Traversebyonefolder(m):
+    # m = os.getcwd()
     n = m.rfind("\\")
     d = m[0: n+1]
-    os.chdir(d)
+    print("Traveresed_path",d)
+    # os.chdir(d)
+    return d
     
     
 def getrelativepath(originalpath,basefolder):
@@ -67,12 +68,12 @@ if openthreadfileRecords == []:
     # print("original Directory"+original_directory)
     os.chdir(Module.getPath())
     openthread_path = os.getcwd()
-    # print(openthread_path)
+    thirdpartyopenthreadDir = Traversebyonefolder(openthread_path)
     for path in abs_paths:
         if path == 'src':
             openthread_include =  openthread_path +'\\' +path
         else:
-            openthread_include =  openthread_path +'\\' 'third_party'  +'\\' +path
+            openthread_include =  thirdpartyopenthreadDir +'\\' +path
         # print('openthread include:'+openthread_include)
         for (dir_path, dir_names, file_names) in os.walk(openthread_include):
             if 'posix' not in dir_path:

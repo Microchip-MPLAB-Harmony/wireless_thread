@@ -1,25 +1,24 @@
-# coding: utf-8
 ##############################################################################
-# Copyright (C) 2023 Microchip Technology Inc. and its subsidiaries.
-#
-# Subject to your compliance with these terms, you may use Microchip software
-# and any derivatives exclusively with Microchip products. It is your
-# responsibility to comply with third party license terms applicable to your
-# use of third party software (including open source software) that may
-# accompany Microchip software.
-#
-# THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
-# EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
-# WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
-# PARTICULAR PURPOSE.
-#
-# IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
-# INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
-# WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
-# BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO THE
-# FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS IN
-# ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
-# THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
+# Copyright (C) [2023], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+  
+# The software and documentation is provided by Microchip and its contributors 
+# "as is" and any express, implied or statutory warranties, including, but not 
+# limited to, the implied warranties of merchantability, fitness for a particular 
+# purpose and non-infringement of third party intellectual property rights are 
+# disclaimed to the fullest extent permitted by law. In no event shall Microchip 
+# or its contributors be liable for any direct, indirect, incidental, special,
+# exemplary, or consequential damages (including, but not limited to, procurement 
+# of substitute goods or services; loss of use, data, or profits; or business 
+# interruption) however caused and on any theory of liability, whether in contract, 
+# strict liability, or tort (including negligence or otherwise) arising in any way 
+# out of the use of the software and documentation, even if advised of the 
+# possibility of such damage.
+# 
+# Except as expressly permitted hereunder and subject to the applicable license terms 
+# for any third-party software incorporated in the software and any applicable open 
+# source software license terms, no license or other rights, whether express or 
+# implied, are granted under any patent or other intellectual property rights of 
+# Microchip or any third party.
 ##############################################################################
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OPEN THREAD CONFIGURATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -70,7 +69,7 @@ def importIncFile(component,HeaderFiles,incpath,Enable,DeviceType,custompath = '
         if 'src' == incpath or 'src/crypto' == incpath:
             incFileSym.setSourcePath(incpath +'/'+ file)
         else:
-            incFileSym.setSourcePath('third_party/'+incpath +'/'+ file)
+            incFileSym.setSourcePath('../'+incpath +'/'+ file)
         if custompath != '':
             # print("HeaderFileCustom:"+custompath)
             incFileSym.setDestPath('driver/thread/'+custompath)
@@ -118,7 +117,7 @@ def importSrcFile(component,SourceFiles,incpath,Enable,DeviceType,custompath = '
         if 'src' == incpath or 'src/crypto' == incpath:
             srcFileSym.setSourcePath(incpath+ '/' + file)
         else:
-            srcFileSym.setSourcePath('third_party/'+incpath+ '/' + file)
+            srcFileSym.setSourcePath('../'+incpath+ '/' + file)
         if custompath != '':
             # print(custompath)
             srcFileSym.setDestPath('driver/thread/'+custompath)
@@ -378,7 +377,7 @@ def HandleDeviceConfigOptions(DeviceType):
             openthreadcomment1.setVisible(True)
         else:
             openthreadcomment1.setVisible(False)
-        # openthreadTcpEnableConfig.setVisible(True)
+        openthreadTcpEnableConfig.setVisible(True)
         openthreadCoapBlockEnable.setVisible(True)
         Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",False)
            
@@ -394,7 +393,7 @@ def HandleDeviceConfigOptions(DeviceType):
             openthreadcomment1.setVisible(True)
         else:
             openthreadcomment1.setVisible(False)
-        # openthreadTcpEnableConfig.setVisible(True)
+        openthreadTcpEnableConfig.setVisible(True)
         openthreadCoapBlockEnable.setVisible(True)
         Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",False)
         
@@ -405,7 +404,7 @@ def HandleDeviceConfigOptions(DeviceType):
         openthreadrcpconfigMenu.setVisible(True)
         openthreadLogEnable.setVisible(False)
         openthreadloglevelconfig.setVisible(False)
-        # openthreadTcpEnableConfig.setVisible(False)
+        openthreadTcpEnableConfig.setVisible(False)
         openthreadCoapBlockEnable.setVisible(False)
         Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",True)
         
@@ -782,7 +781,7 @@ def instantiateComponent(openthread):
     openthreadTcpEnableConfig = openthread.createBooleanSymbol("OPEN_THREAD_TCP_ENABLE_CONFIG",openthreadcoreconfig)
     openthreadTcpEnableConfig.setLabel("Enable TCP")
     openthreadTcpEnableConfig.setDefaultValue(0)
-    openthreadTcpEnableConfig.setVisible(False)
+    openthreadTcpEnableConfig.setVisible(True)
     openthreadTcpEnableConfig.setDescription("Open Thread TCP Enable")
     openthreadTcpEnableConfig.setDependencies(openthreadcoreconfigcallback,['OPEN_THREAD_TCP_ENABLE_CONFIG'])
     
