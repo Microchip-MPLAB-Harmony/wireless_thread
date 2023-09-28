@@ -31,7 +31,7 @@
  * Platform abstraction for the logging
  *
  */
-/
+
 
 //DOM-IGNORE-BEGIN
 /*******************************************************************************
