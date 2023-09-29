@@ -1,16 +1,13 @@
 package:
   format-version: "1.0.0"
   name: "wireless_thread"
-  type: "api"
-  status: "beta"
+  type: "package"
+  status: "production"
   required: false
   version: "1.0.0"
 
   dependencies:
     - name: "csp"
-      type: "package"
-      version: "3.14.0"
-    - name: "dev_packs"
       type: "package"
       version: "3.17.0"
     - name: "bsp"
@@ -30,7 +27,7 @@ package:
       version: "5.4.0"
     - name: "wireless_pic32cxbz_wbz"
       type: "package"
-      version: "1.1.0"
+      version: "1.2.0"
     - name: "wireless_15_4_phy"
       type: "package"
       version: "1.1.0" 
