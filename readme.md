@@ -22,7 +22,7 @@ This repository contains the MPLAB® Harmony 3 Wireless Thread solutions for PIC
 | Folder     | Description                                                     |
 | ---        | ---                                                             |
 | config     | wireless Thread Component configuration file                    |
-| **[docs](docs/index.html)**      | Wireless Thread  help documentation       |
+| docs       | [Wireless Thread  help documentation](https://onlinedocs.microchip.com/oxy/GUID-2DB248AF-C243-496D-9819-969E43CA63BC-en-US-1/index.html)       |
 | drivers    | Driver/Firmware files for Wireless Thread Component             |
 | src        | Platform abstraction layer files for Wireless Thread Component  |
 
