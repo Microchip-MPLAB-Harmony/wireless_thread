@@ -26,7 +26,7 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-// DOM-IGNORE-BEGIN
+
 /*******************************************************************************
 * Copyright (C) [2023], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
@@ -49,7 +49,7 @@
 * implied, are granted under any patent or other intellectual property rights of 
 * Microchip or any third party.
  *******************************************************************************/
-// DOM-IGNORE-END
+
 
 // *****************************************************************************
 // *****************************************************************************
@@ -65,7 +65,7 @@
 #include <openthread-core-config.h>
 #include <openthread/config.h>
 
-#include "openthread-system.h"
+#include <openthread-system.h>
 #include <openthread/diag.h>
 #include <openthread/tasklet.h>
 #include <openthread/platform/logging.h>
@@ -113,10 +113,10 @@ void otTaskletsSignalPending(otInstance *aInstance)
 void taskOpenThread(void *pvParam)
 {
     OT_Msg_T   otMessage;
-	instance = (otInstance *) pvParam;
-	
-	<#if OPEN_THREAD_DEVICE_ROLE == "RCP">
-	/* Create the queue set large enough to hold an event for every space in
+    instance = (otInstance *) pvParam;
+    
+    <#if OPEN_THREAD_DEVICE_ROLE == "RCP">
+    /* Create the queue set large enough to hold an event for every space in
     every queue and semaphore that is to be added to the set. */
     OSAL_QUEUE_CreateSet(&xQueueSet, 20 + 20);
     /* Add the queues and semaphores to the set.  Reading from these queues and
@@ -124,21 +124,21 @@ void taskOpenThread(void *pvParam)
        returned the queue or semaphore handle from this point on. */
     OSAL_QUEUE_AddToSet( &OTQueue, &xQueueSet );
     OSAL_QUEUE_AddToSet( &semPhyInternalHandler, &xQueueSet );
-	</#if>
-	
+    </#if>
+    
 pseudo_reset:   
 
     instance = otInstanceInitSingle();
-	assert(instance);
+    assert(instance);
 
 <#if OPEN_THREAD_DEVICE_ROLE == "FTD" || OPEN_THREAD_DEVICE_ROLE == "MTD">
 <#if OPEN_THREAD_UART_PARSER == true>
-	otAppCliInit(instance);
+    otAppCliInit(instance);
 </#if>
-</#if>	
+</#if>
 <#if OPEN_THREAD_DEVICE_ROLE == "RCP">
 <#if OPEN_THREAD_UART_PARSER == false>
-	otAppNcpInit(instance); 
+    otAppNcpInit(instance); 
 </#if>
 </#if>  
     
@@ -148,7 +148,7 @@ pseudo_reset:
         {
              /* Block to wait for something to be available from the queues or
               semaphore that have been added to the set.*/
-			<#if OPEN_THREAD_DEVICE_ROLE == "RCP">
+            <#if OPEN_THREAD_DEVICE_ROLE == "RCP">
             OSAL_QUEUE_SelectFromSet(&xActivatedMember, &xQueueSet, OSAL_WAIT_FOREVER );
             if( xActivatedMember == semPhyInternalHandler )
             {
@@ -158,21 +158,21 @@ pseudo_reset:
             }
             else if(xActivatedMember == OTQueue )
             {
-			</#if>
-				<#if OPEN_THREAD_DEVICE_ROLE == "RCP">
-				OSAL_QUEUE_Receive(&OTQueue, &otMessage, 0);
-				<#else>
-				OSAL_QUEUE_Receive(&OTQueue, &otMessage, OSAL_WAIT_FOREVER);
-				</#if>
+            </#if>
+                <#if OPEN_THREAD_DEVICE_ROLE == "RCP">
+                OSAL_QUEUE_Receive(&OTQueue, &otMessage, 0);
+                <#else>
+                OSAL_QUEUE_Receive(&OTQueue, &otMessage, OSAL_WAIT_FOREVER);
+                </#if>
                 switch (otMessage.OTMsgId & PLAT_MODULE_ID_MASK)
                 {
-					<#if OPEN_THREAD_UART_SERVICE == true>
-					case PLAT_UART_MODULE_ID:
+                    <#if OPEN_THREAD_UART_SERVICE == true>
+                    case PLAT_UART_MODULE_ID:
                     {
                         pic32cxUartProcess(otMessage.OTMsgId);
                         break;
                     }
-					</#if>
+                    </#if>
                     case PLAT_RADIO_MODULE_ID:
                     {
                         pic32cxRadioProcess(instance, otMessage.OTMsgId);
@@ -191,9 +191,9 @@ pseudo_reset:
                     default:
                         break;
                 }
-			<#if OPEN_THREAD_DEVICE_ROLE == "RCP">
-			}
-			</#if>
+            <#if OPEN_THREAD_DEVICE_ROLE == "RCP">
+            }
+            </#if>
 
         }
         

@@ -11,7 +11,7 @@ MPLAB® Harmony 3 is an extension of the MPLAB® ecosystem for creating embedded
 - [Microchip MPLAB® Harmony](https://www.microchip.com/mplab/mplab-harmony)
 - [Microchip MPLAB® Harmony Pages](https://microchip-mplab-harmony.github.io/)
 
-This repository contains the MPLAB® Harmony 3 Wireless Thread solutions for PIC32CX_BZ platform devices. Quickly incorporate connectivity to your designs with Wireless Thread ICs, modules, software and development kits that make connecting effortless for your customers. Our comprehensive Wireless Thread portfolio has the technology to meet your range, data rate, interoperability, frequency and topology needs. Refer to the following links for release notes, training materials, and interface reference information.
+This repository contains the MPLAB® Harmony 3 Wireless Thread solutions, based on openthread, for PIC32CX_BZ platform devices. Quickly incorporate connectivity to your designs with Wireless Thread ICs, modules, software and development kits that make connecting effortless for your customers. Our comprehensive Wireless Thread portfolio has the technology to meet your range, data rate, interoperability, frequency and topology needs. Refer to the following links for release notes, training materials, and interface reference information.
 
 - [Release Notes](./release_notes.md)
 - [MPLAB® Harmony License](Microchip_SLA001.md)

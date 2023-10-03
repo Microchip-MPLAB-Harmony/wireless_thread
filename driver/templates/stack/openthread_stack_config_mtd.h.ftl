@@ -26,7 +26,7 @@
  *  POSSIBILITY OF SUCH DAMAGE.
  */
 
-// DOM-IGNORE-BEGIN
+
 /*******************************************************************************
 * Copyright (C) [2023], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
@@ -49,7 +49,7 @@
 * implied, are granted under any patent or other intellectual property rights of 
 * Microchip or any third party.
  *******************************************************************************/
-// DOM-IGNORE-END
+
 
 #ifndef _PREINCLUDE_H    /* Guard against multiple inclusion */
 #define _PREINCLUDE_H
@@ -142,18 +142,18 @@ extern "C" {
 </#if>
 
 
-#define OPENTHREAD_MTD												 (1)
+#define OPENTHREAD_MTD                                               (1)
 <#if OPEN_THREAD_LOG_SYMBOL == true>
 #define OPENTHREAD_CONFIG_LOG_LEVEL                                  (${OPEN_THREAD_LOG_LEVEL_CONFIG})
 </#if>
 <#if (OPEN_THREAD_UART_PARSER == true) && (OPEN_THREAD_LOG_SYMBOL == true)>
-#define OPENTHREAD_CONFIG_LOG_OUTPUT 								 (OPENTHREAD_CONFIG_LOG_OUTPUT_APP)
+#define OPENTHREAD_CONFIG_LOG_OUTPUT                                 (OPENTHREAD_CONFIG_LOG_OUTPUT_APP)
 </#if>
 <#if OPEN_THREAD_UART_SERVICE == true>
-#define OPEN_THREAD_UART_ENABLE										 (1)
+#define OPEN_THREAD_UART_ENABLE                                      (1)
 </#if>
 <#if OPEN_THREAD_MTD_MLE_CHILD_TIMEOUT??>
-#define OPENTHREAD_CONFIG_MLE_CHILD_TIMEOUT_DEFAULT 				 (${OPEN_THREAD_MTD_MLE_CHILD_TIMEOUT})
+#define OPENTHREAD_CONFIG_MLE_CHILD_TIMEOUT_DEFAULT                  (${OPEN_THREAD_MTD_MLE_CHILD_TIMEOUT})
 </#if>
 <#if OPEN_THREAD_MTD_IN_BAND_COMMISSIONING_CONFIG == true>
 <#if OPEN_THREAD_MTD_JOINER_ENABLE == true>
@@ -164,7 +164,7 @@ extern "C" {
 </#if>
 <#if OPEN_THREAD_TCP_ENABLE_CONFIG??>
 <#if OPEN_THREAD_TCP_ENABLE_CONFIG == true>
-#define OPENTHREAD_CONFIG_TCP_ENABLE								 (1)
+#define OPENTHREAD_CONFIG_TCP_ENABLE                                 (1)
 </#if>
 </#if>
 
