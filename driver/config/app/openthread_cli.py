@@ -21,6 +21,12 @@
 # Microchip or any third party.
 ##############################################################################
 
+import inspect
+import os
+import sys
+import glob
+import ntpath
+
 folderpathpos = 0
 fileslistpos  = 1
 #-------------------------------------------------------------------------------
@@ -271,6 +277,18 @@ def OpenThreadConfigChangeCallback(symbol,event):
     if symbolID == "OPEN_THREAD_DEVICE_ROLE_CONFIG_2":
         openthreadRoleSelected.setValue(str(remoteSymbol.getSelectedKey()))
 
+#-------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ File Parsing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#-------------------------------------------------------------------------------
+
+def get_script_dir(follow_symlinks=True):
+    if getattr(sys, 'frozen', False): # py2exe, PyInstaller, cx_Freeze
+        path = os.path.abspath(sys.executable)
+    else:
+        path = inspect.getabsfile(get_script_dir)
+    if follow_symlinks:
+        path = os.path.realpath(path)
+    return os.path.dirname(path)
 
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPONENT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

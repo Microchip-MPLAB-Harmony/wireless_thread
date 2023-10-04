@@ -62,11 +62,11 @@ commonincpath_rcp = [
                                                         "settings.cpp",      "settings.hpp",        "settings_driver.hpp", "time_ticker.cpp",
                                                         "trickle_timer.cpp", "trickle_timer.hpp",   "uptime.cpp"],False],
 
-                   # ['openthread/src/lib/spinel',False],
-                   # ['openthread/src/lib/hdlc',False],
-                   # ['openthread/src/lib/platform',False],
-                   # ['openthread/src/lib/url',False],
-                   ['openthread/src/lib',True],
+                   ['openthread/src/lib/spinel',False],
+                   ['openthread/src/lib/hdlc',False],
+                   ['openthread/src/lib/platform',False],
+                   ['openthread/src/lib/url',False],
+                   #['openthread/src/lib',True],
                    ['openthread/src/ncp',False],
                    ['openthread/examples/apps/ncp',False,['ncp.c'],True]
                   ]

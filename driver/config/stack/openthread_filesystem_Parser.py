@@ -20,81 +20,103 @@
 # implied, are granted under any patent or other intellectual property rights of 
 # Microchip or any third party.
 ##############################################################################
-import os
 
 #Global list with openthread file list record
 global openthreadfileRecords
 openthreadfileRecords = []
 #Absolute paths to Parse through the repo
 global abs_paths
-abs_paths = ['openthread\include','openthread\src','openthread'+'\\'+'third_party\mbedtls','openthread'+'\\'+'third_party'+'\\'+'tcplp','openthread\examples','src']
-# Dir_cnt = 0
+abs_paths = [
+             'src',
+             'src/crypto',
+             'openthread/include/openthread',
+             'openthread/include/openthread/platform',
+             'openthread/src/cli',
+             'openthread/src/core',
+             'openthread/src/core/api',
+             'openthread/src/core/backbone_router',
+             'openthread/src/core/border_router',
+             'openthread/src/core/coap',
+             'openthread/src/core/common',
+             'openthread/src/core/config',
+             'openthread/src/core/crypto',
+             'openthread/src/core/diags',
+             'openthread/src/core/mac',
+             'openthread/src/core/meshcop',
+             'openthread/src/core/net',
+             'openthread/src/core/radio',
+             'openthread/src/core/thread',
+             'openthread/src/core/utils',
+             'openthread/src/lib/hdlc',
+             'openthread/src/lib/platform',
+             'openthread/src/lib/spinel',
+             'openthread/src/lib/url',
+             'openthread/src/ncp',
+             'openthread/third_party/mbedtls',
+             'openthread/third_party/mbedtls/repo/configs',
+             'openthread/third_party/mbedtls/repo/include/mbedtls',
+             'openthread/third_party/mbedtls/repo/include/psa',
+             'openthread/third_party/mbedtls/repo/library',
+             'openthread/third_party/tcplp',
+             'openthread/third_party/tcplp/bsdtcp',
+             'openthread/third_party/tcplp/bsdtcp/cc',
+             'openthread/third_party/tcplp/bsdtcp/sys',
+             'openthread/third_party/tcplp/lib',
+             'openthread/examples/platforms',
+             'openthread/examples/platforms/utils',
+             'openthread/examples/apps/cli',
+             'openthread/examples/apps/ncp' 
+             
+            ]
+      
 
-folderpathpos = 0
-fileslistpos  = 1
+#-------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ File Parsing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#-------------------------------------------------------------------------------
 
-def Traversebyonefolder(m):
-    # m = os.getcwd()
-    n = m.rfind("\\")
-    d = m[0: n+1]
-    print("Traveresed_path",d)
-    # os.chdir(d)
-    return d
-    
-    
-def getrelativepath(originalpath,basefolder):
-    start = 0
-    relativepath = ''
-    fullpath = originalpath.split('\\')
-    folder = basefolder.split('\\')
-    for pos in range(len(fullpath)):
-        if str(fullpath[pos]) == str(folder[0]):
-            start = pos
-            break
-    
-    for pos in range(start,len(fullpath)):
-        if pos < len(fullpath)-1:
-            relativepath += (fullpath[pos]+str("/"))
-        else:
-            relativepath += fullpath[pos]
-    
-    # print("Relative_path:"+relativepath)
-    return relativepath
-    
+def get_file_names(path):
+    files = []
+    c_files = glob.glob(path + "/*.c")
+    # print("c_files",c_files)
+    h_files = glob.glob(path + "/*.h")
+    # print("h_files",h_files)
+    cpp_files = glob.glob(path + "/*.cpp")
+    # print("cpp_files",cpp_files)
+    hpp_files = glob.glob(path + "/*.hpp")
+    # print("hpp_files",hpp_files)
+    for file in c_files:
+        filename = ntpath.basename(file)
+        files.append(filename)
+    for file in h_files:
+        filename = ntpath.basename(file)
+        files.append(filename)
+    for file in cpp_files:
+        filename = ntpath.basename(file)
+        files.append(filename)
+    for file in hpp_files:
+        filename = ntpath.basename(file)
+        files.append(filename)
+    # print("files",files)
+    return files
+
+
 
 if openthreadfileRecords == []:
-    # print("Module.getPath():",Module.getPath())
-    original_directory = os.getcwd()
-    # print("original Directory"+original_directory)
-    os.chdir(Module.getPath())
-    openthread_path = os.getcwd()
-    thirdpartyopenthreadDir = Traversebyonefolder(openthread_path)
+    wirelessthreadDir = get_script_dir() + "/../../../"
+    thirdpartyopenthreadDir = get_script_dir() + "/../../../../"
     for path in abs_paths:
-        if path == 'src':
-            openthread_include =  openthread_path +'\\' +path
+        if path == 'src' or path == 'src/crypto':
+            openthread_include =  wirelessthreadDir + path
+            # print("openthread_include",openthread_include)
         else:
-            openthread_include =  thirdpartyopenthreadDir +'\\' +path
-        # print('openthread include:'+openthread_include)
-        for (dir_path, dir_names, file_names) in os.walk(openthread_include):
-            if 'posix' not in dir_path:
-                relative_path = getrelativepath(dir_path,path)
-                if len(path.split('\\')) == len(relative_path.split('/')): 
-                    localDirList = []
-                    localDirList.append(relative_path)
-                    if file_names != []:
-                        localDirList.append(file_names)
-                    openthreadfileRecords.append(localDirList)
-                    # print(file_names)
-                else:
-                    localDirList = []
-                    localDirList.append(relative_path)
-                    if file_names != []:
-                        localDirList.append(file_names)
-                    openthreadfileRecords.append(localDirList)
-        
-    os.chdir(original_directory)
-    current_dir = os.getcwd()
-    # print("Current Directory"+current_dir)
+            openthread_include =  thirdpartyopenthreadDir + path
+            # print("openthread_include",openthread_include)
+        files = get_file_names(openthread_include)
+        # print("Global Executed",files)
+        localDirList = []
+        localDirList.append(path)
+        localDirList.append(files)
+        openthreadfileRecords.append(localDirList)
     
     # for i in range(len(openthreadfileRecords)):
         # print(openthreadfileRecords[i])

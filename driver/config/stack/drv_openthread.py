@@ -23,6 +23,12 @@
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OPEN THREAD CONFIGURATIONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #-------------------------------------------------------------------------------
+import inspect
+import os
+import sys
+import glob
+import ntpath
+
 global FTD_FILE_SYMBOLS
 FTD_FILE_SYMBOLS = []
 global MTD_FILE_SYMBOLS
@@ -600,7 +606,19 @@ def openthreadMtdConfigcallback(symbol,event):
             # Database.clearSymbolValue("OPEN_THREAD","OPEN_THREAD_MTD_JOINER_ENABLE")
             
 
-      
+#-------------------------------------------------------------------------------
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ File Parsing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#-------------------------------------------------------------------------------
+
+def get_script_dir(follow_symlinks=True):
+    if getattr(sys, 'frozen', False): # py2exe, PyInstaller, cx_Freeze
+        path = os.path.abspath(sys.executable)
+    else:
+        path = inspect.getabsfile(get_script_dir)
+    if follow_symlinks:
+        path = os.path.realpath(path)
+    return os.path.dirname(path)
+
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPONENT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #-------------------------------------------------------------------------------
