@@ -32,7 +32,7 @@ The following features are supported as part of the current revision.
 -   SSED Support not available
 -   Thread Log support available only with CLI App.
 -   Free RTOS heap requires 45k when bootloader services are included.
-
+-   Two Mandatory MISRA C Deviations are observed.
 
 ## Development Tools
 -   MPLAB X v6.15
@@ -41,4 +41,4 @@ The following features are supported as part of the current revision.
 -   Device Pack: PIC32CX-BZ2-DFP (1.2.230)
 
 ## Notes
--   None
+-   Harmony Wireless Thread package uses the [openthread](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/mchp_harmony_wireless_thread_v1.0.0) which is available as part of Microchip MPLAB Harmony-GitHub, to provide Thread support.
