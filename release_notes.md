@@ -5,6 +5,7 @@
 
 ## Release v1.0.0
 
+Harmony Wireless Thread package uses the [openthread](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/mchp_harmony_wireless_thread_v1.0.0) which is available as part of Microchip MPLAB Harmony-GitHub, to provide Thread support, and OpenThread released by Google is an open-source implementation of [Thread®](https://www.threadgroup.org/). 
 The Harmony Wireless Thread package offers support through MPLAB Code Configurator(MCC) component, a user-friendly GUI tool that simplifies configuration and generates code based on the selected Thread
 configuration. The purpose of this package is to provide support for system-on-chip (SOC) and radio co-processor (RCP) designs.
 The following features are supported as part of the current revision.
@@ -41,4 +42,5 @@ The following features are supported as part of the current revision.
 -   Device Pack: PIC32CX-BZ2-DFP (1.2.230)
 
 ## Notes
--   Harmony Wireless Thread package uses the [openthread](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/mchp_harmony_wireless_thread_v1.0.0) which is available as part of Microchip MPLAB Harmony-GitHub, to provide Thread support.
+-   [Thread®](https://www.threadgroup.org/) is registered Trademark of Thread Group.
+-   The Microchip name and logo, the Microchip logo, (all others named in the document) are registered trademarks of Microchip Technology Incorporated in the U.S.A. and other countries. All other trademarks are the property of their respective companies.
