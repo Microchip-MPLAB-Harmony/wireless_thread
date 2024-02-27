@@ -3,6 +3,14 @@
 
 # Microchip MPLAB® Harmony 3 Wireless Thread Release Notes
 
+## Release v1.0.1
+
+### Bug fixes
+
+- Fix of dependency version string in package.yml
+
+________________________________
+
 ## Release v1.0.0
 
 Harmony Wireless Thread package uses the [openthread](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/mchp_harmony_wireless_thread_v1.0.0) which is available as part of Microchip MPLAB Harmony, to provide Thread support, and OpenThread released by Google is an open-source implementation of [Thread®](https://www.threadgroup.org/). 
