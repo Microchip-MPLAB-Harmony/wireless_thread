@@ -5,27 +5,8 @@
 
 ## Release v1.1.0
 
-Harmony Wireless Thread package uses the [openthread](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/thread-reference-20230706) which is available as part of Microchip MPLAB Harmony, to provide Thread support, and OpenThread released by Google is an open-source implementation of [Thread®](https://www.threadgroup.org/). 
-The Harmony Wireless Thread package offers support through MPLAB Code Configurator(MCC) component, a user-friendly GUI tool that simplifies configuration and generates code based on the selected Thread
-configuration. The purpose of this package is to provide support for system-on-chip (SOC) and radio co-processor (RCP) designs.
-The following features are supported as part of the current revision.
-
--  Thread Spec Version : v.1.3.0
--  Supported Device Roles:
-    - FTD : Leader, Router, FED.
-    - MTD : MED, SED.
-    - RCP : UART Support
--  Thread v1.3.0 Certified library for FTD and MTD.
--  Thread SDK MCC component: FTD, MTD, RCP.
--  CLI Application as MCC component.
--  Bootloader Supported.
--  TCP supported.
--  Supported Devices:
-    - PIC32CX1012BZ25048
-    - PIC32CX1012BZ25032
-    - PIC32CX1012BZ24032
-    - WBZ451
-    - WBZ450
+-  Thread v1.3.0 Certified library for FTD and MTD with [openthread](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/thread-reference-20230706).
+-  General bug fixes and code enhancements of Thread SDK.
 
 ## Development Tools
 -   MPLAB X v6.20
