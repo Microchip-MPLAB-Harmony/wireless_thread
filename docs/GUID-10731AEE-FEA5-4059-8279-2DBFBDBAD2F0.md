@@ -57,7 +57,7 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-    ![](GUID-F01F541A-42CB-4D2F-AF5D-7A6CFD7FDF14-low.png)
+    ![](GUID-97E9618E-B051-4D91-9F35-E162C2C398A4-low.png)
 
     <br />
 
@@ -69,7 +69,15 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-8.  The project graph will look like
+8.  Select the thread generation option as per the requirement\(either source or library\). The default configured options is Source.
+
+    ![](GUID-6048E87C-8588-4B53-8456-94D828BB260F-low.png)
+
+9.  Below is the Free RTOS Configuration considered for Microchip Thread SDK.
+
+    ![](GUID-B45A5161-502D-41F9-953E-954EAB8BC38D-low.png)
+
+10. The project graph will look like
 
     <br />
 
@@ -77,7 +85,7 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-9.  RightClick on TIME module for selecting the timer source, Select any of the timer.
+11. RightClick on TIME module for selecting the timer source, Select any of the timer.
 
     <br />
 
@@ -85,15 +93,15 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-10. Below is the TC0 configuration considered for the Microchip Thread SDK.
+12. Below is the TC0 configuration considered for the Microchip Thread SDK.
 
     <br />
 
-    ![](GUID-73BF67DB-CA06-413F-931F-BFBC9250CC19-low.png)
+    ![](GUID-8A4088A3-5D90-415C-8DCF-14CCEF301898-low.png)
 
     <br />
 
-11. Choose the Thread role under CLI configuration options as shown below.
+13. Choose the Thread role under CLI configuration options as shown below.
 
     Select the Device Role as FTD for CLI+Thread<br /> FTD project.
 
@@ -111,7 +119,7 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-12. Right click onUSART Driver =\> Go to Satisfiers =\> Click on SERCOM0\(sercom0\)
+14. Right click onUSART Driver =\> Go to Satisfiers =\> Click on SERCOM0\(sercom0\)
 
     <br />
 
@@ -119,7 +127,7 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-13. Click on SERCOM 0 =\> Go to configuration options =\> Change Receive pinout, Transmitpinout.
+15. Click on SERCOM 0 =\> Go to configuration options =\> Change Receive pinout, Transmitpinout.
 
     <br />
 
@@ -127,7 +135,7 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-14. Configure the SERCOM0 system setting to enable the Direct High Speed inside system Configuration options → Generate Fues → DEVCFG1.
+16. Configure the SERCOM0 system setting to enable the Direct High Speed inside system Configuration options → Generate Fues → DEVCFG1.
 
     <br />
 
@@ -135,7 +143,7 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-15. Click on Generate Tab for Code generation. Upon code generation, Thread files will be added to the project.
+17. Click on Generate Tab for Code generation. Upon code generation, Thread files will be added to the project.
 
     <br />
 
@@ -143,7 +151,7 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-16. Once Generation completes the header, source files of Thread will be added under config =\> driver/thread.
+18. Once Generation completes the header, source files of Thread will be added under config =\> driver/thread.
 
     <br />
 
@@ -151,8 +159,22 @@ This section briefs about the project generation, MCC configuration using CLI, T
 
     <br />
 
-17. RTOS task for thread stack will be created tasks.c file and otSysInit \(\) will be called fromSYS\_Initialize\(\) function.
-18. app\_user\_edits.cfile changes: selected line should be commented.
+    For the thread generation as Library the .a file generation can be seen under<br /> libraries folder in Project window as shown below
+
+    <br />
+
+    ![](GUID-CC5E62E3-4D45-4117-95D9-6939F915ED19-low.png)
+
+    <br />
+
+    <br />
+
+    **Note:** Source files will not be generated, if thread generation type is Library.
+
+    <br />
+
+19. RTOS task for thread stack will be created tasks.c file and otSysInit \(\) will be called fromSYS\_Initialize\(\) function.
+20. app\_user\_edits.cfile changes: selected line should be commented.
 
     <br />
 

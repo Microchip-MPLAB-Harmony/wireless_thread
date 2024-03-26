@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<Module name="wireless_thread" id="adbcfed6-7b2b-4262-9839-cf732b1caa14" version="1.0.1">
+<Module name="wireless_thread" id="adbcfed6-7b2b-4262-9839-cf732b1caa14" version="1.1.0">
     <ConfigRoot path="config/module.py"/>
 </Module>

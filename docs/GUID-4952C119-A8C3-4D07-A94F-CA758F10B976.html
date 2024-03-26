@@ -1,435 +1,313 @@
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
-    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="Microchip Thread SDK Memory Layout: The following image displays the flash and RAM layout of WBZ451, specifically for applications utilizing Microchip Thread SDK. Figure 2-1.  Thread Stack Program ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="generator" content="DITA-OT"/><title>2 Memory Layout and Requirements</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976-d506e19"/><meta name="wh-source-relpath" content="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976.xml"/><meta name="wh-out-relpath" content="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976.html"/>
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
-    
-    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
-    
-    <!-- Template default styles  -->
-    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
-    
-    
-    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
-    
-    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
-<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
-<script src="mchp-context-help.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
-    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
-</head>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
-    <body id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976" class="wh_topic_page frmBody">
-        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
-            Jump to main content
-        </a>
-        
-        
-        
-        
-        <header class="navbar navbar-default wh_header">
-    <div class="container-fluid">
-        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
-            <div class="wh_logo_and_publication_title_container">
-                <div class="wh_logo_and_publication_title">
-                    
-                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="Microchip Thread SDK v1.0.0 "/></a>
-                    <div class=" wh_publication_title "><a href="index.html">Microchip Thread SDK v1.0.0 </a></div>
-                    
-                </div>
-                
-                
-            </div>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11"><meta name="copyright" content="(C) Copyright 2024">
+<meta name="DC.rights.owner" content="(C) Copyright 2024">
+<meta name="generator" content="DITA-OT"><meta name="DC.type" content="topic">
+<meta name="DC.title" content="Memory Layout and Requirements">
+<meta name="DC.format" content="XHTML">
+<meta name="DC.identifier" content="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976">
+<meta name="DC.language" content="en-US">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<title>Memory Layout and Requirements</title>
+<link rel="stylesheet" type="text/css" href="syntax-highlight.css"></head>
+<body id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976"><!-- --></a>
+<main role="main"><article role="article" aria-labelledby="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-FD290B51-FE7A-4DF9-9E14-1FB09BE12491">
+<h1 class="title topictitle1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-FD290B51-FE7A-4DF9-9E14-1FB09BE12491" style="">Memory Layout and Requirements</h1>
+<div class="body">
+        <p class="p"><strong class="ph b">Microchip Thread SDK Memory Layout:</strong></p>
 
-            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
-                
-                
-                
-                
-            </div>
-        </div>
-    </div>
-</header>
-        
-        
-         
-        
-        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
-            
-            
-            
-            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
-            
-            <div class="mchp-color-stripe-grid-container">
-  <div class="mchp-main-bar mchp-orange-bar"></div>
-  <div class="mchp-main-bar mchp-blue-bar"></div>
-  <div class="mchp-main-bar mchp-green-bar"></div>
-</div>
-            
-        </div>
-        
-        <div class="container-fluid" id="wh_topic_container">
-            <div class="row">
-
-                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
-                    
-                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li class="active"><div class="topicref" data-id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976"><div class="title"><a href="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
-Memory Layout and Requirements</a></div></div></li></ol></div>
-                    
-                    
-                    
-                    <div class="wh_right_tools">
-                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
-                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
-                        
-                        
-                        
-                        
-                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
-                        
-                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    
-                </nav>
-            </div>
-            
-            
-            
-            
-            <div class="wh_content_area">
-                <div class="row">
-                    
-                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
-                            <div id="wh_publication_toc_content">
-		                        
-                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem"><div data-tocid="GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377-d506e11" class="topicref" data-id="GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377.html" id="GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377-d506e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
-Introduction</a></div></div></li><li role="treeitem" class="active"><div data-tocid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976-d506e19" class="topicref" data-id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976.html" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976-d506e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
-Memory Layout and Requirements</a></div></div></li><li role="treeitem"><div data-tocid="GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA-d506e27" class="topicref" data-id="GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA.html" id="GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA-d506e27-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
-Supported Features</a></div></div></li><li role="treeitem"><div data-tocid="GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9-d506e35" class="topicref" data-id="GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9.html" id="GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9-d506e35-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">4</ph>
-Software Requirements</a></div></div></li><li role="treeitem"><div data-tocid="GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078-d506e43" class="topicref" data-id="GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078.html" id="GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078-d506e43-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">5</ph>
-Hardware Requirements</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E-d506e51" class="topicref" data-id="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E-d506e51-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E.html" id="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E-d506e51-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6</ph>
-Microchip Thread SDK </a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E-d506e123" class="topicref" data-id="GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E-d506e123-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E.html" id="GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E-d506e123-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">7</ph>
-Thread UDP Demo Application</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-727F605E-7133-4F54-B908-6DCC6893FBC1-d506e179" class="topicref" data-id="GUID-727F605E-7133-4F54-B908-6DCC6893FBC1" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-727F605E-7133-4F54-B908-6DCC6893FBC1-d506e179-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-727F605E-7133-4F54-B908-6DCC6893FBC1.html" id="GUID-727F605E-7133-4F54-B908-6DCC6893FBC1-d506e179-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">8</ph>
-Appendix1: Raspberry Pi Setup Procedure</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-392308FE-7D52-4E57-ABDF-47276145DB3E-d506e301" class="topicref" data-id="GUID-392308FE-7D52-4E57-ABDF-47276145DB3E" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-392308FE-7D52-4E57-ABDF-47276145DB3E-d506e301-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-392308FE-7D52-4E57-ABDF-47276145DB3E.html" id="GUID-392308FE-7D52-4E57-ABDF-47276145DB3E-d506e301-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">9</ph>
-Appendix2: OTBR Network Setup</a></div></div></li><li role="treeitem"><div data-tocid="GUID-BC52749F-3DFC-4DBE-AAFE-23BB5FC83662-d506e365" class="topicref" data-id="GUID-BC52749F-3DFC-4DBE-AAFE-23BB5FC83662" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BC52749F-3DFC-4DBE-AAFE-23BB5FC83662.html" id="GUID-BC52749F-3DFC-4DBE-AAFE-23BB5FC83662-d506e365-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">10</ph>
-References</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d506e373" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d506e373-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d506e373-link">Microchip Information</a></div></div></li></ul></div>
-		                        
-                            </div>
-                        </nav>
-                    
-                    
-                    <div class="col-lg-9 col-md-9 col-sm-12" id="wh_topic_body">
-                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
-                            <span class="close-toc-icon-container">
-                                <span class="close-toc-icon"></span>     
-                            </span>
-                        </button>
-                        
-                        
-                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-FD290B51-FE7A-4DF9-9E14-1FB09BE12491">
-<h1 class="- topic/title title topictitle1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-FD290B51-FE7A-4DF9-9E14-1FB09BE12491" style="">2 Memory Layout and Requirements</h1>
-<div class="- topic/body body">
-        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Microchip Thread SDK Memory Layout:</strong></p>
-        <p class="- topic/p p">The following image displays the flash and RAM layout of WBZ451, specifically for
+        <p class="p">The following image displays the flash and RAM layout of WBZ451, specifically for
             applications utilizing Microchip Thread SDK.</p>
-        <div class="- topic/p p">
-            <figure class="- topic/fig fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_L3J_HZS_VYB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_L3J_HZS_VYB">
-                <div class="- topic/p p">
-                    <figure class="- topic/fig fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_ZJJ_ZMT_VYB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_ZJJ_ZMT_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 2-1. <span id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-1AD351D8-C80C-4923-97C9-93BEBC4B93F1" class="fig--title">Thread Stack Program Memory Layout</span></span></figcaption>
+
+        <div class="p">
+            <figure class="fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_L3J_HZS_VYB"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_L3J_HZS_VYB"><!-- --></a>
+                <div class="p">
+                    <figure class="fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_ZJJ_ZMT_VYB"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_ZJJ_ZMT_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 1. </span>Thread Stack Program Memory Layout</div>
                         
-                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_AKJ_ZMT_VYB" src="GUID-EBE02EE1-0A00-41A5-838A-7AFA2D792A61-high.png"/></div></div>
+                        <br><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_AKJ_ZMT_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_AKJ_ZMT_VYB" src="GUID-EBE02EE1-0A00-41A5-838A-7AFA2D792A61-low.png"></div><br>
                     </figure>
-                    <figure class="- topic/fig fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_L3Q_ZMT_VYB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_L3Q_ZMT_VYB">
-                        <div class="- topic/p p">
-                            <figure class="- topic/fig fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_X1R_DNT_VYB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_X1R_DNT_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 2-2. <span id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-280B4FE3-EEF4-45B7-9498-D06ED22BC164" class="fig--title">Thread Stack Data Memory Layout</span></span></figcaption>
+
+                    <figure class="fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_L3Q_ZMT_VYB"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_L3Q_ZMT_VYB"><!-- --></a>
+                        <div class="p">
+                            <figure class="fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_X1R_DNT_VYB"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_X1R_DNT_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 2. </span>Thread Stack Data Memory Layout</div>
                                 
-                                <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_Y1R_DNT_VYB" src="GUID-DEFE9BA5-6F84-463B-8A9F-10C640B23309-high.png"/></div></div>
+                                <br><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_Y1R_DNT_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_Y1R_DNT_VYB" src="GUID-DEFE9BA5-6F84-463B-8A9F-10C640B23309-low.png"></div><br>
                             </figure>
-                            <figure class="- topic/fig fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_PCS_FGG_YYB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_PCS_FGG_YYB">
-                                <div class="- topic/p p">
-                                    <figure class="- topic/fig fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_A35_3GG_YYB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_A35_3GG_YYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 2-3. <span id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-8441139C-E886-4CA2-BF08-533CD20FA47E" class="fig--title">Thread Boot Rom Layout</span></span></figcaption>
+
+                            <figure class="fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_PCS_FGG_YYB"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_PCS_FGG_YYB"><!-- --></a>
+                                <div class="p">
+                                    <figure class="fig fignone" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_A35_3GG_YYB"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__FIG_A35_3GG_YYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 3. </span>Thread Boot Rom Layout</div>
                                         
-                                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_B35_3GG_YYB" src="GUID-F06EC24A-6776-47FE-BFA2-A34BA6A08112-high.png"/></div></div>
-                                        <div class="- topic/p p">
-                                            <div class="- topic/note note notype note_notype" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__NOTE_Q2Q_BNH_YYB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__NOTE_Q2Q_BNH_YYB"><span class="note__title">Note:</span> It is recommended to adjust
+                                        <br><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_B35_3GG_YYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__IMAGE_B35_3GG_YYB" src="GUID-F06EC24A-6776-47FE-BFA2-A34BA6A08112-low.png"></div><br>
+                                        <div class="p">
+                                            <div class="note" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__NOTE_Q2Q_BNH_YYB"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__NOTE_Q2Q_BNH_YYB"><!-- --></a><span class="notetitle">Note:</span> It is recommended to adjust
                                                 the Free RTOS Heap Size (configTOTAL_HEAP_SIZE) to
                                                 45k while using bootloader services(Default Free
                                                 RTOS heap size is 40k).</div>
+
                                         </div>
+
                                     </figure>
+
                                 </div>
+
                             </figure>
+
                         </div>
+
                     </figure>
+
                 </div>
+
             </figure>
+
         </div>
-        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Memory Requiremnets:</strong></p>
-        <p class="- topic/p p">The following table presents the Flash and RAM usage information recorded for different
+
+        <p class="p"><strong class="ph b">Memory Requiremnets:</strong></p>
+
+        <p class="p">The following table presents the Flash and RAM usage information recorded for different
             roles and features of the thread SDK. These values were obtained by referring to the
             configuration specified in the openthread_stack_config.h file and can be customized to
             meet the specific requirements of the application. The configuration file can be
-            accessed from the Header Files → driver/thread/inc path.</p>
-        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Flash and RAM requirements of thread SDK for system-on-chip(SOC) based designs:</strong></p>
-        <p class="- topic/p p">The following memory information is provided as a reference for scenarios with and
+            accessed from the Header Files &rarr; driver/thread/inc path.</p>
+
+        <p class="p"><strong class="ph b">Flash and RAM requirements of thread SDK for system-on-chip(SOC) based designs:</strong></p>
+
+        <p class="p">The following memory information is provided as a reference for scenarios with and
             without the CLI App. The SDK package includes IEEE 802.15.4 PHY Lib, OpenThread,
             Peripheral Libraries (Plibs), FreeRTOS, and other components. The default allocation for
-            FreeRTOS Heap is 40kb and compiler optimization level is 2.</p>
-        <div class="- topic/p p">
-            <div class="table-container"><table class="- topic/table table frame-all" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB" data-cols="7"><caption class="- topic/title title tablecap" data-caption-side="top" data-is-repeated="true"><span class="table--title-label"><span class="table--title-label">Table 2-1. </span></span><span class="table--title" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-32C51A27-172F-4960-B99F-CB7A6C86C19C"></span></caption><colgroup><col style="width:14.285714285714285%"/><col style="width:14.285714285714285%"/><col style="width:14.285714285714285%"/><col style="width:14.285714285714285%"/><col style="width:14.285714285714285%"/><col style="width:14.285714285714285%"/><col style="width:14.285714285714285%"/></colgroup><thead class="- topic/thead thead">
-                        <tr class="- topic/row">
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1" rowspan="2">Device Type</th>
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2" rowspan="2">Role</th>
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3" rowspan="2">App</th>
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4" colspan="2">In Band Commissioning</th>
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5" rowspan="2">Total Data Memory [KB]</th>
-                            <th class="- topic/entry entry align-center colsep-0 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6" rowspan="2">Total Program Memory [KB]</th>
-                        </tr>
-                        <tr class="- topic/row">
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">Commissioner </th>
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">Joiner</th>
-                        </tr>
-                    </thead><tbody class="- topic/tbody tbody">
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1">FTD</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2">Leader/Router</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3">CLI</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">Yes</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">Yes</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5">81</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6">382</td>
-                        </tr>
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1">MTD</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2">End Device</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3">CLI</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">NA</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">Yes</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5">74</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6">280</td>
-                        </tr>
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1">FTD</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2">Leader/Router</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3">CLI</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">No</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">No</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5">80</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6">367</td>
-                        </tr>
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1">MTD</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2">End Device</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3">CLI</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">NA</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">No</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5">74</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6">275</td>
-                        </tr>
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1">FTD</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2">Leader/Router</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3">No App</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">Yes</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">Yes</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5">77</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6">306</td>
-                        </tr>
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1">MTD</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2">End Device</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3">No App</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">NA</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">Yes</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5">70</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6">224</td>
-                        </tr>
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1">FTD</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2">Leader/Router</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3">No App</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">No</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">No</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5">76</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-1" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6">296</td>
-                        </tr>
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__1">MTD</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__2">End Device</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__3">No App</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__7">NA</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__4 GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__8">No</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__5">70</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB__entry__6">216</td>
-                        </tr>
-                    </tbody></table></div>
-        </div>
-        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Flash and RAM requirements of thread SDK for radio Co-processor (RCP) based
-                designs:</strong></p>
-        <p class="- topic/p p">The SDK package includes IEEE 802.15.4 PHY Lib, Part of open thread to support RCP
-            including spinel, Peripheral Libraries (Plibs), FreeRTOS, and other components. The
-            default allocation for FreeRTOS Heap is 40kb and compiler optimization level is 2.</p>
-        <div class="- topic/p p">
-            <div class="table-container"><table class="- topic/table table frame-all" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB" data-ofbid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB" data-cols="4"><caption class="- topic/title title tablecap" data-caption-side="top" data-is-repeated="true"><span class="table--title-label"><span class="table--title-label">Table 2-2. </span></span><span class="table--title" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__GUID-49BF6695-DA5B-4E92-8E63-2C30BF14BF29"></span></caption><colgroup><col style="width:25.106382978723406%"/><col style="width:21.276595744680854%"/><col style="width:26.17021276595745%"/><col style="width:27.446808510638306%"/></colgroup><thead class="- topic/thead thead">
-                        <tr class="- topic/row">
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB__entry__1">Device Type</th>
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB__entry__2">App</th>
-                            <th class="- topic/entry entry align-center colsep-1 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB__entry__3">Total Data Memory [KB]</th>
-                            <th class="- topic/entry entry align-center colsep-0 rowsep-1" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB__entry__4">Total Program Memory [KB]</th>
-                        </tr>
-                    </thead><tbody class="- topic/tbody tbody">
-                        <tr class="- topic/row">
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB__entry__1">Radio Co-Processor(RCP)</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB__entry__2">rcp</td>
-                            <td class="- topic/entry entry align-center colsep-1 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB__entry__3">52</td>
-                            <td class="- topic/entry entry align-center colsep-0 rowsep-0" headers="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB__entry__4">97</td>
-                        </tr>
-                    </tbody></table></div>
-        </div>
-    </div>
-</article></main></div>
-                        
-                        
-                        
-                        
-                        
-                        
-                    </div>
-                    
-                </div>
-            </div>
+            FreeRTOS Heap is 46kb and compiler optimization level is 2.</p>
+
+        <div class="p">
             
-            
-            
-        </div> 
-        <div class="mchp_disclaimer"><p class="mchp_disclaimer_text">The online versions of the documents are provided as a courtesy. Verify all content and data in the device’s PDF documentation found on the device product page.</p></div><footer class="navbar navbar-default wh_footer">
-  <div class=" footer-container mx-auto ">
-    <div class="footer">
-  <div class="mchp-wh-footer">
-    <div class="mchp-footer">
-      <div class="mchp-footer-tier1">
-        <div class="spacer"></div>
-        <div class="mchp-footer-container">
-          <div class="mchp-footer-links mchp-social-media-links">
-            <div class="mchp-component-items">
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="mchp-footer-links">
-            <div class="mchp-component-items">
-              <div class="mchp-component-item">
-                <div class="link">
-                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
-                  <span class="mchp-link__separator">|</span>
-                </div>
-              </div>
-              <div class="mchp-component-item ">
-                <div class="link">
-                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
-                  <span class="mchp-link__separator">|</span>
-                </div>
-              </div>
-              <div class="mchp-component-item ">
-                <div class="link">
-                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
-                  <span class="mchp-link__separator">|</span>
-                </div>
-              </div>
-              <div class="mchp-component-item ">
-                <div class="link">
-                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
-                  <span class="mchp-link__separator">|</span>
-                </div>
-              </div>
-              <div class="mchp-component-item">
-                <div class="link">
-                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
-                  <span class="mchp-link__separator"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mchp-footer-newsletter">
-            <div class="cmp-text">
-              <p>Stay on the leading edge with our blog</p>
-            </div>
-            <div class="mchp-button-wrapper">
-              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
-                <span class="mchp-button__span">MicroSolutions</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="graphic">
-          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
-        </div>
-      </div>
-      <div class="mchp-footer-tier2">
-        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
-      </div>
-    </div>
-  </div>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];  
-    function gtag(){dataLayer.push(arguments);}  
-    gtag('js', new Date());   
-    gtag('config', 'UA-2724382-19');
-  </script>
+<div class="tablenoborder"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB"><!-- --></a><table cellpadding="4" cellspacing="0" summary="" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_D1P_5LY_5YB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap"><span class="table--title-label">Table 1. </span></span></caption>
+                    <col style="width:14.285714285714285%">
+                    <col style="width:14.285714285714285%">
+                    <col style="width:14.285714285714285%">
+                    <col style="width:14.285714285714285%">
+                    <col style="width:14.285714285714285%">
+                    <col style="width:14.285714285714285%">
+                    <col style="width:14.285714285714285%">
+                    <thead class="thead" style="text-align:left;">
+                        <tr class="row">
+                            <th class="entry cellrowborder" rowspan="2" style="text-align:center;vertical-align:middle;" id="d5897e116"><span>Device Type</span></th>
+
+                            <th class="entry cellrowborder" rowspan="2" style="text-align:center;vertical-align:middle;" id="d5897e119"><span>Role</span></th>
+
+                            <th class="entry cellrowborder" rowspan="2" style="text-align:center;vertical-align:middle;" id="d5897e122"><span>App</span></th>
+
+                            <th class="entry cellrowborder" colspan="2" style="text-align:center;vertical-align:middle;" id="d5897e125"><span>In Band Commissioning</span></th>
+
+                            <th class="entry cellrowborder" rowspan="2" style="text-align:center;vertical-align:middle;" id="d5897e128"><span>Total Data Memory [KB]</span></th>
+
+                            <th class="entry cellrowborder" rowspan="2" style="text-align:center;vertical-align:middle;" id="d5897e132"><span>Total Program Memory [KB]</span></th>
+
+                        </tr>
+
+                        <tr class="row">
+                            <th class="entry cellrowborder" style="text-align:center;vertical-align:middle;" id="d5897e138"><span>Commissioner </span></th>
+
+                            <th class="entry cellrowborder" style="text-align:center;vertical-align:middle;" id="d5897e141"><span>Joiner</span></th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="tbody">
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e116 "><span>FTD</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e119 "><span>Leader/Router</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e122 "><span>CLI</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e138 "><span>Yes</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e141 "><span>Yes</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e128 "><span>94</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e132 "><span>407</span></td>
+
+                        </tr>
+
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e116 "><span>MTD</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e119 "><span>End Device</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e122 "><span>CLI</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e138 "><span>NA</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e141 "><span>Yes</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e128 "><span>84</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e132 "><span>329</span></td>
+
+                        </tr>
+
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e116 "><span>FTD</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e119 "><span>Leader/Router</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e122 "><span>CLI</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e138 "><span>No</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e141 "><span>No</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e128 "><span>94</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e132 "><span>392</span></td>
+
+                        </tr>
+
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e116 "><span>MTD</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e119 "><span>End Device</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e122 "><span>CLI</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e138 "><span>NA</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e141 "><span>No</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e128 "><span>84</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e132 "><span>325</span></td>
+
+                        </tr>
+
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e116 "><span>FTD</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e119 "><span>Leader/Router</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e122 "><span>No App</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e138 "><span>Yes</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e141 "><span>Yes</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e128 "><span>90</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e132 "><span>326</span></td>
+
+                        </tr>
+
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e116 "><span>MTD</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e119 "><span>End Device</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e122 "><span>No App</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e138 "><span>NA</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e141 "><span>Yes</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e128 "><span>79</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e132 "><span>262</span></td>
+
+                        </tr>
+
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e116 "><span>FTD</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e119 "><span>Leader/Router</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e122 "><span>No App</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e138 "><span>No</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e141 "><span>No</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e128 "><span>90</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e132 "><span>316</span></td>
+
+                        </tr>
+
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e116 "><span>MTD</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e119 "><span>End Device</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e122 "><span>No App</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e138 "><span>NA</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e125 d5897e141 "><span>No</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e128 "><span>79</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e132 "><span>259</span></td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
 </div>
-  </div>
-</footer>
-        
-        <div id="go2top" class="d-print-none">
-            <span class="oxy-icon oxy-icon-up"></span>
+
         </div>
-        
-        <div id="modal_img_large" class="modal">
-            <span class="close oxy-icon oxy-icon-remove"></span>
-            <div id="modal_img_container"></div>
-            <div id="caption"></div>
+
+        <p class="p"><strong class="ph b">Flash and RAM requirements of thread SDK for radio Co-processor (RCP) based
+                designs:</strong></p>
+
+        <p class="p">The SDK package includes IEEE 802.15.4 PHY Lib, Part of open thread to support RCP
+            including spinel, Peripheral Libraries (Plibs), FreeRTOS, and other components. The
+            default allocation for FreeRTOS Heap is 46kb and compiler optimization level is 2.</p>
+
+        <div class="p">
+            
+<div class="tablenoborder"><a name="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB"><!-- --></a><table cellpadding="4" cellspacing="0" summary="" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976__TABLE_GKH_X5Y_5YB" class="table" frame="border" border="1" rules="all"><caption><span class="tablecap"><span class="table--title-label">Table 2. </span></span></caption>
+                    <col style="width:25.106382978723406%">
+                    <col style="width:21.276595744680854%">
+                    <col style="width:26.17021276595745%">
+                    <col style="width:27.446808510638306%">
+                    <thead class="thead" style="text-align:left;">
+                        <tr class="row">
+                            <th class="entry cellrowborder" style="text-align:center;vertical-align:middle;" id="d5897e380"><span>Device Type</span></th>
+
+                            <th class="entry cellrowborder" style="text-align:center;vertical-align:middle;" id="d5897e383"><span>App</span></th>
+
+                            <th class="entry cellrowborder" style="text-align:center;vertical-align:middle;" id="d5897e386"><span>Total Data Memory [KB]</span></th>
+
+                            <th class="entry cellrowborder" style="text-align:center;vertical-align:middle;" id="d5897e389"><span>Total Program Memory [KB]</span></th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="tbody">
+                        <tr class="row">
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e380 "><span>Radio Co-Processor(RCP)</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e383 "><span>rcp</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e386 "><span>59</span></td>
+
+                            <td class="entry cellrowborder" style="text-align:center;vertical-align:middle;" headers="d5897e389 "><span>91</span></td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+</div>
+
         </div>
-        
-        
-        
-        
-        <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
-        </body>
+
+    </div>
+
+</article></main></body>
 </html>

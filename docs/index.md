@@ -2,7 +2,7 @@
 
 -   [Introduction](GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377.md)
 -   [Memory Layout and Requirements](GUID-4952C119-A8C3-4D07-A94F-CA758F10B976.md)
--   [Supported Features](GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA.md)
+-   [Supported Features and Library Configurations:](GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA.md)
 -   [Software Requirements](GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9.md)
 -   [Hardware Requirements](GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078.md)
 -   [Microchip Thread SDK](GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E.md)
@@ -49,7 +49,6 @@
     -   [The Microchip Website](GUID-7551DC67-D79D-4F0C-B56F-7B17E12400E0.md)
     -   [Product Change Notification Service](GUID-CDA512D8-0DE4-4672-8716-04CAC681CB38.md)
     -   [Customer Support](GUID-F05182E4-B102-4775-A746-1FF37F465312.md)
-    -   [Product Identification System](GUID-ADB76E99-DC24-4AF5-9900-BED214AAAF86.md)
     -   [Microchip Devices Code Protection Feature](GUID-E8251634-7B15-4073-A103-5A5F128B8699.md)
     -   [Legal Notice](GUID-125F1A93-76CC-4BD7-BACA-01844FBD5F4F.md)
     -   [Trademarks](GUID-21750586-F9F2-4E33-87FB-8F2994BF4744.md)

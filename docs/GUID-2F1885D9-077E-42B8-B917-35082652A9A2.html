@@ -1,174 +1,67 @@
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us" data-whc_version="24.1">
-    <head><link rel="shortcut icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><link rel="icon" href="oxygen-webhelp\template\resources/images/favicon.ico"/><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="description" content="This section provides the setps for building and running projects. Please follow the instructions outlined in the &#34; Creating a new MCC Harmony project&#34; section and generate two projects. One project ..."/><meta name="copyright" content="(C) Copyright 2023"/><meta name="generator" content="DITA-OT"/><title>6.5 Building and running a project</title><!--  Generated with Oxygen version 24.1, build number 2022062014.  --><meta name="wh-path2root" content=""/><meta name="wh-toc-id" content="GUID-2F1885D9-077E-42B8-B917-35082652A9A2-d506e107"/><meta name="wh-source-relpath" content="GUID-2F1885D9-077E-42B8-B917-35082652A9A2.xml"/><meta name="wh-out-relpath" content="GUID-2F1885D9-077E-42B8-B917-35082652A9A2.html"/>
-    <!-- Latest compiled and minified Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/lib/bootstrap/css/bootstrap.min.css"/>
-    
-    <link rel="stylesheet" href="./oxygen-webhelp/lib/jquery-ui/jquery-ui.min.css"/>
-    
-    <!-- Template default styles  -->
-    <link rel="stylesheet" type="text/css" href="./oxygen-webhelp/app/topic-page.css?buildId=2022062014"/>
-    
-    
-    <script src="./oxygen-webhelp/lib/jquery/jquery-3.5.1.min.js"></script>
-    
-    <script data-main="./oxygen-webhelp/app/topic-page.js" src="./oxygen-webhelp/lib/requirejs/require.js"></script>
-<link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/microchip.css?buildId=2022062014"/><link rel="stylesheet" type="text/css" href="oxygen-webhelp/template/notes.css?buildId=2022062014"/>
-<script src="mchp-context-help.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" rel="stylesheet" type="text/css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async="" type="text/javascript"></script>
-    <script src="https://assets.adobedtm.com/6a72a357eb48/a636c708c7fe/launch-0b0023397020.min.js"></script><!-- Adobe Analytics -->
-</head>
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en-us">
+<head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 
-    <body id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2" class="wh_topic_page frmBody">
-        <a href="#wh_topic_body" class="sr-only sr-only-focusable">
-            Jump to main content
-        </a>
-        
-        
-        
-        
-        <header class="navbar navbar-default wh_header">
-    <div class="container-fluid">
-        <div class="wh_header_flex_container navbar-nav navbar-expand-md navbar-dark">
-            <div class="wh_logo_and_publication_title_container">
-                <div class="wh_logo_and_publication_title">
-                    
-                    <a href="index.html" class=" wh_logo d-none d-sm-block "><img src="oxygen-webhelp\template\resources/images/microchip.png" alt="Microchip Thread SDK v1.0.0 "/></a>
-                    <div class=" wh_publication_title "><a href="index.html">Microchip Thread SDK v1.0.0 </a></div>
-                    
-                </div>
-                
-                
-            </div>
-
-            <div class="wh_top_menu_and_indexterms_link collapse navbar-collapse" id="wh_top_menu_and_indexterms_link">
-                
-                
-                
-                
-            </div>
-        </div>
-    </div>
-</header>
-        
-        
-         
-        
-        <div class=" wh_search_input navbar-form wh_topic_page_search search " role="form">
-            
-            
-            
-            <form id="searchForm" method="get" role="search" action="search.html"><div class="d-flex justify-contents-around"><div class="flex-grow-1"></div><div class="position-relative flex-grow-1"><input type="search" placeholder="Search " class="wh_search_textfield" id="textToSearch" name="searchQuery" aria-label="Search query" required="required"/><button type="submit" class="wh_search_button" aria-label="Search"><span class="search_input_text">Search</span></button></div><div class="align-self-center flex-grow-1 ml-2"></div></div></form>
-            
-            <div class="mchp-color-stripe-grid-container">
-  <div class="mchp-main-bar mchp-orange-bar"></div>
-  <div class="mchp-main-bar mchp-blue-bar"></div>
-  <div class="mchp-main-bar mchp-green-bar"></div>
-</div>
-            
-        </div>
-        
-        <div class="container-fluid" id="wh_topic_container">
-            <div class="row">
-
-                <nav class="wh_tools d-print-none navbar-expand-md" aria-label="Tools">
-                    
-                    <div data-tooltip-position="bottom" class=" wh_breadcrumb "><ol class="d-print-none"><li><span class="home"><a href="index.html"><span>Home</span></a></span></li><li><div class="topicref" data-id="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E"><div class="title"><a href="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6</ph>
-Microchip Thread SDK </a></div></div></li><li class="active"><div class="topicref" data-id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2"><div class="title"><a href="GUID-2F1885D9-077E-42B8-B917-35082652A9A2.html"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6.5</ph>
-Building and running a project</a></div></div></li></ol></div>
-                    
-                    
-                    
-                    <div class="wh_right_tools">
-                        <button class="wh_hide_highlight" aria-label="Toggle search highlights" title="Toggle search highlights"></button>
-                        <button class="webhelp_expand_collapse_sections" data-next-state="collapsed" aria-label="Collapse sections" title="Collapse sections"></button>
-                        
-                        
-                        
-                        
-                        <div class=" wh_print_link print d-none d-md-inline-block "><button onClick="window.print()" title="Print this page" aria-label="Print this page"></button></div>
-                        
-                        <button type="button" id="wh_toc_button" class="custom-toggler navbar-toggler collapsed wh_toggle_button navbar-light" aria-expanded="false" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    
-                </nav>
-            </div>
-            
-            
-            
-            
-            <div class="wh_content_area">
-                <div class="row">
-                    
-                        <nav id="wh_publication_toc" class="col-lg-3 col-md-3 col-sm-12 d-md-block d-none d-print-none" aria-label="Table of Contents Container">
-                            <div id="wh_publication_toc_content">
-		                        
-                            	<div class=" wh_publication_toc " data-tooltip-position="right"><span class="expand-button-action-labels"><span id="button-expand-action" role="button" aria-label="Expand"></span><span id="button-collapse-action" role="button" aria-label="Collapse"></span><span id="button-pending-action" role="button" aria-label="Pending"></span></span><ul role="tree" aria-label="Table of Contents"><li role="treeitem"><div data-tocid="GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377-d506e11" class="topicref" data-id="GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377.html" id="GUID-162D7BE7-3A35-4D12-AE09-EE84C6554377-d506e11-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">1</ph>
-Introduction</a></div></div></li><li role="treeitem"><div data-tocid="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976-d506e19" class="topicref" data-id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976.html" id="GUID-4952C119-A8C3-4D07-A94F-CA758F10B976-d506e19-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">2</ph>
-Memory Layout and Requirements</a></div></div></li><li role="treeitem"><div data-tocid="GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA-d506e27" class="topicref" data-id="GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA.html" id="GUID-58B87176-DD8F-445A-B937-07BCBABF7BDA-d506e27-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">3</ph>
-Supported Features</a></div></div></li><li role="treeitem"><div data-tocid="GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9-d506e35" class="topicref" data-id="GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9.html" id="GUID-B56A6FD6-7CD5-4A36-8FA8-7816474B2FF9-d506e35-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">4</ph>
-Software Requirements</a></div></div></li><li role="treeitem"><div data-tocid="GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078-d506e43" class="topicref" data-id="GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078.html" id="GUID-9F528E75-CFAF-468E-BC41-8BEFE1F42078-d506e43-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">5</ph>
-Hardware Requirements</a></div></div></li><li role="treeitem" aria-expanded="true"><div data-tocid="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E-d506e51" class="topicref" data-id="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E" data-state="expanded"><span role="button" tabindex="0" aria-labelledby="button-collapse-action GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E-d506e51-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E.html" id="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E-d506e51-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6</ph>
-Microchip Thread SDK </a></div></div><ul role="group" class="navbar-nav nav-list"><li role="treeitem"><div data-tocid="GUID-589F688B-6710-45A6-94B9-47BABB8E0404-d506e59" class="topicref" data-id="GUID-589F688B-6710-45A6-94B9-47BABB8E0404" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-589F688B-6710-45A6-94B9-47BABB8E0404.html" id="GUID-589F688B-6710-45A6-94B9-47BABB8E0404-d506e59-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6.1</ph>
-Thread MCC Component Overview</a></div></div></li><li role="treeitem"><div data-tocid="GUID-6626E977-DE67-48FD-BC0E-D96515FCBD08-d506e67" class="topicref" data-id="GUID-6626E977-DE67-48FD-BC0E-D96515FCBD08" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-6626E977-DE67-48FD-BC0E-D96515FCBD08.html" id="GUID-6626E977-DE67-48FD-BC0E-D96515FCBD08-d506e67-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6.2</ph>
-CLI Component MCC Overview</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-E585B16B-5D65-41F2-B234-6864EA47D41C-d506e75" class="topicref" data-id="GUID-E585B16B-5D65-41F2-B234-6864EA47D41C" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-E585B16B-5D65-41F2-B234-6864EA47D41C-d506e75-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-E585B16B-5D65-41F2-B234-6864EA47D41C.html" id="GUID-E585B16B-5D65-41F2-B234-6864EA47D41C-d506e75-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6.3</ph>
-MCC Component Configuration</a></div></div></li><li role="treeitem"><div data-tocid="GUID-10731AEE-FEA5-4059-8279-2DBFBDBAD2F0-d506e99" class="topicref" data-id="GUID-10731AEE-FEA5-4059-8279-2DBFBDBAD2F0" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-10731AEE-FEA5-4059-8279-2DBFBDBAD2F0.html" id="GUID-10731AEE-FEA5-4059-8279-2DBFBDBAD2F0-d506e99-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6.4</ph>
-Creating a new MCC Harmony Project</a></div></div></li><li role="treeitem" class="active"><div data-tocid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2-d506e107" class="topicref" data-id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-2F1885D9-077E-42B8-B917-35082652A9A2.html" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2-d506e107-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6.5</ph>
-Building and running a project</a></div></div></li><li role="treeitem"><div data-tocid="GUID-42B3C06D-BF25-4A26-B2F0-0AE63AC8FE13-d506e115" class="topicref" data-id="GUID-42B3C06D-BF25-4A26-B2F0-0AE63AC8FE13" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-42B3C06D-BF25-4A26-B2F0-0AE63AC8FE13.html" id="GUID-42B3C06D-BF25-4A26-B2F0-0AE63AC8FE13-d506e115-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">6.6</ph>
-MCC Project creation for RCP with Thread Component </a></div></div></li></ul></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E-d506e123" class="topicref" data-id="GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E-d506e123-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E.html" id="GUID-B9324B07-E12F-4AC3-B913-1E4A7C5C0E9E-d506e123-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">7</ph>
-Thread UDP Demo Application</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-727F605E-7133-4F54-B908-6DCC6893FBC1-d506e179" class="topicref" data-id="GUID-727F605E-7133-4F54-B908-6DCC6893FBC1" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-727F605E-7133-4F54-B908-6DCC6893FBC1-d506e179-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-727F605E-7133-4F54-B908-6DCC6893FBC1.html" id="GUID-727F605E-7133-4F54-B908-6DCC6893FBC1-d506e179-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">8</ph>
-Appendix1: Raspberry Pi Setup Procedure</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-392308FE-7D52-4E57-ABDF-47276145DB3E-d506e301" class="topicref" data-id="GUID-392308FE-7D52-4E57-ABDF-47276145DB3E" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-392308FE-7D52-4E57-ABDF-47276145DB3E-d506e301-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-392308FE-7D52-4E57-ABDF-47276145DB3E.html" id="GUID-392308FE-7D52-4E57-ABDF-47276145DB3E-d506e301-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">9</ph>
-Appendix2: OTBR Network Setup</a></div></div></li><li role="treeitem"><div data-tocid="GUID-BC52749F-3DFC-4DBE-AAFE-23BB5FC83662-d506e365" class="topicref" data-id="GUID-BC52749F-3DFC-4DBE-AAFE-23BB5FC83662" data-state="leaf"><span role="button" class="wh-expand-btn"></span><div class="title"><a href="GUID-BC52749F-3DFC-4DBE-AAFE-23BB5FC83662.html" id="GUID-BC52749F-3DFC-4DBE-AAFE-23BB5FC83662-d506e365-link"><ph xmlns="http://www.oxygenxml.com/ns/webhelp/toc">10</ph>
-References</a></div></div></li><li role="treeitem" aria-expanded="false"><div data-tocid="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d506e373" class="topicref backmatter backmatter_parent" data-id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B" data-state="not-ready"><span role="button" tabindex="0" aria-labelledby="button-expand-action GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d506e373-link" class="wh-expand-btn"></span><div class="title"><a href="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B.html" id="GUID-0FB3F908-88EE-45CE-94F5-E97AF9049C9B-d506e373-link">Microchip Information</a></div></div></li></ul></div>
-		                        
-                            </div>
-                        </nav>
-                    
-                    
-                    <div class="col-lg-9 col-md-9 col-sm-12" id="wh_topic_body">
-                        <button id="wh_close_publication_toc_button" class="close-toc-button d-none" aria-label="Toggle publishing table of content" aria-controls="wh_publication_toc" aria-expanded="true">
-                            <span class="close-toc-icon-container">
-                                <span class="close-toc-icon"></span>     
-                            </span>
-                        </button>
-                        
-                        
-                        <div class=" wh_topic_content body "><main role="main"><article role="article" aria-labelledby="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-2CFF89C9-486B-408A-8C99-17C5122FCDAF">
-<h1 class="- topic/title title topictitle1" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-2CFF89C9-486B-408A-8C99-17C5122FCDAF" style="">6.5 Building and running a project</h1>
-<div class="- topic/body body">
-<p class="- topic/p p">This section provides the setps for building and running projects. Please follow the instructions
-            outlined in the "<a class="- topic/xref xref" href="GUID-10731AEE-FEA5-4059-8279-2DBFBDBAD2F0.html">Creating a new MCC Harmony project"</a> section and generate two projects. One
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE11"><meta name="copyright" content="(C) Copyright 2024">
+<meta name="DC.rights.owner" content="(C) Copyright 2024">
+<meta name="generator" content="DITA-OT"><meta name="DC.type" content="topic">
+<meta name="DC.title" content="Building and running a project">
+<meta name="DC.relation" scheme="URI" content="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E.html">
+<meta name="DC.format" content="XHTML">
+<meta name="DC.identifier" content="GUID-2F1885D9-077E-42B8-B917-35082652A9A2">
+<meta name="DC.language" content="en-US">
+<link rel="stylesheet" type="text/css" href="css/custom.css">
+<title>Building and running a project</title>
+<link rel="stylesheet" type="text/css" href="syntax-highlight.css"></head>
+<body id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2"><!-- --></a>
+<main role="main"><article role="article" aria-labelledby="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-2CFF89C9-486B-408A-8C99-17C5122FCDAF">
+<h1 class="title topictitle1" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-2CFF89C9-486B-408A-8C99-17C5122FCDAF" style="">Building and running a project</h1>
+<div class="body">
+<p class="p">This section provides the setps for building and running projects. Please follow the instructions
+            outlined in the "<a class="xref" href="GUID-10731AEE-FEA5-4059-8279-2DBFBDBAD2F0.html">Creating a new MCC Harmony project"</a> section and generate two projects. One
             project should have FTD as the device role, while the other should have MTD as the
             device role, with the CLI App included. The default settings can be used for all other
             configurations. Once the projects are created build the projects and build should be
             successful.</p>
-        <p class="- topic/p p">The following scenario outlines the formation of a thread network and the exchange of
+
+        <p class="p">The following scenario outlines the formation of a thread network and the exchange of
             data between a leader (FTD) and an end device (MTD). Node1 serves as the leader (FTD),
             while node2 functions as the end device(MTD).</p>
-        <ol class="- topic/ol ol" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__OL_TB1_XZY_5YB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__OL_TB1_XZY_5YB">
-            <li class="- topic/li li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-EDD0609A-8983-440A-87BC-6DB973ABB942" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-EDD0609A-8983-440A-87BC-6DB973ABB942">Once the projects are created right click on the project, "Clean and Build" option
+
+        <a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__OL_TB1_XZY_5YB"><!-- --></a><ol class="ol" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__OL_TB1_XZY_5YB">
+            <li class="li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-EDD0609A-8983-440A-87BC-6DB973ABB942"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-EDD0609A-8983-440A-87BC-6DB973ABB942"><!-- --></a><span class="indent-level-default">1.</span>Once the projects are created right click on the project, "Clean and Build" option
                 and Flash the firmwares into two WBZ451 Xplained Pro boards as shown
-                        below.<p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Building the FTD project:</strong></p><div class="- topic/p p">
-                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_S2Z_VBZ_5YB" src="GUID-A4C9835E-F203-4C92-B165-7F8536680424-high.png"/></div></div>
-                </div><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Building the MTD project:</strong></p><div class="- topic/p p">
-                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_KX4_PCZ_5YB" src="GUID-083157AA-E49B-4AE1-9006-7C65EBA2A937-high.png"/></div></div>
-                </div><p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Flashing the projects:</strong></p><p class="- topic/p p">Flash the FTD and MTD firmwares into each
-                    device selecting in project properties → Connected Hardware Tool as shown
-                    below</p><div class="- topic/p p">
-                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_DT2_XFZ_5YB" src="GUID-F24D2C6E-2542-47F4-B4A9-FBCF8B7FDF5F-high.png"/></div></div>
-                </div><div class="- topic/p p">
-                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_V5Q_KGZ_5YB" src="GUID-3363CDE8-3649-4A2B-AF16-5244EC6D5E6A-high.png"/></div></div>
-                </div></li>
-            <li class="- topic/li li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-B66EE442-78C8-417F-B571-DC37FFF48F88" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-B66EE442-78C8-417F-B571-DC37FFF48F88">Open Tera Term Serial tool and Goto Setup → Serial port and set the following
-                settings as shown in below.<div class="- topic/p p">
-                    <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_ELW_GJZ_5YB" src="GUID-0DE54A47-0491-4ABA-AE8D-75B6322F20E7-high.png"/></div></div>
-                </div></li>
-            <li class="- topic/li li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-917E0A30-CDDD-429B-9CED-D43E8B7839BD" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-917E0A30-CDDD-429B-9CED-D43E8B7839BD">The below commands are to be inputted
+                        below.<p class="p"><strong class="ph b">Building the FTD project:</strong></p>
+<div class="p">
+                    <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_S2Z_VBZ_5YB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_S2Z_VBZ_5YB" src="GUID-A4C9835E-F203-4C92-B165-7F8536680424-low.png"></div><br>
+                </div>
+<p class="p"><strong class="ph b">Building the MTD project:</strong></p>
+<div class="p">
+                    <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_KX4_PCZ_5YB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_KX4_PCZ_5YB" src="GUID-083157AA-E49B-4AE1-9006-7C65EBA2A937-low.png"></div><br>
+                </div>
+<p class="p"><strong class="ph b">Flashing the projects:</strong></p>
+<p class="p">Flash the FTD and MTD firmwares into each
+                    device selecting in project properties &rarr; Connected Hardware Tool as shown
+                    below</p>
+<div class="p">
+                    <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_DT2_XFZ_5YB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_DT2_XFZ_5YB" src="GUID-F24D2C6E-2542-47F4-B4A9-FBCF8B7FDF5F-low.png"></div><br>
+                </div>
+<div class="p">
+                    <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_V5Q_KGZ_5YB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_V5Q_KGZ_5YB" src="GUID-3363CDE8-3649-4A2B-AF16-5244EC6D5E6A-low.png"></div><br>
+                </div>
+</li>
+
+            <li class="li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-B66EE442-78C8-417F-B571-DC37FFF48F88"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-B66EE442-78C8-417F-B571-DC37FFF48F88"><!-- --></a><span class="indent-level-default">2.</span>Open Tera Term Serial tool and Goto Setup &rarr; Serial port and set the following
+                settings as shown in below.<div class="p">
+                    <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_ELW_GJZ_5YB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_ELW_GJZ_5YB" src="GUID-0DE54A47-0491-4ABA-AE8D-75B6322F20E7-low.png"></div><br>
+                </div>
+</li>
+
+            <li class="li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-917E0A30-CDDD-429B-9CED-D43E8B7839BD"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-917E0A30-CDDD-429B-9CED-D43E8B7839BD"><!-- --></a><span class="indent-level-default">3.</span>The below commands are to be inputted
                 in node1 to form the thread network with Leader role. After successful inputting of
-                each comand thread stack responds as "Done". <div class="- topic/p p">
-                    <pre class="+ topic/pre pr-d/codeblock pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_KTL_QXZ_5YB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_KTL_QXZ_5YB"><code><strong class="+ topic/ph hi-d/b ph b">Node1:</strong>
+                each comand thread stack responds as "Done". <div class="p">
+                    <pre class="pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_KTL_QXZ_5YB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_KTL_QXZ_5YB"><!-- --></a><code id="d1133e69" content="Node1:&#xA;&gt; dataset init new&#xA;&gt; dataset channel 19&#xA;&gt; dataset networkkey 00112233445566778899AABBCCDDEEA9&#xA;&gt; dataset commit active&#xA;&gt; ifconfig up&#xA;&gt; state&#xA;&gt; thread start&#xA;&gt; state"><strong class="ph b">Node1:</strong>
 &gt; dataset init new
 &gt; dataset channel 19
 &gt; dataset networkkey 00112233445566778899AABBCCDDEEA9
@@ -177,19 +70,24 @@ References</a></div></div></li><li role="treeitem" aria-expanded="false"><div da
 &gt; state
 &gt; thread start
 &gt; state</code></pre>
-                </div></li>
-            <li class="- topic/li li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-58C62E50-4031-4420-AD38-9E20190B32AF" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-58C62E50-4031-4420-AD38-9E20190B32AF">Once the above commands are executed
+                </div>
+</li>
+
+            <li class="li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-58C62E50-4031-4420-AD38-9E20190B32AF"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-58C62E50-4031-4420-AD38-9E20190B32AF"><!-- --></a><span class="indent-level-default">4.</span>Once the above commands are executed
                 the node1 forms the thread network and assisgns itself with leader role as shown in
-                the below image.<div class="- topic/p p">
-                    <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_ZZY_X31_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_ZZY_X31_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 6-1. <span id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-85BFD35C-370F-4BD3-A810-F64E53CF9FFF" class="fig--title">Node1</span></span></figcaption>
+                the below image.<div class="p">
+                    <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_ZZY_X31_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_ZZY_X31_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 1. </span>Node1</div>
                         
-                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_A1Z_X31_VYB" src="GUID-613E9AF5-4B2B-46B5-A6C3-BA2387F4E792-high.png"/></div></div>
+                        <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_A1Z_X31_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_A1Z_X31_VYB" src="GUID-613E9AF5-4B2B-46B5-A6C3-BA2387F4E792-low.png"></div><br>
                     </figure>
-                </div></li>
-            <li class="- topic/li li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-724BDB81-F13A-450D-BB76-2FBA3637B1E6" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-724BDB81-F13A-450D-BB76-2FBA3637B1E6">The below commands are to be inputted
+
+                </div>
+</li>
+
+            <li class="li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-724BDB81-F13A-450D-BB76-2FBA3637B1E6"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-724BDB81-F13A-450D-BB76-2FBA3637B1E6"><!-- --></a><span class="indent-level-default">5.</span>The below commands are to be inputted
                 in node2 to join the thread network formed by node1. After successful inputting of
-                each comand thread stack responds as "Done". <div class="- topic/p p">
-                    <pre class="+ topic/pre pr-d/codeblock pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_HGX_CZZ_5YB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_HGX_CZZ_5YB"><code><strong class="+ topic/ph hi-d/b ph b">Node2:</strong>
+                each comand thread stack responds as "Done". <div class="p">
+                    <pre class="pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_HGX_CZZ_5YB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_HGX_CZZ_5YB"><!-- --></a><code id="d1133e92" content="Node2:&#xA;&gt; dataset channel 19&#xA;&gt; dataset networkkey 00112233445566778899AABBCCDDEEA9&#xA;&gt; dataset commit active&#xA;&gt; ifconfig up&#xA;&gt; state&#xA;&gt; thread start&#xA;&gt; state"><strong class="ph b">Node2:</strong>
 &gt; dataset channel 19
 &gt; dataset networkkey 00112233445566778899AABBCCDDEEA9
 &gt; dataset commit active
@@ -197,234 +95,131 @@ References</a></div></div></li><li role="treeitem" aria-expanded="false"><div da
 &gt; state
 &gt; thread start
 &gt; state</code></pre>
-                </div></li>
-            <li class="- topic/li li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-E082847D-1597-43F9-83E3-EE880B940600" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-E082847D-1597-43F9-83E3-EE880B940600">Once the above commands are executed the node2 joins the thread network formed by
-                node1 with child role as shown in the image below.<div class="- topic/p p">
-                    <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_GX1_Z31_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_GX1_Z31_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 6-2. <span id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-B1461472-C838-4655-8161-7977058D4F97" class="fig--title">Node2</span></span></figcaption>
+                </div>
+</li>
+
+            <li class="li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-E082847D-1597-43F9-83E3-EE880B940600"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-E082847D-1597-43F9-83E3-EE880B940600"><!-- --></a><span class="indent-level-default">6.</span>Once the above commands are executed the node2 joins the thread network formed by
+                node1 with child role as shown in the image below.<div class="p">
+                    <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_GX1_Z31_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_GX1_Z31_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 2. </span>Node2</div>
                         
-                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_HX1_Z31_VYB" src="GUID-F0137450-60F7-4233-A8FD-B92FE4A054CF-high.png"/></div></div>
+                        <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_HX1_Z31_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_HX1_Z31_VYB" src="GUID-F0137450-60F7-4233-A8FD-B92FE4A054CF-low.png"></div><br>
                     </figure>
-                </div></li>
-            <li class="- topic/li li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-078B94CA-3307-4C81-A139-84B29269DBBB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-078B94CA-3307-4C81-A139-84B29269DBBB">Get the IP Address of each node for further communication by using following command
-                and IP addresses of node1 and node 2 are shown below<div class="- topic/p p">
-                    <pre class="+ topic/pre pr-d/codeblock pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_C4W_JF1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_C4W_JF1_VYB"><code>&gt; ipaddr</code></pre>
-                </div><div class="- topic/p p">
-                    <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_MRS_BJ1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_MRS_BJ1_VYB">
-                        <div class="- topic/p p">
-                            <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_G4P_SJ1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_G4P_SJ1_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 6-3. <span id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-58146D45-0B6E-468C-B76E-A59AE728829C" class="fig--title">Node1</span></span></figcaption>
+
+                </div>
+</li>
+
+            <li class="li" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-078B94CA-3307-4C81-A139-84B29269DBBB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-078B94CA-3307-4C81-A139-84B29269DBBB"><!-- --></a><span class="indent-level-default">7.</span>Get the IP Address of each node for further communication by using following command
+                and IP addresses of node1 and node 2 are shown below<div class="p">
+                    <pre class="pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_C4W_JF1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_C4W_JF1_VYB"><!-- --></a><code id="d1133e116" content="&gt; ipaddr">&gt; ipaddr</code></pre>
+                </div>
+<div class="p">
+                    <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_MRS_BJ1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_MRS_BJ1_VYB"><!-- --></a>
+                        <div class="p">
+                            <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_G4P_SJ1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_G4P_SJ1_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 3. </span>Node1</div>
                                 
-                                <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_H4P_SJ1_VYB" src="GUID-5E90A12A-5533-409A-A6C4-AAD8211F8739-high.png"/></div></div>
+                                <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_H4P_SJ1_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_H4P_SJ1_VYB" src="GUID-5E90A12A-5533-409A-A6C4-AAD8211F8739-low.png"></div><br>
                             </figure>
+
                         </div>
+
                     </figure>
-                </div><div class="- topic/p p">
-                    <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_RY2_DJ1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_RY2_DJ1_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 6-4. <span id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-CDD05ED4-4BA9-4FB6-8AFF-00D59C3076A0" class="fig--title">Node2</span></span></figcaption>
+
+                </div>
+<div class="p">
+                    <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_RY2_DJ1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_RY2_DJ1_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 4. </span>Node2</div>
                         
-                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_SY2_DJ1_VYB" src="GUID-1B53AD30-2395-4AB1-9075-9501F5933995-high.png"/></div></div>
+                        <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_SY2_DJ1_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_SY2_DJ1_VYB" src="GUID-1B53AD30-2395-4AB1-9075-9501F5933995-low.png"></div><br>
                     </figure>
-                </div></li>
+
+                </div>
+</li>
+
         </ol>
-        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">UDP Data Exchange between Node1 and Node2:</strong></p>
-        <p class="- topic/p p">Follow the below commands to send a UDP packet from node 2 to node1</p>
-        <div class="- topic/p p">
-            <pre class="+ topic/pre pr-d/codeblock pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_CK5_ZG1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_CK5_ZG1_VYB"><code><strong class="+ topic/ph hi-d/b ph b">Node1:</strong>
+
+        <p class="p"><strong class="ph b">UDP Data Exchange between Node1 and Node2:</strong></p>
+
+        <p class="p">Follow the below commands to send a UDP packet from node 2 to node1</p>
+
+        <div class="p">
+            <pre class="pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_CK5_ZG1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_CK5_ZG1_VYB"><!-- --></a><code id="d1133e157" content="Node1:&#xA;&gt; udp open&#xA;&gt; udp bind :: 1234"><strong class="ph b">Node1:</strong>
 &gt; udp open
 &gt; udp bind :: 1234</code></pre>
         </div>
-        <div class="- topic/p p">
-            <pre class="+ topic/pre pr-d/codeblock pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_W54_HH1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_W54_HH1_VYB"><code><strong class="+ topic/ph hi-d/b ph b">Node2:</strong>
+
+        <div class="p">
+            <pre class="pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_W54_HH1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_W54_HH1_VYB"><!-- --></a><code id="d1133e165" content="Node2:&#xA;&gt; udp open&#xA;&gt; udp send fd45:db4c:c440:c702:6296:bbb0:354:d4d7 1234 Hello"><strong class="ph b">Node2:</strong>
 &gt; udp open
 &gt; udp send fd45:db4c:c440:c702:6296:bbb0:354:d4d7 1234 Hello</code></pre>
         </div>
-        <div class="- topic/p p">
-            <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_LSL_M31_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_LSL_M31_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 6-5. <span id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-8F05698A-F008-486C-AEFB-846428271B3C" class="fig--title">Node1</span></span></figcaption>
+
+        <div class="p">
+            <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_LSL_M31_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_LSL_M31_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 5. </span>Node1</div>
                 
-                <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_MSL_M31_VYB" src="GUID-BB4B39C0-FB4D-4652-98D8-5A5B630E348D-high.png"/></div></div>
+                <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_MSL_M31_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_MSL_M31_VYB" src="GUID-BB4B39C0-FB4D-4652-98D8-5A5B630E348D-low.png"></div><br>
             </figure>
-            <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_EKW_M31_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_EKW_M31_VYB">
-                <div class="- topic/p p">
-                    <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_SCT_N31_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_SCT_N31_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 6-6. <span id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-3162EEB1-9122-4FCA-B47E-CD27D2FF1B67" class="fig--title">Node2</span></span></figcaption>
+
+            <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_EKW_M31_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_EKW_M31_VYB"><!-- --></a>
+                <div class="p">
+                    <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_SCT_N31_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_SCT_N31_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 6. </span>Node2</div>
                         
-                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_TCT_N31_VYB" src="GUID-F58E211C-E26A-42D8-8F9C-F57FCB8CB29C-high.png"/></div></div>
+                        <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_TCT_N31_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_TCT_N31_VYB" src="GUID-F58E211C-E26A-42D8-8F9C-F57FCB8CB29C-low.png"></div><br>
                     </figure>
+
                 </div>
+
             </figure>
+
         </div>
-        <p class="- topic/p p"><strong class="+ topic/ph hi-d/b ph b">Block Transfer Data Exchange between Node1 and Node2:</strong></p>
-        <p class="- topic/p p">To execute the following scenario, kindly activate the Block Transfer feature in the
-            thread MCC configuration as elaborated in the "<a class="- topic/xref xref" href="GUID-C3A4ADD3-79E7-493B-AF3B-2ECFD7BDD424.html">Thread SDK MCC
-                Configuration</a>" section under Common MCC configuration options.</p>
-        <p class="- topic/p p">Follow the below commands to perform a block transfer from Node2 to Node1. </p>
-        <div class="- topic/p p">
-            <pre class="+ topic/pre pr-d/codeblock pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_CM5_R51_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_CM5_R51_VYB"><code><strong class="+ topic/ph hi-d/b ph b">Node1:</strong>
+
+        <p class="p"><strong class="ph b">Block Transfer Data Exchange between Node1 and Node2:</strong></p>
+
+        <p class="p">To execute the following scenario, kindly activate the Block Transfer feature in the
+            thread MCC configuration as elaborated in the "<a class="xref" href="GUID-C3A4ADD3-79E7-493B-AF3B-2ECFD7BDD424.html">Thread SDK MCC Configuration</a>" section under Common MCC configuration options.</p>
+
+        <p class="p">Follow the below commands to perform a block transfer from Node2 to Node1. </p>
+
+        <div class="p">
+            <pre class="pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_CM5_R51_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_CM5_R51_VYB"><!-- --></a><code id="d1133e213" content="Node1:&#xA;&gt; coap start&#xA;&gt; coap resourse test-resource"><strong class="ph b">Node1:</strong>
 &gt; coap start
 &gt; coap resourse test-resource</code></pre>
         </div>
-        <div class="- topic/p p">
-            <pre class="+ topic/pre pr-d/codeblock pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_UVC_V51_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_UVC_V51_VYB"><code><strong class="+ topic/ph hi-d/b ph b">Node2:</strong>
+
+        <div class="p">
+            <pre class="pre codeblock" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_UVC_V51_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__CODEBLOCK_UVC_V51_VYB"><!-- --></a><code id="d1133e221" content="Node2:&#xA;&gt; coap start&#xA;&gt; coap post fda8:6505:5286:466f:3d3b:88ae:c24b:b06 test-resource block-256 1"><strong class="ph b">Node2:</strong>
 &gt; coap start
 &gt; coap post fda8:6505:5286:466f:3d3b:88ae:c24b:b06 test-resource block-256 1</code></pre>
         </div>
-        <div class="- topic/p p">
-            <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_WB2_CV1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_WB2_CV1_VYB">
-                <div class="- topic/p p">
-                    <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_G4D_HV1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_G4D_HV1_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 6-7. <span id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-F144A6DB-2AF2-44BD-959E-48F04E55AFD0" class="fig--title">Node1</span></span></figcaption>
+
+        <div class="p">
+            <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_WB2_CV1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_WB2_CV1_VYB"><!-- --></a>
+                <div class="p">
+                    <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_G4D_HV1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_G4D_HV1_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 7. </span>Node1</div>
                         
-                        <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_H4D_HV1_VYB" src="GUID-27F833C8-3781-41CD-8A39-C1E93271509C-high.png"/></div></div>
+                        <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_H4D_HV1_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_H4D_HV1_VYB" src="GUID-27F833C8-3781-41CD-8A39-C1E93271509C-low.png"></div><br>
                     </figure>
-                    <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_RTR_HV1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_RTR_HV1_VYB">
-                        <div class="- topic/p p">
-                            <figure class="- topic/fig fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_GMK_3V1_VYB" data-ofbid="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_GMK_3V1_VYB"><figcaption class="- topic/title title figcapcenter"><span class="figtitleprefix fig--title-label">Figure 6-8. <span id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__GUID-20503224-7877-4E84-A298-04E001011854" class="fig--title">Node2</span></span></figcaption>
+
+                    <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_RTR_HV1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_RTR_HV1_VYB"><!-- --></a>
+                        <div class="p">
+                            <figure class="fig fignone" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_GMK_3V1_VYB"><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__FIG_GMK_3V1_VYB"><!-- --></a><div class="figcap"><span class="fig--title-label">Figure 8. </span>Node2</div>
                                 
-                                <div class="imagecenter"><div class="imagecenter break break"><img class="- topic/image image imagecenter break break" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_HMK_3V1_VYB" src="GUID-073E7445-0370-4B95-BF71-391F75F5D6A9-high.png"/></div></div>
+                                <br><a name="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_HMK_3V1_VYB"><!-- --></a><div class="imagecenter"><img class="image imagecenter" id="GUID-2F1885D9-077E-42B8-B917-35082652A9A2__IMAGE_HMK_3V1_VYB" src="GUID-073E7445-0370-4B95-BF71-391F75F5D6A9-low.png"></div><br>
                             </figure>
+
                         </div>
+
                     </figure>
+
                 </div>
+
             </figure>
+
         </div>
+
 </div>
-</article></main></div>
-                        
-                        
-                        
-                        
-                        
-                        
-                    </div>
-                    
-                </div>
-            </div>
-            
-            
-            
-        </div> 
-        <div class="mchp_disclaimer"><p class="mchp_disclaimer_text">The online versions of the documents are provided as a courtesy. Verify all content and data in the device’s PDF documentation found on the device product page.</p></div><footer class="navbar navbar-default wh_footer">
-  <div class=" footer-container mx-auto ">
-    <div class="footer">
-  <div class="mchp-wh-footer">
-    <div class="mchp-footer">
-      <div class="mchp-footer-tier1">
-        <div class="spacer"></div>
-        <div class="mchp-footer-container">
-          <div class="mchp-footer-links mchp-social-media-links">
-            <div class="mchp-component-items">
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.facebook.com/pages/Microchip-Technology-Inc/20320981741" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Facebook" src="oxygen-webhelp/template/resources/images/201016-corp-facebook.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.linkedin.com/company/microchip-technology" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip LinkedIn" src="oxygen-webhelp/template/resources/images/201016-corp-linkedin.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://twitter.com/MicrochipTech" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Twitter" src="oxygen-webhelp/template/resources/images/201016-corp-twitter.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.youtube.com/user/MicrochipTechnology" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip YouTube" src="oxygen-webhelp/template/resources/images/201016-corp-youtube.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.instagram.com/microchiptechnologyinc/" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Instagram" src="oxygen-webhelp/template/resources/images/201016-corp-instagram.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.weibo.com/microchiptech" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Weibo" src="oxygen-webhelp/template/resources/images/201016-corp-weibo.png"/>
-                </a>
-              </div>
-              <div class="mchp-component-item">
-                <a class="cmp-image__link" href="https://www.microchip.com/en-us/about/blog" target="_blank">
-                  <img class="cmp-image__image" alt="Microchip Blog" src="oxygen-webhelp/template/resources/images/201016-corp-blog.png"/>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="mchp-footer-links">
-            <div class="mchp-component-items">
-              <div class="mchp-component-item">
-                <div class="link">
-                  <a href="https://www.microchip.com/about-us/contact-us" class="mchp-link__link">Contact</a>
-                  <span class="mchp-link__separator">|</span>
-                </div>
-              </div>
-              <div class="mchp-component-item ">
-                <div class="link">
-                  <a href="https://www.microchip.com/en-us/about/legal-information" class="mchp-link__link">Legal</a>
-                  <span class="mchp-link__separator">|</span>
-                </div>
-              </div>
-              <div class="mchp-component-item ">
-                <div class="link">
-                  <a href="https://www.microchip.com/en-us/about/legal-information/privacy-policy" class="mchp-link__link">Privacy Policy</a>
-                  <span class="mchp-link__separator">|</span>
-                </div>
-              </div>
-              <div class="mchp-component-item ">
-                <div class="link">
-                  <a href="https://www.microchip.com/en-us/about/legal-information/microchip-cookie-statement" class="mchp-link__link">Cookies</a>
-                  <span class="mchp-link__separator">|</span>
-                </div>
-              </div>
-              <div class="mchp-component-item">
-                <div class="link">
-                  <a href="https://careers.microchip.com/" class="mchp-link__link">Careers</a>
-                  <span class="mchp-link__separator"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mchp-footer-newsletter">
-            <div class="cmp-text">
-              <p>Stay on the leading edge with our blog</p>
-            </div>
-            <div class="mchp-button-wrapper">
-              <a role="button" href="https://www.microchip.com/en-us/about/blog" class="mchp-button mchp-button-regular solid">
-                <span class="mchp-button__span">MicroSolutions</span>
-              </a>
-            </div>
-          </div>
-        </div>
-        <div class="graphic">
-          <img src="oxygen-webhelp/template/resources/images/footer-graphic.png"/>
-        </div>
-      </div>
-      <div class="mchp-footer-tier2">
-        <p class="mchp-copyright">© Copyright 1998-2022 Microchip Technology Inc. All rights reserved.</p>
-      </div>
-    </div>
-  </div>
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async="true" src="https://www.googletagmanager.com/gtag/js?id=UA-2724382-19"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];  
-    function gtag(){dataLayer.push(arguments);}  
-    gtag('js', new Date());   
-    gtag('config', 'UA-2724382-19');
-  </script>
+
+<nav role="navigation" class="related-links">
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="GUID-35F8786B-0912-4736-BD9F-7975E01A9D0E.html">Microchip Thread SDK</a></div>
 </div>
-  </div>
-</footer>
-        
-        <div id="go2top" class="d-print-none">
-            <span class="oxy-icon oxy-icon-up"></span>
-        </div>
-        
-        <div id="modal_img_large" class="modal">
-            <span class="close oxy-icon oxy-icon-remove"></span>
-            <div id="modal_img_container"></div>
-            <div id="caption"></div>
-        </div>
-        
-        
-        
-        
-        <script type="text/javascript">_satellite.pageBottom();</script><!-- Adobe Analytics -->
-        </body>
+</nav></article></main></body>
 </html>

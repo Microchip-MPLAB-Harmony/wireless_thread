@@ -4,7 +4,15 @@ The configuration of Thread MCC is categorized into two parts: common configurat
 
 <br />
 
-![](GUID-B7419323-8CAE-4F53-B272-611B77D21788-low.png)
+![](GUID-5B53FEE3-89A8-4D7D-A838-A1CA9CAC3718-low.png)
+
+<br />
+
+Thread Code can be generated as source or library and image below depicts the thread<br /> generation configuration.
+
+<br />
+
+![](GUID-6048E87C-8588-4B53-8456-94D828BB260F-low.png)
 
 <br />
 
@@ -14,13 +22,13 @@ The following image illustrates the role of the device as FTD and the available<
 
 <br />
 
-![](GUID-C98C20C6-0916-42A4-98F2-146BB017A5C4-low.png)
+![](GUID-A75FEB79-E8A0-42A1-BC22-C0B1154BB24F-low.png)
 
 <br />
 
 From the above image FTD configuration details are as follows
 
-**Maximum children**- The maximum number of children supported by the FTD device. The<br /> default number of children supported is 10.
+**Maximum children**- The maximum number of children supported by the FTD device. The<br /> default number of children supported is 20.
 
 **IP Addr Per Child**- The maximum number of supported IPv6 address registrations<br /> per child. The default value is 4.
 
@@ -31,11 +39,7 @@ From the above image FTD configuration details are as follows
 
     The image<br /> below depicts the In Band Commissioning in FTD configuration and its sub<br /> configuration options.
 
-    <br />
-
-    ![](GUID-C06C3599-CAC5-4F9A-B0C0-27ED69FC5E1E-low.png)
-
-    <br />
+    ![](GUID-40DAE592-423A-4416-9AE3-E0E67E50180B-low.png)
 
 
 **Minimal Thread Device\(MTD\) MCC Configuration Options:**
@@ -44,7 +48,7 @@ The following image illustrates the role of the device as MTD and the available<
 
 <br />
 
-![](GUID-656FE0CE-1CE2-47B4-AB2A-9142911E0230-low.png)
+![](GUID-A4D37C04-C252-4E87-A0D9-0B342DB8609F-low.png)
 
 <br />
 
@@ -58,13 +62,9 @@ From the above image MTD configuration details are as follows
 
 -   **Joiner** - Enables Joiner for In Band Commissioning. Default Value is enabled.
 
-    The image below depicts the In Band<br /> Commissioning in MTD configuration and its sub configuration options.
+    The image below depicts the In Band<br /> Commissioning in MTD configuration and its sub configuration<br /> options.
 
-    <br />
-
-    ![](GUID-E3B81FE2-7AF5-4F74-8A6B-BB9A95966D9C-low.png)
-
-    <br />
+    ![](GUID-45397627-D0A0-480C-9EE6-662ACDA59683-low.png)
 
 
 **Common MCC Configuration Options:**
@@ -73,7 +73,7 @@ The following image illustrates the common configuration options for FTD and MTD
 
 <br />
 
-![](GUID-256D99D8-C4FF-42B7-9205-9B3E3EF8CE18-low.png)
+![](GUID-EE08A363-277B-44A4-AE3A-D79A8BD2363C-low.png)
 
 <br />
 
@@ -83,13 +83,19 @@ From the above image common configuration details are as follows
 
 <br />
 
-**Note:** In this current release Thread Log support is available only when CLI is enabled.
+**Note:** The default log level in thread prebuilt Library\(.a\) is set to OT\_LOG\_LEVEL\_DEBUG and dynamic log level control is possible.
 
 <br />
 
 **Enable TCP** - It is a boolean options which enables the TCP service and by default<br /> the option is disabled.
 
 **Coap Block Transfer**- It is a boolean option which enables Coap Block Transfer and<br /> by default the option is disabled.
+
+<br />
+
+**Note:** Coap Block transfer is supported upto 512 bytes of block data only\(block-512\).
+
+<br />
 
 **Radio Co-Processor\(RCP\) MCC Configuration Options:**
 
