@@ -1269,7 +1269,7 @@ def onAttachmentConnected(source, target):
         phy_component_Task_Sym.setReadOnly(True)
         global phy_bmm_large_buffers_Sym
         phy_bmm_large_buffers_Sym = remoteComponent.getSymbolByID("PHY_INTEGER_BMMLARGEBUFFERS")
-        phy_bmm_large_buffers_Sym.setValue(7)
+        phy_bmm_large_buffers_Sym.setValue(9)
         phy_bmm_large_buffers_Sym.setReadOnly(True)
         
     elif (connectID == "OT_DeviceSupportDependency"):

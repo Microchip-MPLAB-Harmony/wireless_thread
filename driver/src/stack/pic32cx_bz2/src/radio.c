@@ -88,7 +88,7 @@ enum
 #define OT_RADIO_2P4GHZ_OQPSK_CHANNEL_MIN 11
 #define OT_RADIO_2P4GHZ_OQPSK_CHANNEL_MAX 26
 
-#define OT_RADIO_RX_BUFFERS_NUM			  5U
+#define OT_RADIO_RX_BUFFERS_NUM			  9U
 
 /* Variable holding the details on frame to be transmitted */
 static otRadioFrame sTransmitFrame;
@@ -594,7 +594,13 @@ void PHY_RxFrameCallback(PHY_FrameInfo_t *rxFrame)
         }
     }
     
+	if(receivedFrame == NULL)
+	{
+		bmm_buffer_free((buffer_t *)rxFrame->buffer_header);
+	}
+	
     otEXPECT(receivedFrame != NULL);
+	
     
     if(rxFrame != NULL)
     {
