@@ -29,20 +29,42 @@ import sys
 import glob
 import ntpath
 
-global FTD_FILE_SYMBOLS
-FTD_FILE_SYMBOLS = []
-global MTD_FILE_SYMBOLS
-MTD_FILE_SYMBOLS = []
+global FTD_HDR_FILE_SYMBOLS
+FTD_HDR_FILE_SYMBOLS = []
+global FTD_SRC_FILE_SYMBOLS
+FTD_SRC_FILE_SYMBOLS = []
+global MTD_HDR_FILE_SYMBOLS
+MTD_HDR_FILE_SYMBOLS = []
+global MTD_SRC_FILE_SYMBOLS
+MTD_SRC_FILE_SYMBOLS = []
+global COMMON_HDR_FILE_SYMBOLS
+COMMON_HDR_FILE_SYMBOLS = []
+global COMMON_SRC_FILE_SYMBOLS
+COMMON_SRC_FILE_SYMBOLS = []
+global PAL_HDR_FILE_SYMBOLS
+PAL_HDR_FILE_SYMBOLS = []
+global PAL_SRC_FILE_SYMBOLS
+PAL_SRC_FILE_SYMBOLS = []
 global RCP_FILE_SYMBOLS
 RCP_FILE_SYMBOLS = []
-global TCPFileSymbls
-TCPFileSymbls = []
+global TCP_HDR_FILE_SYMBOLS
+TCP_HDR_FILE_SYMBOLS = []
+global TCP_SRC_FILE_SYMBOLS
+TCP_SRC_FILE_SYMBOLS = []
 folderpathpos = 0
 fileslistpos  = 1
 # FTD_FILE = 0
 # MTD_FILE = 0
 # RCP_FILE = 0
 TcpEnabled = 0
+
+
+pic32cx_bz2_family = {'PIC32CX1012BZ25048',
+                          'PIC32CX1012BZ25032',
+                          'PIC32CX1012BZ24032',
+                          'WBZ451',
+                          'WBZ450',
+                          } 
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OPEN THREAD FILE GENERATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #-------------------------------------------------------------------------------
@@ -72,7 +94,7 @@ def importIncFile(component,HeaderFiles,incpath,Enable,DeviceType,custompath = '
             incFileSym = component.createFileSymbol(None, None)
         incFileSym.setOverwrite(True)
         incFileSym.setOutputName(file)
-        if 'src' == incpath or 'src/crypto' == incpath:
+        if src_path1 == incpath or src_path2 == incpath:
             incFileSym.setSourcePath(incpath +'/'+ file)
         else:
             incFileSym.setSourcePath('../'+incpath +'/'+ file)
@@ -120,7 +142,7 @@ def importSrcFile(component,SourceFiles,incpath,Enable,DeviceType,custompath = '
             srcFileSym = component.createFileSymbol(Srcfilesym, None)
         srcFileSym.setOverwrite(True)
         srcFileSym.setOutputName(file)
-        if 'src' == incpath or 'src/crypto' == incpath:
+        if src_path1 == incpath or src_path2 == incpath:
             srcFileSym.setSourcePath(incpath+ '/' + file)
         else:
             srcFileSym.setSourcePath('../'+incpath+ '/' + file)
@@ -143,7 +165,8 @@ def importSrcFile(component,SourceFiles,incpath,Enable,DeviceType,custompath = '
 def importfiles(component,includepath,Enable,DeviceType = ''):
     # print("openthread-importfiles")
     # print("DeviceType:"+DeviceType)
-    File_symbols = []
+    Hdr_File_symbols = []
+    Src_File_symbols = []
     for Incpath in includepath:
         # print(Incpath)
         hdrcustompath = ''
@@ -200,16 +223,17 @@ def importfiles(component,includepath,Enable,DeviceType = ''):
                         hdrsymlist = importIncFile(component,headerfiles,incpath,Enable,DeviceType)
                     
                     for hdrsymbl in hdrsymlist:   
-                        File_symbols.append(hdrsymbl)
+                        Hdr_File_symbols.append(hdrsymbl)
                         
                 if sourcefiles != []:
-                    if srccustompath != '':
-                        Srcsymlist = importSrcFile(component,sourcefiles,incpath,Enable,DeviceType,srccustompath)
-                    else:
-                        Srcsymlist = importSrcFile(component,sourcefiles,incpath,Enable,DeviceType)
-                    
-                    for srcsymbl in Srcsymlist:
-                        File_symbols.append(srcsymbl)
+                    # if openthreadlibraryGen.getValue() == False or 'src' == incpath or 'src/crypto' == incpath:
+                        if srccustompath != '':
+                            Srcsymlist = importSrcFile(component,sourcefiles,incpath,Enable,DeviceType,srccustompath)
+                        else:
+                            Srcsymlist = importSrcFile(component,sourcefiles,incpath,Enable,DeviceType)
+                        
+                        for srcsymbl in Srcsymlist:
+                            Src_File_symbols.append(srcsymbl)
             
                 if incsubdir == True:
                     for subrecord in range(len(openthreadfileRecords)):
@@ -247,92 +271,121 @@ def importfiles(component,includepath,Enable,DeviceType = ''):
                                     else:
                                         hdrsymlist = importIncFile(component,headerfiles1,subincpath,Enable,DeviceType)
                                     for hdrsymbl in hdrsymlist:
-                                        File_symbols.append(hdrsymbl)
+                                        Hdr_File_symbols.append(hdrsymbl)
                                         
                                 if sourcefiles1 != []:
-                                    if srccustompath != '':
-                                        Srcsymlist = importSrcFile(component,sourcefiles1,subincpath,Enable,DeviceType,srccustompath)
-                                    else:
-                                        Srcsymlist = importSrcFile(component,sourcefiles1,subincpath,Enable,DeviceType)
-                                    for srcsymbl in Srcsymlist:
-                                        File_symbols.append(srcsymbl)
+                                    # if openthreadlibraryGen.getValue() == False or 'src' == incpath or 'src/crypto' == incpath:
+                                        if srccustompath != '':
+                                            Srcsymlist = importSrcFile(component,sourcefiles1,subincpath,Enable,DeviceType,srccustompath)
+                                        else:
+                                            Srcsymlist = importSrcFile(component,sourcefiles1,subincpath,Enable,DeviceType)
+                                        for srcsymbl in Srcsymlist:
+                                            Src_File_symbols.append(srcsymbl)
                                                                 
-    return File_symbols                                
+    return Hdr_File_symbols,Src_File_symbols                                
 
 
 def Handle_FTD_MTD_RCP_FileSymbls(component,DirPathlist,DeviceType = []):
     
     if DeviceType != []:
         if "FTD" in DeviceType:
-            ftdfilesymb = importfiles(component,DirPathlist,False,DeviceType="FTD")
-            for symb in ftdfilesymb:
-                FTD_FILE_SYMBOLS.append(symb)
+            ftdHdrfilesymb,ftdSrcfilesymb = importfiles(component,DirPathlist,False,DeviceType="FTD")
+            for symb in ftdHdrfilesymb:
+                FTD_HDR_FILE_SYMBOLS.append(symb)
+            for symb in ftdSrcfilesymb:
+                FTD_SRC_FILE_SYMBOLS.append(symb)
         if "MTD" in DeviceType:
-            mtdfilesymb = importfiles(component,DirPathlist,False,DeviceType="MTD")
-            for symb in mtdfilesymb:
-                MTD_FILE_SYMBOLS.append(symb)
+            mtdHdrfilesymb,mtdSrcfilesymb = importfiles(component,DirPathlist,False,DeviceType="MTD")
+            for symb in mtdHdrfilesymb:
+                MTD_HDR_FILE_SYMBOLS.append(symb)
+            for symb in mtdSrcfilesymb:
+                MTD_SRC_FILE_SYMBOLS.append(symb)
         if "RCP" in DeviceType:
-            rcpfilesymb = importfiles(component,DirPathlist,False,DeviceType="RCP")
-            for symb in rcpfilesymb:
+            rcpHdrfilesymb,rcpSrcfilesymb = importfiles(component,DirPathlist,False,DeviceType="RCP")
+            for symb in rcpHdrfilesymb:
+                RCP_FILE_SYMBOLS.append(symb)
+            for symb in rcpSrcfilesymb:
                 RCP_FILE_SYMBOLS.append(symb)
     
 
 def EnableFileSymbls(DeviceType):
     if DeviceType == "FTD":
-        for symbl in FTD_FILE_SYMBOLS:
+        for symbl in FTD_HDR_FILE_SYMBOLS:
             symbl.setEnabled(True)
-        for symbl in MTD_FILE_SYMBOLS:
+        if openthreadlibraryGen.getSelectedKey() == "Source":
+            for symbl in FTD_SRC_FILE_SYMBOLS:
+                symbl.setEnabled(True) 
+            openthreadftdLibraryEnable.setEnabled(False)
+        elif openthreadlibraryGen.getSelectedKey() == "Library":
+            openthreadftdLibraryEnable.setEnabled(True)
+            for symbl in FTD_SRC_FILE_SYMBOLS:
+                symbl.setEnabled(False) 
+        for symbl in MTD_HDR_FILE_SYMBOLS:
             symbl.setEnabled(False)
+        for symbl in MTD_SRC_FILE_SYMBOLS:
+            symbl.setEnabled(False)
+        openthreadmtdLibraryEnable.setEnabled(False)
         for symbl in RCP_FILE_SYMBOLS:
             symbl.setEnabled(False)
     elif DeviceType == "MTD":
-        for symbl in FTD_FILE_SYMBOLS:
+        for symbl in FTD_HDR_FILE_SYMBOLS:
             symbl.setEnabled(False)
-        for symbl in MTD_FILE_SYMBOLS:
+        for symbl in FTD_SRC_FILE_SYMBOLS:
+            symbl.setEnabled(False)
+        openthreadftdLibraryEnable.setEnabled(False)
+        for symbl in MTD_HDR_FILE_SYMBOLS:
             symbl.setEnabled(True)
+        if openthreadlibraryGen.getSelectedKey() == "Source":
+            for symbl in MTD_SRC_FILE_SYMBOLS:
+                symbl.setEnabled(True)
+            openthreadmtdLibraryEnable.setEnabled(False)
+        elif openthreadlibraryGen.getSelectedKey() == "Library":
+            openthreadmtdLibraryEnable.setEnabled(True)
+            for symbl in FTD_SRC_FILE_SYMBOLS:
+                symbl.setEnabled(False) 
+            for symbl in MTD_SRC_FILE_SYMBOLS:
+                symbl.setEnabled(False)
         for symbl in RCP_FILE_SYMBOLS:
             symbl.setEnabled(False)
     elif DeviceType == "RCP":
-        for symbl in FTD_FILE_SYMBOLS:
+        for symbl in FTD_HDR_FILE_SYMBOLS:
             symbl.setEnabled(False)
-        for symbl in MTD_FILE_SYMBOLS:
+        for symbl in FTD_SRC_FILE_SYMBOLS:
             symbl.setEnabled(False)
+        for symbl in MTD_HDR_FILE_SYMBOLS:
+            symbl.setEnabled(False)
+        for symbl in MTD_SRC_FILE_SYMBOLS:
+            symbl.setEnabled(False)
+        openthreadftdLibraryEnable.setEnabled(False)
+        openthreadmtdLibraryEnable.setEnabled(False)
         for symbl in RCP_FILE_SYMBOLS:
             symbl.setEnabled(True)
             
 
 def HandleTcpFileSymbols(Enable):
-    for symbls in TCPFileSymbls:
+    Value = False
+    for symbls in TCP_HDR_FILE_SYMBOLS:
         symbls.setEnabled(Enable)
+    if Enable == True and openthreadlibraryGen.getSelectedKey() == "Source":
+        Value = True
+    for symbls in TCP_SRC_FILE_SYMBOLS:
+        symbls.setEnabled(Value)
+        
+def HandleCommonFileSymbols(Enable):
+    Value = False
+    for symbls in COMMON_HDR_FILE_SYMBOLS:
+        symbls.setEnabled(Enable)
+    
+    if openthreadDevicerole.getValue() == "RCP":
+        Value = True
+    elif Enable == True and openthreadlibraryGen.getSelectedKey() == "Source":
+        Value = True
+    for symbls in COMMON_SRC_FILE_SYMBOLS:
+        symbls.setEnabled(Value)
 
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OPEN THREAD COMPILER HANDLING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #-------------------------------------------------------------------------------
-                
-def PreprocessorMacroConfig(DeviceType):
-    preprocessorMacro = preprocessor_C_Compiler.getValue()
-    # print("preprocessorMacro:",preprocessorMacro)
-    # preprocessor_C_Compiler.setAppend(False, ";")
-    if DeviceType == "FTD":
-        if "OPENTHREAD_MTD" in preprocessorMacro:
-            preprocessorMacro = preprocessorMacro.replace(";OPENTHREAD_MTD",";OPENTHREAD_FTD")
-        elif "OPENTHREAD_FTD" not in preprocessorMacro:
-            preprocessorMacro = preprocessorMacro + ";OPENTHREAD_FTD"
-    elif DeviceType == "MTD":
-        if "OPENTHREAD_FTD" in preprocessorMacro:
-            preprocessorMacro = preprocessorMacro.replace(";OPENTHREAD_FTD",";OPENTHREAD_MTD")
-            # print("preprocessorMacro:",preprocessorMacro)
-        elif "OPENTHREAD_MTD" not in preprocessorMacro:
-            preprocessorMacro = preprocessorMacro + ";OPENTHREAD_MTD"
-    elif DeviceType == "RCP":
-        if "OPENTHREAD_FTD" in preprocessorMacro:
-            preprocessorMacro = preprocessorMacro.replace(";OPENTHREAD_FTD","")
-        elif "OPENTHREAD_MTD" in preprocessorMacro:
-            preprocessorMacro = preprocessorMacro.replace(";OPENTHREAD_MTD","")
-    preprocessor_C_Compiler.setValue(preprocessorMacro)
-    preprocessor_C_Compiler.setEnabled(True)  
-    preprocessor_CPP_Compiler.setValue(preprocessorMacro)
-    preprocessor_CPP_Compiler.setEnabled(True)
 
 
 def setIncPath(component, incPaths):
@@ -361,58 +414,97 @@ def setIncPath(component, incPaths):
 def HandleUsartResourceAllocation(DeviceType,logEnable):
     # componentids = Database.getActiveComponentIDs()
     if DeviceType == "FTD" or DeviceType == "MTD":
-        if (logEnable == True) or (Database.getSymbolValue("THREAD_CLI","OPEN_THREAD_CLI_UART_SYM") == True):#("OPEN_THREAD_CLI" in componentids):
+        if (Database.getSymbolValue("THREAD_CLI","OPEN_THREAD_CLI_UART_SYM") == True):#("OPEN_THREAD_CLI" in componentids):
             # print("HandleUsartResourceAllocation")
+            localComponent.setDependencyEnabled("OT_CONSOLE_dependency", False)
             if openthreadUartConfig.getValue() == False:
                 openthreadUartConfig.setValue(True)
         else:
             openthreadUartConfig.setValue(False)
-    # elif DeviceType == "RCP":
-        # openthreadUartConfig.setValue(False)
+            localComponent.setDependencyEnabled("OT_USART_dependency",False)
+            
+            # if openthreadLogEnable.getValue() == True:
+                # requiredComponent = ["SYS_CONSOLE"]
+                # openthreadUartConfig.setValue(True)
+                # localComponent.setDependencyEnabled("OT_CONSOLE_dependency", True)
+                # if "SYS_CONSOLE" not in componentids: 
+                    # Database.activateComponents(requiredComponent)
+
+
+def HandleLibConfigurationOptions(EnableLibrary):
+    if EnableLibrary == True:
+        openthreadmtdconfigMenu.setVisible(False)
+        openthreadrcpconfigMenu.setVisible(False)
+        openthreadftdconfigMenu.setVisible(False)
+        openthreadTcpEnableConfig.setVisible(False)
+        openthreadCoapBlockEnable.setVisible(False)
+        openthreadloglevelconfig.setVisible(False)
+        openthreadLogEnable.setVisible(True)
+    else:
+        HandleDeviceConfigOptions(openthreadDevicerole.getValue())
+    
 
 
 def HandleDeviceConfigOptions(DeviceType):
     if DeviceType == "FTD":
-        openthreadmtdconfigMenu.setVisible(False)
-        openthreadrcpconfigMenu.setVisible(False)
-        openthreadftdconfigMenu.setVisible(True)
-        openthreadLogEnable.setVisible(True)
-        if openthreadLogEnable.getValue() == True:
-            openthreadloglevelconfig.setVisible(True)
-        if openthreadroleconfig2.getVisible() == True:
-            openthreadcomment1.setVisible(True)
-        else:
-            openthreadcomment1.setVisible(False)
-        openthreadTcpEnableConfig.setVisible(True)
-        openthreadCoapBlockEnable.setVisible(True)
-        Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",False)
+        openthreadlibraryGen.setVisible(True)
+        if openthreadlibraryGen.getSelectedKey() == "Source":
+            openthreadmtdconfigMenu.setVisible(False)
+            openthreadrcpconfigMenu.setVisible(False)
+            openthreadftdconfigMenu.setVisible(True)
+            openthreadLogEnable.setVisible(True)
+            if openthreadLogEnable.getValue() == True:
+                openthreadloglevelconfig.setVisible(True)
+            if openthreadUartParser.getValue() == True:
+                openthreadcomment1.setVisible(True)
+            else:
+                openthreadcomment1.setVisible(False)
+            openthreadTcpEnableConfig.setVisible(True)
+            openthreadCoapBlockEnable.setVisible(True)
+        elif openthreadlibraryGen.getSelectedKey() == "Library":
+            HandleLibConfigurationOptions(True)
+        # Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",True)
            
            
     elif DeviceType == "MTD":
-        openthreadftdconfigMenu.setVisible(False)
-        openthreadrcpconfigMenu.setVisible(False)
-        openthreadmtdconfigMenu.setVisible(True)
-        openthreadLogEnable.setVisible(True)
-        if openthreadLogEnable.getValue() == True:
-            openthreadloglevelconfig.setVisible(True)
-        if openthreadroleconfig2.getVisible() == True:
-            openthreadcomment1.setVisible(True)
-        else:
-            openthreadcomment1.setVisible(False)
-        openthreadTcpEnableConfig.setVisible(True)
-        openthreadCoapBlockEnable.setVisible(True)
-        Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",False)
+        openthreadlibraryGen.setVisible(True)
+        if openthreadlibraryGen.getSelectedKey() == "Source":
+            openthreadftdconfigMenu.setVisible(False)
+            openthreadrcpconfigMenu.setVisible(False)
+            openthreadmtdconfigMenu.setVisible(True)
+            for symb in MTD_OPTION_SYMBOLS:
+                    symb.setVisible(True)
+            if openthreadUartParser.getValue() == True:
+                openthreadmtdsleepEnable.setValue(False)
+                openthreadmtdsleepEnable.setReadOnly(True)
+            if openthreadmtdInBandCommissioningConfig.getValue() == False:
+                openthreadmtdJoinerEnable.setVisible(False)
+            openthreadLogEnable.setVisible(True)
+            if openthreadLogEnable.getValue() == True:
+                openthreadloglevelconfig.setVisible(True)
+            if openthreadUartParser.getValue() == True:
+                openthreadcomment1.setVisible(True)
+            else:
+                openthreadcomment1.setVisible(False)
+            openthreadTcpEnableConfig.setVisible(True)
+            openthreadCoapBlockEnable.setVisible(True)
+        elif openthreadlibraryGen.getSelectedKey() == "Library":
+            HandleLibConfigurationOptions(True)
+            if openthreadUartParser.getValue() == False:
+                for symb in MTD_OPTION_SYMBOLS:
+                    symb.setVisible(False)
+                openthreadmtdconfigMenu.setVisible(True)
+                openthreadmtdsleepEnable.setVisible(True)
+                openthreadmtdsleepEnable.setReadOnly(False)
+        # Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",True)
         
         
     elif DeviceType == "RCP":
-        openthreadftdconfigMenu.setVisible(False)
-        openthreadmtdconfigMenu.setVisible(False)
+        HandleLibConfigurationOptions(True)
+        openthreadlibraryGen.setVisible(False)
         openthreadrcpconfigMenu.setVisible(True)
         openthreadLogEnable.setVisible(False)
-        openthreadloglevelconfig.setVisible(False)
-        openthreadTcpEnableConfig.setVisible(False)
-        openthreadCoapBlockEnable.setVisible(False)
-        Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",True)
+        # Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",True)
         
     #Checks and Handles Usart Resource based on Config
     HandleUsartResourceAllocation(DeviceType,openthreadLogEnable.getValue())
@@ -424,8 +516,10 @@ def openthreadcoreconfigcallback(symbol,event):
     remotesymbol = event["symbol"]
     symbolID = event["id"]
     value = event["value"]
+    global localComponent
+    localComponent = symbol.getComponent()
     # print("openthreadconfigcallback",symbol,event)
-    if symbolID == "OPEN_THREAD_DEVICE_ROLE_CONFIG_1" or symbolID == "OPEN_THREAD_DEVICE_ROLE_CONFIG_2":
+    if symbolID == "OPEN_THREAD_DEVICE_ROLE_CONFIG_1":
         if value == 0:
             openthreadDevicerole.setValue("FTD")
             
@@ -440,11 +534,21 @@ def openthreadcoreconfigcallback(symbol,event):
             HandleDeviceConfigOptions("FTD")
             #Enable File Symbols
             EnableFileSymbls("FTD")
+            if openthreadTcpEnableConfig.getValue() == False:
+                HandleTcpFileSymbols(False)
+            else:
+                HandleTcpFileSymbols(True)
+            HandleCommonFileSymbols(True)
             
         elif value == "MTD":
             HandleDeviceConfigOptions("MTD")
             #Enable File Symbols
             EnableFileSymbls("MTD")
+            if openthreadTcpEnableConfig.getValue() == False:
+                HandleTcpFileSymbols(False)
+            else:
+                HandleTcpFileSymbols(True)
+            HandleCommonFileSymbols(True)
             
         elif value == "RCP":
             HandleDeviceConfigOptions("RCP")
@@ -453,28 +557,52 @@ def openthreadcoreconfigcallback(symbol,event):
             #Enable File Symbols
             EnableFileSymbls("RCP")
             openthreadUartParser.setValue(False)
-                 
+            HandleTcpFileSymbols(False)
+            HandleCommonFileSymbols(True)
+
     
     elif symbolID == "OPEN_THREAD_LOG_SYMBOL":
         if value == True:
             openthreadloglevelconfig.setVisible(True)
             if openthreadUartConfig.getValue() == False:
-                openthreadUartConfig.setValue(True)
+                # openthreadUartConfig.setValue(True)
+                localComponent.setDependencyEnabled("OT_USART_Dependency",False)
+                EnableConsoleDependency()
         elif value == False:
             openthreadloglevelconfig.setVisible(False)
-            HandleUsartResourceAllocation(openthreadDevicerole.getValue(),False)
+            #HandleUsartResourceAllocation(openthreadDevicerole.getValue(),False)
+            localComponent.setDependencyEnabled("OT_CONSOLE_dependency", False)
             
             
     elif symbolID == "OPEN_THREAD_DEVICE_ROLE_CLI_CONFIG":
         # openthreadroleconfig2.setValue(remotesymbol.getSelectedKey())
-        openthreadroleconfig2.setValue(value)
+        openthreadroleconfig1.setValue(Database.getSymbolValue("THREAD_CLI","OPEN_THREAD_DEVICE_ROLE_CLI_CONFIG"))
     
     elif symbolID == "OPEN_THREAD_TCP_ENABLE_CONFIG":
         if value == True:
             HandleTcpFileSymbols(True)
         elif value == False:
             HandleTcpFileSymbols(False)
- 
+
+
+def openthreadFileGenerationCallback(symbol,event):
+    symbolID = event["id"]
+    value = event["value"]
+    global localComponent
+    localComponent = symbol.getComponent()
+    
+    if symbolID == "OPEN_THREAD_LIBRARY_GENERATION":
+        if value == True:
+            HandleLibConfigurationOptions(True)
+            EnableFileSymbls(openthreadDevicerole.getValue())
+            HandleTcpFileSymbols(True)
+            HandleCommonFileSymbols(True)
+        else:
+            HandleLibConfigurationOptions(False)
+            EnableFileSymbls(openthreadDevicerole.getValue())
+            if openthreadTcpEnableConfig.getValue() == False:
+                HandleTcpFileSymbols(False)
+            HandleCommonFileSymbols(True)
  
 ####################################################################################
 ####################System Configuration Callback###################################
@@ -487,20 +615,32 @@ def HandleUsartDependencies(Enable):
     # openthreadAppcData3.setEnabled(Enable)
     openthreadserialparsing.setValue(Enable)
     
+def EnableConsoleDependency():
+    componentids = Database.getActiveComponentIDs()
+    requiredComponent = ["sys_console"]
+    # openthreadUartConfig.setValue(True)
+    localComponent.setDependencyEnabled("OT_CONSOLE_dependency", True)
+    if "sys_console" not in componentids: 
+        Database.activateComponents(requiredComponent)
+    Database.connectDependencies([['OPEN_THREAD','OT_CONSOLE_dependency','sys_console_0','sys_console']])
+
 
 def openthreadSystemconfigcallback(symbol,event):
     # print(symbol,event)
     symbolID = event["id"]
     value = event["value"]
+    global localComponent
+    localComponent = symbol.getComponent()
     componentids = Database.getActiveComponentIDs()
     requiredComponent = ["drv_usart"]
     # print("componentids:",componentids)
     if symbolID == "OPEN_THREAD_UART_SERVICE":
         if value == True:
+            localComponent.setDependencyEnabled("OT_CONSOLE_dependency", False)
             if "drv_usart" not in componentids: 
                 Database.activateComponents(requiredComponent)
             componentids = Database.getActiveComponentIDs()
-            openthread_component.setDependencyEnabled("OT_USART_dependency",True)
+            localComponent.setDependencyEnabled("OT_USART_dependency",True)
             Database.connectDependencies([['OPEN_THREAD','OT_USART_dependency','drv_usart_0','drv_usart']])
             if Database.getSymbolValue("drv_usart","DRV_USART_COMMON_MODE") != "Asynchronous":
                 Database.setSymbolValue("drv_usart", "DRV_USART_COMMON_MODE", "Asynchronous")
@@ -510,12 +650,34 @@ def openthreadSystemconfigcallback(symbol,event):
             # if openthreadroleconfig1.getValue() != "RCP":
             if "drv_usart" in componentids: 
                 Database.deactivateComponents(requiredComponent)
+                print("componentids",componentids)
                 # Database.connectDependencies(["OPEN_THREAD","OT_USART_Dependency","drv_usart","DRV_USART"])
             # openthreadserialparsing.setValue(False)
             HandleUsartDependencies(False)
+            if openthreadLogEnable.getValue() == True:
+                EnableConsoleDependency()
             # else:
                 # openthreadUartConfig.setValue(True)
-    
+    elif symbolID == "SYS_CONSOLE_DEVICE":
+        print("componentids",componentids)
+        if value != "":
+            print("SercomConnectedCallback",value)
+            global uartTxRingBufferSym
+            uartTxRingBufferSym = Database.getComponentByID(value.lower()).getSymbolByID("USART_TX_RING_BUFFER_SIZE")
+            uartTxRingBufferSym.setValue(1024)
+            uartTxRingBufferSym.setReadOnly(True)
+        else:
+            uartTxRingBufferSym.setReadOnly(False)
+        
+    elif symbolID == "SYS_TIME_PLIB":
+        if value != "":
+            global TcPrescalerSymbol
+            TcPrescalerSymbol = Database.getComponentByID(value.lower()).getSymbolByID("TC_CTRLA_PRESCALER")
+            print("Tc0Callback",value)
+            TcPrescalerSymbol.setValue(5)
+            TcPrescalerSymbol.setReadOnly(True)
+        else:
+            TcPrescalerSymbol.setReadOnly(False)
 
 ####################################################################################
 ####################Open Thread Parser Callback###################################
@@ -529,11 +691,11 @@ def openthreadParserUpdateCallback(symbol,event):
     if symbolID == "OPEN_THREAD_CLI_UART_SYM":
         if value == True:
             openthreadcomment1.setVisible(True)
-            openthreadroleconfig1.setVisible(False)
-            openthreadroleconfig2.setVisible(True)
             openthreadUartParser.setValue(True)
+            # openthreadroleconfig1.setValue(Database.getComponentByID("THREAD_CLI").getSymbolByID("OPEN_THREAD_DEVICE_ROLE_CLI_CONFIG").getValue())
+            openthreadroleconfig1.setReadOnly(True)
             # print("openthreadroleconfig2.getKey()",openthreadroleconfig2.getSelectedKey())
-            openthreadDevicerole.setValue(str(openthreadroleconfig2.getSelectedKey()))
+            openthreadDevicerole.setValue(str(openthreadroleconfig1.getSelectedKey()))
             #Disable Sleep Option in MTD config while CLI Enabled
             if openthreadmtdsleepEnable.getValue() == True:
                 openthreadmtdsleepEnable.setValue(False)
@@ -541,9 +703,8 @@ def openthreadParserUpdateCallback(symbol,event):
             
         elif value == False:
             openthreadcomment1.setVisible(False)
-            openthreadroleconfig1.setVisible(True)
-            openthreadroleconfig2.setVisible(False)
             openthreadUartParser.setValue(False)
+            openthreadroleconfig1.setReadOnly(False)
             # print("openthreadroleconfig1.getKey()",openthreadroleconfig1.getSelectedKey())
             openthreadDevicerole.setValue(str(openthreadroleconfig1.getSelectedKey()))
             #Re Enable Sleep Option in MTD config while CLI Disbaled
@@ -557,15 +718,6 @@ def openthreadFtdConfigcallback(symbol,event):
     # print("openthreadFtdConfigcallback",symbol,event)
     symbolID = event["id"]
     value = event["value"]
-    
-    # if symbolID == "OPEN_THREAD_FTD_LOG_SYMBOL":
-        # if value == True:
-            # openthreadftdloglevelconfig.setVisible(True)
-            # if openthreadUartConfig.getValue() == False:
-                # openthreadUartConfig.setValue(True)
-                
-        # elif value == False:
-            # openthreadftdloglevelconfig.setVisible(False)
     
     if symbolID == "OPEN_THREAD_FTD_IN_BAND_COMMISSIONING_CONFIG":
         if value == True:
@@ -604,8 +756,8 @@ def openthreadMtdConfigcallback(symbol,event):
             # openthreadmtdInBandCommissioningConfig.setValue(False)
             # Database.clearSymbolValue("OPEN_THREAD","OPEN_THREAD_MTD_IN_BAND_COMMISSIONING_CONFIG")
             # Database.clearSymbolValue("OPEN_THREAD","OPEN_THREAD_MTD_JOINER_ENABLE")
-            
-
+        
+        
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ File Parsing ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #-------------------------------------------------------------------------------
@@ -622,10 +774,23 @@ def get_script_dir(follow_symlinks=True):
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPONENT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #-------------------------------------------------------------------------------
+global deviceName
+deviceName = Variables.get("__PROCESSOR")
+
 def instantiateComponent(openthread):
     global openthread_component
     openthread_component = openthread
     print("Open Thread driver component")
+    #Disable UART and Log  Dependencies until Parser or Log is enabled
+    openthread.setDependencyEnabled("OT_USART_dependency", False)
+    openthread.setDependencyEnabled("OT_CONSOLE_dependency", False)
+    
+    global src_path1
+    global src_path2
+    if deviceName in pic32cx_bz2_family:
+        src_path1 = 'driver/src/stack/pic32cx_bz2/src'
+        src_path2 = 'driver/src/stack/pic32cx_bz2/src/crypto'
+    
     #Parse open thread File System
     # ParseOpenThreadFileSystem()
     execfile(Module.getPath() + '/driver/config/stack/openthread_filesystem_Parser.py')
@@ -701,22 +866,31 @@ def instantiateComponent(openthread):
     openthreadroleconfig1.setDisplayMode("Description")
     openthreadroleconfig1.setDescription("Open Thread Device Role Configuration")
     openthreadroleconfig1.setVisible(True)
-    # openthreadroleconfig1.setReadOnly(True)
-    openthreadroleconfig1.setDependencies(openthreadcoreconfigcallback,["OPEN_THREAD_DEVICE_ROLE_CONFIG_1"])
+    openthreadroleconfig1.setReadOnly(False)
+    openthreadroleconfig1.setDependencies(openthreadcoreconfigcallback,["OPEN_THREAD_DEVICE_ROLE_CONFIG_1","THREAD_CLI.OPEN_THREAD_DEVICE_ROLE_CLI_CONFIG"])
+    
+    global openthreadlibraryGen
+    openthreadlibraryGen = openthread.createKeyValueSetSymbol("OPEN_THREAD_LIBRARY_GENERATION",openthreadcoreconfig)
+    openthreadlibraryGen.setLabel("Thread Generation")
+    openthreadlibraryGen.addKey("Source","Source","Source")
+    openthreadlibraryGen.addKey("Library","Library","Library")
+    openthreadlibraryGen.setDefaultValue(0)
+    openthreadlibraryGen.setVisible(True)
+    openthreadlibraryGen.setDependencies(openthreadFileGenerationCallback,["OPEN_THREAD_LIBRARY_GENERATION"])
     
     #Cli Device Role Config
-    global openthreadroleconfig2
-    openthreadroleconfig2 = openthread.createKeyValueSetSymbol("OPEN_THREAD_DEVICE_ROLE_CONFIG_2", openthreadcoreconfig)
-    openthreadroleconfig2.setLabel("Device Role")
-    openthreadroleconfig2.addKey("FTD", "FTD", "FTD")
-    openthreadroleconfig2.addKey("MTD", "MTD", "MTD")
-    openthreadroleconfig2.setDefaultValue(0)
-    openthreadroleconfig2.setOutputMode("Value")
-    openthreadroleconfig2.setDisplayMode("Description")
-    openthreadroleconfig2.setDescription("Open Thread Device Role Configuration")
-    openthreadroleconfig2.setVisible(False)
-    openthreadroleconfig2.setReadOnly(True)
-    openthreadroleconfig2.setDependencies(openthreadcoreconfigcallback,["OPEN_THREAD_DEVICE_ROLE_CONFIG_2","THREAD_CLI.OPEN_THREAD_DEVICE_ROLE_CLI_CONFIG"])
+    # global openthreadroleconfig2
+    # openthreadroleconfig2 = openthread.createKeyValueSetSymbol("OPEN_THREAD_DEVICE_ROLE_CONFIG_2", openthreadcoreconfig)
+    # openthreadroleconfig2.setLabel("Device Role")
+    # openthreadroleconfig2.addKey("FTD", "FTD", "FTD")
+    # openthreadroleconfig2.addKey("MTD", "MTD", "MTD")
+    # openthreadroleconfig2.setDefaultValue(0)
+    # openthreadroleconfig2.setOutputMode("Value")
+    # openthreadroleconfig2.setDisplayMode("Description")
+    # openthreadroleconfig2.setDescription("Open Thread Device Role Configuration")
+    # openthreadroleconfig2.setVisible(False)
+    # openthreadroleconfig2.setReadOnly(True)
+    # openthreadroleconfig2.setDependencies(openthreadcoreconfigcallback,["OPEN_THREAD_DEVICE_ROLE_CONFIG_2"])
     
     global openthreadcomment1
     openthreadcomment1 = openthread.createCommentSymbol("OPEN_THREAD_COMMENT_1",openthreadcoreconfig)
@@ -734,6 +908,9 @@ def instantiateComponent(openthread):
     
     execfile(Module.getPath() + '/driver/config/stack/openthread_rcp.py')
     
+   #Enable FTD File Symbols --> Default Role = FTD
+    EnableFileSymbls("FTD")
+    
     #############################################################################
     
     #Device Role Config for FTL
@@ -750,7 +927,7 @@ def instantiateComponent(openthread):
     openthreadUartConfig.setDefaultValue(0)
     openthreadUartConfig.setVisible(False)
     openthreadUartConfig.setDescription("Open Thread System Configuration")
-    openthreadUartConfig.setDependencies(openthreadSystemconfigcallback,["OPEN_THREAD_UART_SERVICE"])
+    openthreadUartConfig.setDependencies(openthreadSystemconfigcallback,["OPEN_THREAD_UART_SERVICE","sys_console_0:SYS_CONSOLE_DEVICE","sys_time:SYS_TIME_PLIB"])
 
 
     global openthreadUartParser
@@ -778,7 +955,7 @@ def instantiateComponent(openthread):
     openthreadLogEnable.setDefaultValue(0)
     openthreadLogEnable.setVisible(True)
     openthreadLogEnable.setDescription("Open Thread Serial Log")
-    # openthreadftdEnable.setDependencies(openthreadParserUpdateCallback,['OPEN_THREAD_UART_PARSER'])
+    openthreadLogEnable.setDependencies(openthreadcoreconfigcallback,['OPEN_THREAD_LOG_SYMBOL'])
     
     global openthreadloglevelconfig
     openthreadloglevelconfig = openthread.createKeyValueSetSymbol("OPEN_THREAD_LOG_LEVEL_CONFIG", openthreadcoreconfig)
@@ -794,7 +971,7 @@ def instantiateComponent(openthread):
     openthreadloglevelconfig.setDisplayMode("Description")
     openthreadloglevelconfig.setDescription("Open Thread Device Role Configuration")
     openthreadloglevelconfig.setVisible(False)
-    openthreadloglevelconfig.setDependencies(openthreadcoreconfigcallback,["OPEN_THREAD_LOG_SYMBOL"])
+    # openthreadloglevelconfig.setDependencies(openthreadcoreconfigcallback,["OPEN_THREAD_LOG_SYMBOL"])
     
     global openthreadTcpEnableConfig
     openthreadTcpEnableConfig = openthread.createBooleanSymbol("OPEN_THREAD_TCP_ENABLE_CONFIG",openthreadcoreconfig)
@@ -838,19 +1015,35 @@ def instantiateComponent(openthread):
                          ['openthread/third_party/mbedtls/repo/library',False],
                          ['openthread/include/openthread',True],
                          ['openthread/examples/platforms/utils',False,["logging_rtt.h","logging_rtt.c"],False],
-                         ['openthread/examples/platforms',False],
-                         ['src',False,[],False,'inc'],
-                         ['src/crypto',False,[],False,'inc/crypto']
+                         ['openthread/examples/platforms',False]
                         ]
     
-    importfiles(openthread,commonincpath,True) 
+    hdrFileSymbls,srcFileSymbls = importfiles(openthread,commonincpath,True) 
     
+    for symb in hdrFileSymbls:
+        COMMON_HDR_FILE_SYMBOLS.append(symb)
+        
+    for symb in srcFileSymbls:
+        COMMON_SRC_FILE_SYMBOLS.append(symb)
+    
+    global palincpath
+    palincpath    =  [['driver/src/stack/pic32cx_bz2/src',False,[],False,'inc','src'],
+                         ['driver/src/stack/pic32cx_bz2/src/crypto',False,[],False,'inc/crypto','src/crypto']
+                     ]
+    
+    hdrFileSymbls,srcFileSymbls = importfiles(openthread,palincpath,True)
+    
+    for symb in hdrFileSymbls:
+        PAL_HDR_FILE_SYMBOLS.append(symb)
+        
+    for symb in srcFileSymbls:
+        PAL_SRC_FILE_SYMBOLS.append(symb)
     
     # Database.setSymbolValue('pic32cx_bz2_devsupport','ZIGBEESTACK_LOADED','OPEN_THREAD')
     
     global openthreadTypesHFile
     openthreadTypesHFile = openthread.createFileSymbol('OPEN_THREAD_TYPES_H',None)
-    openthreadTypesHFile.setSourcePath("/driver/src/stack/types.h")
+    openthreadTypesHFile.setSourcePath("/driver/src/stack/include/types.h")
     openthreadTypesHFile.setOutputName("types.h")
     openthreadTypesHFile.setDestPath('driver/thread/inc')
     openthreadTypesHFile.setProjectPath('config/'+configName+'/driver/thread/inc/types.h')
@@ -861,7 +1054,7 @@ def instantiateComponent(openthread):
     
     global openthreadStringsHFile
     openthreadStringsHFile = openthread.createFileSymbol('OPEN_THREAD_STRINGS_H',None)
-    openthreadStringsHFile.setSourcePath("/driver/src/stack/strings.h")
+    openthreadStringsHFile.setSourcePath("/driver/src/stack/include/strings.h")
     openthreadStringsHFile.setOutputName("strings.h")
     openthreadStringsHFile.setDestPath('driver/thread/inc')
     openthreadStringsHFile.setProjectPath('config/'+configName+'/driver/thread/inc/strings.h')
@@ -881,10 +1074,13 @@ def instantiateComponent(openthread):
                        ['openthread/third_party/tcplp/lib',False]
                       ]
     
-    Tcpfilesymb = importfiles(openthread,TcpIncPath,False)
-    for symbl in Tcpfilesymb:
-        TCPFileSymbls.append(symbl)
-    TCPFileSymbls.extend(TCPFiles)
+    Tcphdrfilesymb,TcpSrcfilesymb = importfiles(openthread,TcpIncPath,False)
+    for symbl in Tcphdrfilesymb:
+        TCP_HDR_FILE_SYMBOLS.append(symbl)
+    TCP_HDR_FILE_SYMBOLS.extend(TCPFiles)
+    
+    for symbl in TcpSrcfilesymb:
+        TCP_SRC_FILE_SYMBOLS.append(symbl)
     
     #############################################################################
     ## Thread FTL Handlings
@@ -1050,27 +1246,13 @@ def onAttachmentConnected(source, target):
     if (connectID == "OT_WolfCrypt_Dependency"):
         # Database.connectDependencies([['lib_crypto', 'LIB_CRYPTO_WOLFCRYPT_Dependency', 'lib_wolfcrypt', 'lib_wolfcrypt']])
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_hw", True)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_md5", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_sha1", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_sha256", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_hmac", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_tdes", False)
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes", True)
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_hw", True)
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_128", True)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_192", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_256", False)
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ecb", True)
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ecb_hw", True)
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_cbc", True)
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_cbc_hw", True)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ctr", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_gcm", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ccm", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_ecc", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_rsa", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_oaep", False)
-        # Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_asn1", False)
         
     elif (connectID == "OT_USART_dependency"):
         if Database.getSymbolValue("drv_usart","DRV_USART_COMMON_MODE") != "Asynchronous":
@@ -1079,8 +1261,16 @@ def onAttachmentConnected(source, target):
         # Database.connectDependencies([['OPEN_THREAD','OT_USART_dependency','drv_usart_0','drv_usart']])
     
     elif (connectID == "OT_802154phy_dependency"):
-        Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_RTOS_TASK",False)
-        Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",False)
+        Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_RTOS_TASK",True)
+        Database.setSymbolValue("IEEE_802154_PHY","CREATE_PHY_SEMAPHORE",True)
+        Database.setSymbolValue("IEEE_802154_PHY","PHY_TASK_PRIORITY",4)
+        global phy_component_Task_Sym
+        phy_component_Task_Sym = remoteComponent.getSymbolByID("PHY_TASK_PRIORITY")
+        phy_component_Task_Sym.setReadOnly(True)
+        global phy_bmm_large_buffers_Sym
+        phy_bmm_large_buffers_Sym = remoteComponent.getSymbolByID("PHY_INTEGER_BMMLARGEBUFFERS")
+        phy_bmm_large_buffers_Sym.setValue(7)
+        phy_bmm_large_buffers_Sym.setReadOnly(True)
         
     elif (connectID == "OT_DeviceSupportDependency"):
         Database.sendMessage(remoteID, "RTC_SUPPORT", {"target":remoteID,
@@ -1090,13 +1280,15 @@ def onAttachmentConnected(source, target):
     
     elif (connectID == "OT_FreeRtosDependency"):
         Database.setSymbolValue("FreeRTOS","FREERTOS_USE_TIMERS",True)
+        Database.setSymbolValue("FreeRTOS","FREERTOS_TOTAL_HEAP_SIZE",46080)
+        
         
     elif (connectID == "openthread_Capability"):
         # print("Openthread Capability")
         componentids = Database.getActiveComponentIDs()
         # print("componentids:",componentids)
         if "THREAD_CLI" in componentids:
-            openthreadroleconfig2.setValue(Database.getComponentByID("THREAD_CLI").getSymbolByID("OPEN_THREAD_DEVICE_ROLE_CLI_CONFIG").getValue())
+            openthreadroleconfig1.setValue(Database.getSymbolValue("THREAD_CLI","OPEN_THREAD_DEVICE_ROLE_CLI_CONFIG"))
 
 
 def onAttachmentDisconnected(source, target):
@@ -1119,7 +1311,12 @@ def finalizeComponent(openthread):
 
 def destroyComponent(openthread):
     requiredComponents.extend(["drv_usart","THREAD_CLI"])
-    Database.deactivateComponents(requiredComponents)
+    phy_component_Task_Sym.setReadOnly(False)
+    phy_bmm_large_buffers_Sym.setReadOnly(False)
+    uartTxRingBufferSym.setReadOnly(False)
+    TcPrescalerSymbol.setReadOnly(False)
+    for comp in requiredComponents:
+        Database.deactivateComponents([comp])
     
     
 def handleMessage(messageID, args):

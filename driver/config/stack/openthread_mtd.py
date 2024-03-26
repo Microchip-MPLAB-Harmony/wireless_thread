@@ -66,6 +66,8 @@ Handle_FTD_MTD_RCP_FileSymbls(openthread,coreincpath_mtd,["MTD"])#["FTD","MTD"])
 # mtdconfigincpath   = [["examples/config/mtd",False,['ot_tasks.c'],False,"config","src"]] #Default configuration
 
 # Handle_FTD_MTD_RCP_FileSymbls(openthread,mtdconfigincpath,["MTD"])
+global MTD_OPTION_SYMBOLS
+MTD_OPTION_SYMBOLS = []
 
 global openthreadmtdconfigMenu
 openthreadmtdconfigMenu = openthread.createMenuSymbol("OPEN_THREAD_MTD_MENU_SYMBOL", openthreadcoreconfig)
@@ -123,6 +125,13 @@ openthreadmtdJoinerEnable.setDescription("Open Thread Joiner Enable")
 # openthreadmtdCommissionerEnable.setVisible(False)
 # openthreadmtdCommissionerEnable.setDescription("Open Thread Commssioner Enable")
 
+global openthreadmtdLibraryEnable
+openthreadmtdLibraryEnable = openthread.createLibrarySymbol("OPEN_THREAD_MTD_LIB_ENABLE",None)
+openthreadmtdLibraryEnable.setDestPath("/driver/lib")
+openthreadmtdLibraryEnable.setSourcePath("/driver/src/stack/pic32cx_bz2/lib/lib-OpenThread_MTD.a")
+openthreadmtdLibraryEnable.setOutputName("lib-OpenThread_MTD.a")
+openthreadmtdLibraryEnable.setEnabled(False)
+
 global mtdconfigfilesym
 mtdconfigfilesym = openthread.createFileSymbol('MTD_OPEN_THREAD_CONFIG',None)
 mtdconfigfilesym.setSourcePath("/driver/templates/stack/openthread_stack_config_mtd.h.ftl")
@@ -134,4 +143,7 @@ mtdconfigfilesym.setOverwrite(True)
 mtdconfigfilesym.setMarkup(True)
 mtdconfigfilesym.setEnabled(False)
 
-MTD_FILE_SYMBOLS.append(mtdconfigfilesym)
+MTD_HDR_FILE_SYMBOLS.append(mtdconfigfilesym)
+# MTD_FILE_SYMBOLS.append(openthreadmtdLibraryEnable)
+
+MTD_OPTION_SYMBOLS.extend([openthreadmtdsleepEnable,openthreadmtdMleChildTimeout,openthreadmtdInBandCommissioningConfig,openthreadmtdJoinerEnable])

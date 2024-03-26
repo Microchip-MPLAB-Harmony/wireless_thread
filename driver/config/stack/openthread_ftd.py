@@ -73,7 +73,7 @@ openthreadftdconfigMenu.setVisible(True)
 global openthreadftdMleMaxChildconfig
 openthreadftdMleMaxChildconfig = openthread.createIntegerSymbol("OPEN_THREAD_FTD_MLE_MAX_CHILD_CONFIG",openthreadftdconfigMenu)
 openthreadftdMleMaxChildconfig.setLabel("Maximum children")
-openthreadftdMleMaxChildconfig.setDefaultValue(10)
+openthreadftdMleMaxChildconfig.setDefaultValue(20)
 openthreadftdMleMaxChildconfig.setMin(10)
 openthreadftdMleMaxChildconfig.setMax(32)
 openthreadftdMleMaxChildconfig.setVisible(True)
@@ -122,6 +122,14 @@ openthreadftdCommissionerEnable.setDefaultValue(0)
 openthreadftdCommissionerEnable.setVisible(False)
 openthreadftdCommissionerEnable.setDescription("Open Thread Commssioner Enable")
 
+
+global openthreadftdLibraryEnable
+openthreadftdLibraryEnable = openthread.createLibrarySymbol("OPEN_THREAD_FTD_LIB_ENABLE",None)
+openthreadftdLibraryEnable.setDestPath("/driver/lib")
+openthreadftdLibraryEnable.setSourcePath("/driver/src/stack/pic32cx_bz2/lib/lib-OpenThread_FTD.a")
+openthreadftdLibraryEnable.setOutputName("lib-OpenThread_FTD.a")
+openthreadftdLibraryEnable.setEnabled(False)
+
 global ftdconfigfilesym
 ftdconfigfilesym = openthread.createFileSymbol('FTD_OPEN_THREAD_CONFIG',None)
 ftdconfigfilesym.setSourcePath("/driver/templates/stack/openthread_stack_config_ftd.h.ftl")
@@ -133,8 +141,6 @@ ftdconfigfilesym.setOverwrite(True)
 ftdconfigfilesym.setMarkup(True)
 ftdconfigfilesym.setEnabled(False)
 
-FTD_FILE_SYMBOLS.append(ftdconfigfilesym)
+FTD_HDR_FILE_SYMBOLS.append(ftdconfigfilesym)
+# FTD_FILE_SYMBOLS.append(openthreadftdLibraryEnable)
 
-
-#Enable FTD File Symbols --> Default Role = FTD
-EnableFileSymbls("FTD")

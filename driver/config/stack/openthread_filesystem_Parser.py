@@ -27,8 +27,6 @@ openthreadfileRecords = []
 #Absolute paths to Parse through the repo
 global abs_paths
 abs_paths = [
-             'src',
-             'src/crypto',
              'openthread/include/openthread',
              'openthread/include/openthread/platform',
              'openthread/src/cli',
@@ -68,6 +66,11 @@ abs_paths = [
              'openthread/examples/apps/ncp' 
              
             ]
+global plat_abs_path
+plat_abs_path = [
+                    'driver/src/stack/pic32cx_bz2/src',
+                    'driver/src/stack/pic32cx_bz2/src/crypto'
+                ]
       
 
 #-------------------------------------------------------------------------------
@@ -105,11 +108,7 @@ if openthreadfileRecords == []:
     wirelessthreadDir = get_script_dir() + "/../../../"
     thirdpartyopenthreadDir = get_script_dir() + "/../../../../"
     for path in abs_paths:
-        if path == 'src' or path == 'src/crypto':
-            openthread_include =  wirelessthreadDir + path
-            # print("openthread_include",openthread_include)
-        else:
-            openthread_include =  thirdpartyopenthreadDir + path
+        openthread_include =  thirdpartyopenthreadDir + path
             # print("openthread_include",openthread_include)
         files = get_file_names(openthread_include)
         # print("Global Executed",files)
@@ -117,10 +116,19 @@ if openthreadfileRecords == []:
         localDirList.append(path)
         localDirList.append(files)
         openthreadfileRecords.append(localDirList)
-    
-    # for i in range(len(openthreadfileRecords)):
-        # print(openthreadfileRecords[i])
-        # print('\n')
+        
+    for path in plat_abs_path:
+        openthread_include =  wirelessthreadDir + path
+        files = get_file_names(openthread_include)
+        # print("Global Executed",files)
+        localDirList = []
+        localDirList.append(path)
+        localDirList.append(files)
+        openthreadfileRecords.append(localDirList)
+
+    for i in range(len(openthreadfileRecords)):
+        print(openthreadfileRecords[i])
+        print('\n')
 
 
 

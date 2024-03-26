@@ -41,6 +41,7 @@ def loadModule():
         openthread.addDependency('OT_802154phy_dependency', 'IEEE 802.15.4 PHY', 'IEEE 802.15.4 PHY', True, True)
         openthread.addDependency("OT_WolfCrypt_Dependency", "LIB_WOLFCRYPT", None, False, True)
         openthread.addDependency("OT_USART_dependency", "DRV_USART", 'Thread USART', False, False)
+        openthread.addDependency("OT_CONSOLE_dependency", "SYS_CONSOLE", 'Thread Log', False, True)
         openthread.addDependency('OT_SysTimeDependency', 'SYS_TIME', 'SYS_TIME', True, True)
         openthread.addDependency('OT_FreeRtosDependency', 'RTOS', 'RTOS', True, True)
         openthread.addDependency('OT_HarmonyCoreDependency', 'Core Service', 'Core', True, True)

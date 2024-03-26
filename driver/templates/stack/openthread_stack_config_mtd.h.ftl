@@ -51,8 +51,8 @@
  *******************************************************************************/
 
 
-#ifndef _PREINCLUDE_H    /* Guard against multiple inclusion */
-#define _PREINCLUDE_H
+#ifndef _STACKCONFIG_H    /* Guard against multiple inclusion */
+#define _STACKCONFIG_H
 
 
 /* ************************************************************************** */
@@ -104,7 +104,7 @@ extern "C" {
  
 //#define OT_PLATFORM                                                  (external)
 #define PACKAGE_NAME                                                 "OPENTHREAD"
-#define PACKAGE_VERSION                                              "mchp_harmony_wireless_thread_v1.0.0"
+#define PACKAGE_VERSION                                              "thread-reference-20230706"
 
 #define OPENTHREAD_CONFIG_FILE                                       "openthread-core-pic32cx-config.h"
 #define OPENTHREAD_CORE_CONFIG_PLATFORM_CHECK_FILE                   "openthread-core-pic32cx-config-check.h"
@@ -122,6 +122,7 @@ extern "C" {
 #define OPENTHREAD_CONFIG_THREAD_VERSION                             (OT_THREAD_VERSION_1_3)
 #define OPENTHREAD_CONFIG_COAP_API_ENABLE                            (1)
 #define OPENTHREAD_CONFIG_COAP_BLOCKWISE_TRANSFER_ENABLE             (1)
+#define OPENTHREAD_CONFIG_COAP_MAX_BLOCK_LENGTH                      (512)
 #define OPENTHREAD_CONFIG_COAP_SECURE_API_ENABLE                     (1)
 #define OPENTHREAD_CONFIG_MAC_DEFAULT_MAX_FRAME_RETRIES_INDIRECT     (1)
 #define OPENTHREAD_CONFIG_MLE_STEERING_DATA_SET_OOB_ENABLE           (1)
@@ -131,26 +132,30 @@ extern "C" {
 #define OPENTHREAD_CONFIG_MAC_ATTACH_DATA_POLL_PERIOD                500
 #define OPENTHREAD_CONFIG_MAC_SOFTWARE_TX_SECURITY_ENABLE            (1) 
 #define OPENTHREAD_CONFIG_MAC_SOFTWARE_TX_TIMING_ENABLE              (1)
-<#if OPEN_THREAD_COAP_BLOCK_TRANSFER_ENABLE == true>
-#define OPENTHREAD_CONFIG_MESSAGE_BUFFER_SIZE                        (sizeof(void *) * 64)
-</#if>
+#define OPENTHREAD_CONFIG_MAC_SOFTWARE_RX_TIMING_ENABLE              (1)
+#define OPENTHREAD_CONFIG_TMF_NETDATA_SERVICE_ENABLE                 (1)
 <#if OPEN_THREAD_DEVICE_ROLE == "FTD" || OPEN_THREAD_DEVICE_ROLE == "MTD">
 <#if OPEN_THREAD_UART_PARSER == true>
 #define OPENTHREAD_CONFIG_CLI_UART_TX_BUFFER_SIZE                    (2048)
-#define OPENTHREAD_CONFIG_CLI_UART_RX_BUFFER_SIZE                    (512)
 </#if>
 </#if>
 
 
 #define OPENTHREAD_MTD                                               (1)
-<#if OPEN_THREAD_LOG_SYMBOL == true>
-#define OPENTHREAD_CONFIG_LOG_LEVEL                                  (${OPEN_THREAD_LOG_LEVEL_CONFIG})
-</#if>
+#define OPENTHREAD_CONFIG_LOG_MAX_SIZE                               (512)
+#define OPENTHREAD_CONFIG_LOG_LEVEL_DYNAMIC_ENABLE                   (1)
 <#if (OPEN_THREAD_UART_PARSER == true) && (OPEN_THREAD_LOG_SYMBOL == true)>
 #define OPENTHREAD_CONFIG_LOG_OUTPUT                                 (OPENTHREAD_CONFIG_LOG_OUTPUT_APP)
+<#elseif OPEN_THREAD_LOG_SYMBOL == true>
+#define OPEN_THREAD_LOG_ENABLED                                      (1)
 </#if>
-<#if OPEN_THREAD_UART_SERVICE == true>
-#define OPEN_THREAD_UART_ENABLE                                      (1)
+<#if OPEN_THREAD_LIBRARY_GENERATION == "Library">
+#define OPENTHREAD_CONFIG_MLE_CHILD_TIMEOUT_DEFAULT                  (240)
+#define OPENTHREAD_CONFIG_JOINER_ENABLE                              (1)
+#define OPENTHREAD_CONFIG_TCP_ENABLE                                 (1)
+<#else>
+<#if OPEN_THREAD_LOG_SYMBOL == true>
+#define OPENTHREAD_CONFIG_LOG_LEVEL                                  (${OPEN_THREAD_LOG_LEVEL_CONFIG})
 </#if>
 <#if OPEN_THREAD_MTD_MLE_CHILD_TIMEOUT??>
 #define OPENTHREAD_CONFIG_MLE_CHILD_TIMEOUT_DEFAULT                  (${OPEN_THREAD_MTD_MLE_CHILD_TIMEOUT})
@@ -168,6 +173,19 @@ extern "C" {
 </#if>
 </#if>
 
+</#if>
+
+<#if OPEN_THREAD_UART_SERVICE == true>
+#define OPEN_THREAD_UART_ENABLE                                      (1)
+</#if>
+#define SYS_PDS_NUM_MAX_CHILDREN_ENTRY                               (1)
+#define OPENTHREAD_CONFIG_MAC_CSL_RECEIVER_ENABLE                    (1)
+#define OPENTHREAD_CONFIG_PLATFORM_USEC_TIMER_ENABLE                 (1)
+
+#define OPENTHREAD_CONFIG_DHCP6_CLIENT_ENABLE                       (1)              
+#define OPENTHREAD_CONFIG_DUA_ENABLE                                (1) 
+#define OPENTHREAD_CONFIG_MLR_ENABLE                                (1)
+#define OPENTHREAD_CONFIG_DNS_CLIENT_ENABLE                         (1)
 
 
     /* Provide C++ Compatibility */
@@ -175,7 +193,7 @@ extern "C" {
 }
 #endif
 
-#endif /* _PREINCLUDE_H */
+#endif /* _STACKCONFIG_H */
 
 /* *****************************************************************************
  End of File
