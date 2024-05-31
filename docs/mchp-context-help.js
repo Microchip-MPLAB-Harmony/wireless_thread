@@ -1,4 +1,4 @@
-( function() {  var mapping = [];
+( function() {  var mapping = [{"appname":"", "appid":"TRD_UDP_DEMO", "path":"GUID-453F8414-5A8C-40F7-839B-E4630ED876B2.html"}];
             var mchp = (function (mchp) {
                 var mchp = mchp || {};
                 var mapping = [];

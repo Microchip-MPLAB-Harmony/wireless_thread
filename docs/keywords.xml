@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <keywords publicationid="GUID-2DB248AF-C243-496D-9819-969E43CA63BC"
           language="en-US"
-          version="2"
+          version="3"
           documenttitle="MicrohipThread SDK"
           pubtype="Online Reference"
           pubsubtype=""
           pubuserguidesubtype=""
           pubproducthierarchy=""
           devices=""
-          revisiondate="22/01/2024 00:00:00"
-          revisionletter="2"
+          revisiondate="27/05/2024 00:00:00"
+          revisionletter="3"
           isbn=""
           pubid=""
           reachid=""
           description=""
-          lastmodified="09/02/2024 07:20:52"
+          lastmodified="27/05/2024 09:04:06"
           covertitle="Microchip Thread SDK"
-          frontcover=""/>
+          frontcover="">
+   <keyworditem topicid="GUID-453F8414-5A8C-40F7-839B-E4630ED876B2"
+                nocomponent="true"
+                parent="">
+      <device/>
+      <module/>
+      <component/>
+      <register>Introduction</register>
+      <title>Introduction</title>
+      <bitfield/>
+      <keyword>TRD_UDP_DEMO</keyword>
+   </keyworditem>
+</keywords>
