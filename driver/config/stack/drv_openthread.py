@@ -64,6 +64,7 @@ pic32cx_bz2_family = {'PIC32CX1012BZ25048',
                           'PIC32CX1012BZ24032',
                           'WBZ451',
                           'WBZ450',
+                          'WBZ451H',
                           } 
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OPEN THREAD FILE GENERATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -808,16 +809,17 @@ def instantiateComponent(openthread):
     # print configName
     
     global requiredComponents
-    requiredComponents = [
-        "IEEE_802154_PHY",
-        "sys_time",
-        "FreeRTOS",
-        "trng",
-        "rcon",
-        "lib_wolfcrypt",
-        "pic32cx_bz2_devsupport",
-        "lib_crypto"
-    ]
+    if (deviceName in pic32cx_bz2_family):
+         requiredComponents = [
+             "IEEE_802154_PHY",
+             "sys_time",
+             "FreeRTOS",
+             "trng",
+             "rcon",
+             "lib_wolfcrypt",
+             "pic32cx_bz2_devsupport",
+             "lib_crypto"
+         ]
     
     for component in requiredComponents:
         res = Database.activateComponents([component])
@@ -1304,9 +1306,9 @@ def onAttachmentDisconnected(source, target):
 
 def finalizeComponent(openthread):
     # pass
-    result = Database.connectDependencies([['OPEN_THREAD', 'OT_WolfCrypt_Dependency', 'lib_wolfcrypt', 'lib_wolfcrypt']])
-    result = Database.connectDependencies([['lib_crypto', 'LIB_CRYPTO_WOLFCRYPT_Dependency', 'lib_wolfcrypt', 'lib_wolfcrypt']])
-
+    if (deviceName in pic32cx_bz2_family):
+         result = Database.connectDependencies([['OPEN_THREAD', 'OT_WolfCrypt_Dependency', 'lib_wolfcrypt', 'lib_wolfcrypt']])
+         result = Database.connectDependencies([['lib_crypto', 'LIB_CRYPTO_WOLFCRYPT_Dependency', 'lib_wolfcrypt', 'lib_wolfcrypt']])
 
 
 def destroyComponent(openthread):

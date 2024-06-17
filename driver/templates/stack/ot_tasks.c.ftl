@@ -60,6 +60,7 @@
 #include "configuration.h"
 #include "definitions.h"
 #include "platform-pic32cx.h"
+#include "ot_tasks.h"
 
 #include <assert.h>
 #include <openthread-core-config.h>
@@ -77,9 +78,6 @@
 // Section: RTOS "Tasks" Routine
 // *****************************************************************************
 // *****************************************************************************
-
-void taskOpenThread(void *pvParam);
-bool otIsIdle(void);
 
 TaskHandle_t taskHandleOpenThread;
 

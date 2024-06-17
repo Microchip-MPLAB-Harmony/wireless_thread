@@ -29,6 +29,7 @@ def loadModule():
                           'PIC32CX1012BZ24032',
                           'WBZ451',
                           'WBZ450',
+                          'WBZ451H',
                           } 
                           
     processor = Variables.get('__PROCESSOR') 
