@@ -747,9 +747,13 @@ def openthreadMtdConfigcallback(symbol,event):
             
     elif symbolID == "OPEN_THREAD_MTD_SLEEP_ENABLE":
         if value == True:
-            Database.setSymbolValue("pic32cx_bz2_devsupport","ENABLE_DEEP_SLEEP",True)
+            if (deviceName in pic32cx_bz2_family):
+                Database.sendMessage("pic32cx_bz2_devsupport", "DEEP_SLEEP_ENABLE", {"target": "pic32cx_bz2_devsupport",
+                                                        "source": "OPEN_THREAD","isEnabled":True})
         elif value == False:
-            Database.setSymbolValue("pic32cx_bz2_devsupport","ENABLE_DEEP_SLEEP",False)
+            if (deviceName in pic32cx_bz2_family):
+                Database.sendMessage("pic32cx_bz2_devsupport", "DEEP_SLEEP_ENABLE", {"target": "pic32cx_bz2_devsupport",
+                                                        "source": "OPEN_THREAD","isEnabled":False})
             
     # elif symbolID == "OPEN_THREAD_MTD_JOINER_ENABLE":
         # if value == False:
