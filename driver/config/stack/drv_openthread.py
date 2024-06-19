@@ -535,7 +535,7 @@ def openthreadcoreconfigcallback(symbol,event):
             HandleDeviceConfigOptions("FTD")
             #Enable File Symbols
             EnableFileSymbls("FTD")
-            if openthreadTcpEnableConfig.getValue() == False:
+            if (openthreadTcpEnableConfig.getValue() == False) and (openthreadlibraryGen.getValue() == 0):
                 HandleTcpFileSymbols(False)
             else:
                 HandleTcpFileSymbols(True)
@@ -545,7 +545,7 @@ def openthreadcoreconfigcallback(symbol,event):
             HandleDeviceConfigOptions("MTD")
             #Enable File Symbols
             EnableFileSymbls("MTD")
-            if openthreadTcpEnableConfig.getValue() == False:
+            if (openthreadTcpEnableConfig.getValue() == False) and (openthreadlibraryGen.getValue() == 0):
                 HandleTcpFileSymbols(False)
             else:
                 HandleTcpFileSymbols(True)
