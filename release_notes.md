@@ -8,7 +8,12 @@
 ### Features
 
 -  Support for WBZ451H high power module
--  General bug fixes of Thread SDK.
+-  Files generation enhancement of Thread MCC component.
+
+|    Role  |       Library       |    CID   |Thread Specification Version | Platform  |                                                        Openthread Tag                                                     |
+|----------|---------------------|----------|-----------------------------|-----------|---------------------------------------------------------------------------------------------------------------------------|
+|    FTD   | lib-OpenThread_FTD.a|  13A247  |           v1.3.0            |  WBZ451H  | [thread-reference-20230706](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/thread-reference-20230706) |
+|    MTD   | lib-OpenThread_MTD.a|  13A248  |           v1.3.0            |  WBZ451H  | [thread-reference-20230706](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/thread-reference-20230706) |
 
 ## Development Tools
 -   [MPLAB X v6.20 or later](https://www.microchip.com/mplab/mplab-x-ide)
