@@ -8,6 +8,7 @@
 ### Features
 
 -  Support for WBZ451H high power module
+-  Thread v1.3.0 Certified library for FTD and MTD with [openthread](https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/thread-reference-20230706).
 -  Files generation enhancement of Thread MCC component.
 
 |    Role  |       Library       |    CID   |Thread Specification Version | Platform  |                                                        Openthread Tag                                                     |
