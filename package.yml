@@ -4,13 +4,13 @@ package:
   type: "package"
   status: "production"
   required: false
-  version: "v1.2.0"
+  version: "v1.3.0"
 
   dependencies:
     - name: "wireless_15_4_phy"
       type: "package"
-      version: "v1.3.0" 
+      version: "v1.4.0-rc.1" 
     - name: "openthread"
       type: "package"
-      version: "thread-reference-20230706"
+      version: "OT_v1.4.0_RC1"
 

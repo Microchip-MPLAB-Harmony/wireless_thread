@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (C) [2024], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+# Copyright (C) [2025], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
 # The software and documentation is provided by Microchip and its contributors 
 # "as is" and any express, implied or statutory warranties, including, but not 
@@ -39,6 +39,7 @@ abs_paths = [
              'openthread/src/core/config',
              'openthread/src/core/crypto',
              'openthread/src/core/diags',
+             'openthread/src/core/instance',
              'openthread/src/core/mac',
              'openthread/src/core/meshcop',
              'openthread/src/core/net',
@@ -49,7 +50,9 @@ abs_paths = [
              'openthread/src/lib/platform',
              'openthread/src/lib/spinel',
              'openthread/src/lib/url',
+             'openthread/src/lib/utils',
              'openthread/src/ncp',
+             'openthread/src/ncp/platform',
              'openthread/third_party/mbedtls',
              'openthread/third_party/mbedtls/repo/configs',
              'openthread/third_party/mbedtls/repo/include/mbedtls',
@@ -68,8 +71,8 @@ abs_paths = [
             ]
 global plat_abs_path
 plat_abs_path = [
-                    'driver/src/stack/pic32cx_bz2/src',
-                    'driver/src/stack/pic32cx_bz2/src/crypto'
+                    'driver/src/stack/src',
+                    'driver/src/stack/src/crypto'
                 ]
       
 
@@ -81,8 +84,12 @@ def get_file_names(path):
     files = []
     c_files = glob.glob(path + "/*.c")
     # print("c_files",c_files)
+    c_ftl_files = glob.glob(path + "/*.c.ftl")
+    # print("c_ftl_files",c_ftl_files)
     h_files = glob.glob(path + "/*.h")
     # print("h_files",h_files)
+    h_ftl_files = glob.glob(path + "/*.h.ftl")
+    # print("h_ftl_files",h_ftl_files)
     cpp_files = glob.glob(path + "/*.cpp")
     # print("cpp_files",cpp_files)
     hpp_files = glob.glob(path + "/*.hpp")
@@ -90,7 +97,13 @@ def get_file_names(path):
     for file in c_files:
         filename = ntpath.basename(file)
         files.append(filename)
+    for file in c_ftl_files:
+        filename = ntpath.basename(file)
+        files.append(filename)
     for file in h_files:
+        filename = ntpath.basename(file)
+        files.append(filename)
+    for file in h_ftl_files:
         filename = ntpath.basename(file)
         files.append(filename)
     for file in cpp_files:

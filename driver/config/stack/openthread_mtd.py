@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (C) [2024], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+# Copyright (C) [2025], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
 # The software and documentation is provided by Microchip and its contributors 
 # "as is" and any express, implied or statutory warranties, including, but not 
@@ -40,7 +40,7 @@
 #FTD,MTD File includes paths
 # global coreincpath_ftd_mtd
 global coreincpath_mtd
-coreincpath_mtd   = [['openthread/src/core/common',False,["extension_example.cpp"],False],
+coreincpath_mtd   = [['openthread/src/core/common',False],
                          ['openthread/src/core/api',False],
                          ['openthread/src/core/backbone_router',False],
                          ['openthread/src/core/border_router',False,["routing_manager.hpp"],True],
@@ -48,6 +48,7 @@ coreincpath_mtd   = [['openthread/src/core/common',False,["extension_example.cpp
                          ['openthread/src/core/config',False],
                          ['openthread/src/core/crypto',False],
                          ['openthread/src/core/diags',False],
+                         ['openthread/src/core/instance',False,["extension_example.cpp"],False],
                          ['openthread/src/core/mac',False],
                          ['openthread/src/core/meshcop',False],
                          ['openthread/src/core/net',False],
@@ -128,7 +129,7 @@ openthreadmtdJoinerEnable.setDescription("Open Thread Joiner Enable")
 global openthreadmtdLibraryEnable
 openthreadmtdLibraryEnable = openthread.createLibrarySymbol("OPEN_THREAD_MTD_LIB_ENABLE",None)
 openthreadmtdLibraryEnable.setDestPath("/driver/lib")
-openthreadmtdLibraryEnable.setSourcePath("/driver/src/stack/pic32cx_bz2/lib/lib-OpenThread_MTD.a")
+openthreadmtdLibraryEnable.setSourcePath("/driver/src/stack/lib/lib-OpenThread_MTD.a")
 openthreadmtdLibraryEnable.setOutputName("lib-OpenThread_MTD.a")
 openthreadmtdLibraryEnable.setEnabled(False)
 

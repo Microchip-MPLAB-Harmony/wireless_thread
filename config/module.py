@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (C) [2024], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+# Copyright (C) [2025], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
 # The software and documentation is provided by Microchip and its contributors 
 # "as is" and any express, implied or statutory warranties, including, but not 
@@ -30,30 +30,31 @@ def loadModule():
                           'WBZ451',
                           'WBZ450',
                           'WBZ451H'
-                          } 
-                          
+                          }
+    pic32cx_bz3_family = {'PIC32CX5109BZ31048',
+                          'PIC32CX5109BZ31032',
+                          'WBZ351',
+                          'WBZ350'
+                          }
+
     processor = Variables.get('__PROCESSOR') 
     
     print('processor={}'.format(processor))
-                          
-    if (processor in pic32cx_bz2_family):                      
-        openthread  = Module.CreateComponent('OPEN_THREAD', 'Thread Stack', 'Wireless/Drivers/Thread', 'driver/config/stack/drv_openthread.py')
-        openthread.setDisplayType('Thread SDK Driver')
-        openthread.addDependency('OT_802154phy_dependency', 'IEEE 802.15.4 PHY', 'IEEE 802.15.4 PHY', True, True)
+    openthread  = Module.CreateComponent('OPEN_THREAD', 'Thread Stack', 'Wireless/Drivers/Thread', 'driver/config/stack/drv_openthread.py')
+    openthread.setDisplayType('Thread SDK Driver')
+    openthread.addDependency('OT_802154phy_dependency', 'IEEE 802.15.4 PHY', 'IEEE 802.15.4 PHY', True, True)
+    openthread.addDependency("OT_USART_dependency", "DRV_USART", 'Thread USART', False, True)
+    openthread.addDependency("OT_SPI_dependency", "SPI", 'Thread SPI', False, True)
+    openthread.addDependency("OT_CONSOLE_dependency", "SYS_CONSOLE", 'Thread Log', False, True)
+    openthread.addDependency('OT_SysTimeDependency', 'SYS_TIME', 'SYS_TIME', True, True)
+    openthread.addDependency('OT_FreeRtosDependency', 'RTOS', 'RTOS', True, True)
+    openthread.addDependency('OT_HarmonyCoreDependency', 'Core Service', 'Core', True, True)
+    openthread.addDependency('OT_DeviceSupportDependency', 'Device_Support', 'Device_Support', True, True)
+    openthread.addDependency('OT_PDS_Module_Dependency', 'PDS_SubSystem', None, True, True)
+    openthread.addCapability('openthread_Capability', 'Thread Stack', True)
+    if (processor in pic32cx_bz2_family):
         openthread.addDependency("OT_WolfCrypt_Dependency", "LIB_WOLFCRYPT", None, False, True)
-        openthread.addDependency("OT_USART_dependency", "DRV_USART", 'Thread USART', False, False)
-        openthread.addDependency("OT_CONSOLE_dependency", "SYS_CONSOLE", 'Thread Log', False, True)
-        openthread.addDependency('OT_SysTimeDependency', 'SYS_TIME', 'SYS_TIME', True, True)
-        openthread.addDependency('OT_FreeRtosDependency', 'RTOS', 'RTOS', True, True)
-        openthread.addDependency('OT_HarmonyCoreDependency', 'Core Service', 'Core', True, True)
-        openthread.addDependency('OT_DeviceSupportDependency', 'Device_Support', 'Device_Support', True, True)
-        openthread.addDependency('OT_PDS_Module_Dependency', 'PDS_SubSystem', None, True, True)
-        openthread.addCapability('openthread_Capability', 'Thread Stack', True)
-        
-        
-        openthreadcli  = Module.CreateComponent('THREAD_CLI', 'CLI', 'Wireless/Drivers/Thread/App', 'driver/config/app/openthread_cli.py')
-        openthreadcli.setDisplayType('Thread Serial Interface')
-        openthreadcli.addDependency('openthread_Dependency', 'Thread Stack','Thread Stack',True, True)
-        
 
-        
+    openthreadcli  = Module.CreateComponent('THREAD_CLI', 'CLI', 'Wireless/Drivers/Thread/App', 'driver/config/app/openthread_cli.py')
+    openthreadcli.setDisplayType('Thread Serial Interface')
+    openthreadcli.addDependency('openthread_Dependency', 'Thread Stack','Thread Stack',True, True)

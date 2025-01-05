@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2024, The OpenThread Authors.
+ *  Copyright (c) 2025, The OpenThread Authors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 
 
 /*******************************************************************************
-* Copyright (C) [2024], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+* Copyright (C) [2025], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
 * The software and documentation is provided by Microchip and its contributors 
 * "as is" and any express, implied or statutory warranties, including, but not 
@@ -119,7 +119,7 @@ extern "C" {
 #define OPENTHREAD_CONFIG_IP6_SLAAC_ENABLE                           (1)
 #define OPENTHREAD_CONFIG_MAC_CSL_AUTO_SYNC_ENABLE                   (0)
 #define OPENTHREAD_CONFIG_PING_SENDER_ENABLE                         (1)
-#define OPENTHREAD_CONFIG_THREAD_VERSION                             (OT_THREAD_VERSION_1_3)
+#define OPENTHREAD_CONFIG_THREAD_VERSION                             (OT_THREAD_VERSION_1_4)
 #define OPENTHREAD_CONFIG_COAP_API_ENABLE                            (1)
 #define OPENTHREAD_CONFIG_COAP_BLOCKWISE_TRANSFER_ENABLE             (1)
 #define OPENTHREAD_CONFIG_COAP_MAX_BLOCK_LENGTH                      (512)
@@ -153,6 +153,7 @@ extern "C" {
 #define OPENTHREAD_CONFIG_MLE_CHILD_TIMEOUT_DEFAULT                  (240)
 #define OPENTHREAD_CONFIG_JOINER_ENABLE                              (1)
 #define OPENTHREAD_CONFIG_TCP_ENABLE                                 (1)
+#define OPENTHREAD_CONFIG_DNS_CLIENT_OVER_TCP_ENABLE                 (1)
 <#else>
 <#if OPEN_THREAD_LOG_SYMBOL == true>
 #define OPENTHREAD_CONFIG_LOG_LEVEL                                  (${OPEN_THREAD_LOG_LEVEL_CONFIG})
@@ -170,6 +171,7 @@ extern "C" {
 <#if OPEN_THREAD_TCP_ENABLE_CONFIG??>
 <#if OPEN_THREAD_TCP_ENABLE_CONFIG == true>
 #define OPENTHREAD_CONFIG_TCP_ENABLE                                 (1)
+#define OPENTHREAD_CONFIG_DNS_CLIENT_OVER_TCP_ENABLE                (1)
 </#if>
 </#if>
 
@@ -186,7 +188,22 @@ extern "C" {
 #define OPENTHREAD_CONFIG_DUA_ENABLE                                (1) 
 #define OPENTHREAD_CONFIG_MLR_ENABLE                                (1)
 #define OPENTHREAD_CONFIG_DNS_CLIENT_ENABLE                         (1)
+#define OPENTHREAD_CONFIG_MESSAGE_USE_HEAP_ENABLE                   (1)
+#define OPENTHREAD_CONFIG_HEAP_EXTERNAL_ENABLE                      (1)
 
+<#if DEVICE_SOC_FAMILY_TYPE == "bz3">
+#define OPENTHREAD_BARCO_SHA256_C                                   (1)
+</#if>
+
+#define OPENTHREAD_CONFIG_DIAG_ENABLE                               (0)
+#define OPENTHREAD_CONFIG_MAC_FILTER_ENABLE                         (1)
+#define OPENTHREAD_CONFIG_SNTP_CLIENT_ENABLE                        (1)
+#define OPENTHREAD_CONFIG_TMF_ANYCAST_LOCATOR_ENABLE                (1)
+#define OPENTHREAD_CONFIG_UDP_FORWARD_ENABLE                        (1)
+#define OPENTHREAD_CONFIG_UPTIME_ENABLE                             (1)
+#define OPENTHREAD_CONFIG_MLE_LINK_METRICS_SUBJECT_ENABLE           (0)
+#define OPENTHREAD_CONFIG_MULTICAST_DNS_PUBLIC_API_ENABLE           (1)
+#define OPENTHREAD_CONFIG_DNS_CLIENT_DEFAULT_SERVER_ADDRESS_AUTO_SET_ENABLE  (1)
 
     /* Provide C++ Compatibility */
 #ifdef __cplusplus

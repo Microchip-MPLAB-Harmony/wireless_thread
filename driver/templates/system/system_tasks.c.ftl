@@ -1,6 +1,6 @@
 (void) xTaskCreate(taskOpenThread,
                        "ot-task",
-                       4096,
+                       1024,
                        NULL,
                        3,
                        &taskHandleOpenThread);

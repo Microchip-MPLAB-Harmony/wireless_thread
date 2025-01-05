@@ -1,5 +1,5 @@
 ##############################################################################
-# Copyright (C) [2024], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+# Copyright (C) [2025], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
 # The software and documentation is provided by Microchip and its contributors 
 # "as is" and any express, implied or statutory warranties, including, but not 
@@ -43,18 +43,19 @@ commonincpath_rcp = [
                     ['openthread/src/core/config',False],
                     ['openthread/src/core/crypto',False],
                     ['openthread/src/core/diags',False],
-                    ['openthread/src/core/mac',False,['link_raw.cpp', 'link_raw.hpp','mac_frame.cpp', 'mac_frame.hpp','mac_types.cpp', 'mac_types.hpp', 'sub_mac.cpp', 'sub_mac.hpp', 'sub_mac_callbacks.cpp'],True],
+                    ['openthread/src/core/instance',False,["extension_example.cpp"],False],
+                    ['openthread/src/core/mac',False,['link_raw.cpp', 'link_raw.hpp','mac_frame.cpp', 'mac_frame.hpp','mac_types.cpp', 'mac_types.hpp', 'sub_mac.cpp', 'sub_mac.hpp', 'sub_mac_callbacks.cpp', 'mac_header_ie.cpp', 'mac_header_ie.hpp'],True],
                     ['openthread/src/core/meshcop',False,['network_name.hpp','extended_panid.hpp'],True],
                     ['openthread/src/core/net',False,['icmp6.hpp','ip4_types.hpp','ip6.hpp','ip6_address.hpp','ip6_headers.hpp','ip6_mpl.hpp','ip6_types.hpp','nat64_translator.hpp','netif.hpp','socket.hpp','tcp6.hpp','udp6.hpp','checksum.hpp'],True],
                     ['openthread/src/core',False],
                     ['openthread/src/core/radio',False,['trel_interface.cpp','trel_link.cpp','trel_packet.cpp'],False],
-                    ['openthread/src/core/thread',False,['topology.hpp','child_mask.hpp','link_quality.hpp','mle_types.hpp','network_data_types.hpp','mlr_types.hpp'],True],
+                    ['openthread/src/core/thread',False,['child_mask.hpp','link_quality.hpp','mle_types.hpp','network_data_types.hpp','mlr_types.hpp'],True],
                     ['openthread/src/core/utils',False,['heap.cpp','heap.hpp','otns.hpp','power_calibration.hpp'],True],
-                    ['openthread/src/core/api',False,["instance_api.cpp","link_raw_api.cpp","logging_api.cpp","message_api.cpp","random_noncrypto_api.cpp","tasklet_api.cpp"],True],
+                    ['openthread/src/core/api',False,["instance_api.cpp","link_raw_api.cpp","logging_api.cpp","random_noncrypto_api.cpp","tasklet_api.cpp"],True],
                                                             
                     ['openthread/src/core/common',False,["appender.cpp",     "appender.hpp",        #"arg_macros.hpp",
                                                         "binary_search.cpp", #"bit_vector.hpp",
-                                                        "crc16.cpp",         "crc16.hpp",           "extension_example.cpp",
+                                                        "crc16.cpp",         "crc16.hpp",
                                                         #"frame_builder.cpp", "frame_builder.hpp",   
                                                         "frame_data.cpp", "heap.cpp",            "heap_allocatable.hpp", 
                                                         "heap_array.hpp",    "heap_data.cpp",       "heap_data.hpp",       "heap_string.cpp", 
@@ -66,8 +67,10 @@ commonincpath_rcp = [
                    ['openthread/src/lib/hdlc',False],
                    ['openthread/src/lib/platform',False],
                    ['openthread/src/lib/url',False],
+                   ['openthread/src/lib/utils',False],
                    #['openthread/src/lib',True],
                    ['openthread/src/ncp',False],
+                   ['openthread/src/ncp/platform',False],
                    ['openthread/examples/apps/ncp',False,['ncp.c'],True]
                   ]
 
@@ -85,15 +88,46 @@ openthreadrcpconfigMenu = openthread.createMenuSymbol("OPEN_THREAD_RCP_MENU_SYMB
 openthreadrcpconfigMenu.setLabel("RCP Configuration")
 openthreadrcpconfigMenu.setVisible(False)
 
+global openthreadrcpSpiSercomInst
+openthreadrcpSpiSercomInst = openthread.createStringSymbol("OPEN_THREAD_RCP_SPI_INST",None)
+openthreadrcpSpiSercomInst.setLabel("RCP SPI INST")
+openthreadrcpSpiSercomInst.setVisible(False)
+openthreadrcpSpiSercomInst.setDefaultValue("")
+
 global openthreadRcpHdlcConfig
 openthreadRcpHdlcConfig = openthread.createKeyValueSetSymbol("OPEN_THREAD_RCP_HDLC_CONFIG", openthreadrcpconfigMenu)
 openthreadRcpHdlcConfig.setLabel("HDLC Interface")
 openthreadRcpHdlcConfig.addKey("UART", "UART", "UART")
+openthreadRcpHdlcConfig.addKey("SPI", "SPI", "SPI")
 openthreadRcpHdlcConfig.setDefaultValue(0)
 openthreadRcpHdlcConfig.setOutputMode("Value")
 openthreadRcpHdlcConfig.setDisplayMode("Description")
 openthreadRcpHdlcConfig.setDescription("Open Thread Device Role Configuration")
 openthreadRcpHdlcConfig.setVisible(True)
+openthreadRcpHdlcConfig.setDependencies(openthreadRCPConfigcallback,["OPEN_THREAD_RCP_HDLC_CONFIG"])
+
+availablePinDictionary = {}
+
+# Send message to core to get available pins
+availablePinDictionary = Database.sendMessage("core", "PIN_LIST", availablePinDictionary)
+
+global openthreadrcpSpiSSPin
+openthreadrcpSpiSSPin = openthread.createKeyValueSetSymbol("OPEN_THREAD_RCP_SPI_SS_CONFIG",openthreadrcpconfigMenu)
+openthreadrcpSpiSSPin.setVisible(False)
+openthreadrcpSpiSSPin.setLabel("SPI Slave Select Pin")
+openthreadrcpSpiSSPin.setOutputMode("Key")
+openthreadrcpSpiSSPin.setDisplayMode("Description")
+openthreadrcpSpiSSPin.addKey("", "", "")
+for pad in sort_alphanumeric(availablePinDictionary.values()):
+    # iter+=1
+    key = pad
+    # print("key:",key)
+    value = list(availablePinDictionary.keys())[list(availablePinDictionary.values()).index(pad)]
+    # print("Value:",value)
+    description = pad
+    openthreadrcpSpiSSPin.addKey(key, value, description)
+# ptaReqPin.setDefaultValue(0)
+openthreadrcpSpiSSPin.setDependencies(openthreadRCPConfigcallback,["OPEN_THREAD_RCP_SPI_SS_CONFIG"])
 
 global rcpconfigfilesym
 rcpconfigfilesym = openthread.createFileSymbol('RCP_OPEN_THREAD_CONFIG',None)

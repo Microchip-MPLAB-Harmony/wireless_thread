@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2024, The OpenThread Authors.
+ *  Copyright (c) 2025, The OpenThread Authors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 
 
 /*******************************************************************************
-* Copyright (C) [2024], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+* Copyright (C) [2025], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
 * The software and documentation is provided by Microchip and its contributors 
 * "as is" and any express, implied or statutory warranties, including, but not 
@@ -72,7 +72,7 @@
 #include <openthread/diag.h>
 #include <openthread/tasklet.h>
 #include <openthread/platform/logging.h>
-
+#include <string.h>
 // *****************************************************************************
 // *****************************************************************************
 // Section: RTOS "Tasks" Routine
@@ -95,9 +95,9 @@ extern OSAL_SEM_HANDLE_TYPE semPhyInternalHandler;
 <#if OPEN_THREAD_UART_PARSER == true && ((OPEN_THREAD_DEVICE_ROLE == "FTD") || (OPEN_THREAD_DEVICE_ROLE == "MTD" ))>
 extern void otAppCliInit(otInstance *aInstance);
 </#if>
+</#if>
 <#if OPEN_THREAD_UART_PARSER == false && (OPEN_THREAD_DEVICE_ROLE == "RCP")>
 extern void otAppNcpInit(otInstance *aInstance);
-</#if>
 </#if>
 
 
@@ -185,6 +185,13 @@ pseudo_reset:
                         break;
                     }
                     </#if>
+					<#if OPEN_THREAD_RCP_HDLC_CONFIG == "SPI">
+					case PLAT_SPI_SLAVE_MODULE_ID:
+                    {
+                        pic32cxSpiSlaveProcess(otMessage.OTMsgId);
+                        break;
+                    }
+					</#if>
                     case PLAT_RADIO_MODULE_ID:
                     {
                         pic32cxRadioProcess(instance, otMessage.OTMsgId);
@@ -214,7 +221,18 @@ pseudo_reset:
     goto pseudo_reset;
 }
 
+void *otPlatCAlloc(size_t aNum, size_t aSize)
+{
+    void *temp;
+    temp = pvPortMalloc(aNum * aSize);
+    memset(temp, 0, (aNum * aSize));
+    return temp;
+}
 
+void otPlatFree(void *aPtr)
+{
+    vPortFree(aPtr);
+}
 /*******************************************************************************
  End of File
  */

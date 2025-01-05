@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2024, The OpenThread Authors.
+ *  Copyright (c) 2025, The OpenThread Authors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 
 
 /*******************************************************************************
-* Copyright (C) [2024], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+* Copyright (C) [2025], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
 * The software and documentation is provided by Microchip and its contributors 
 * "as is" and any express, implied or statutory warranties, including, but not 
@@ -119,7 +119,7 @@ extern "C" {
 #define OPENTHREAD_CONFIG_IP6_SLAAC_ENABLE                           (1)
 #define OPENTHREAD_CONFIG_MAC_CSL_AUTO_SYNC_ENABLE                   (0)
 #define OPENTHREAD_CONFIG_PING_SENDER_ENABLE                         (1)
-#define OPENTHREAD_CONFIG_THREAD_VERSION                             (OT_THREAD_VERSION_1_3)
+#define OPENTHREAD_CONFIG_THREAD_VERSION                             (OT_THREAD_VERSION_1_4)
 #define OPENTHREAD_CONFIG_COAP_API_ENABLE                            (1)
 #define OPENTHREAD_CONFIG_COAP_BLOCKWISE_TRANSFER_ENABLE             (1)
 #define OPENTHREAD_CONFIG_COAP_MAX_BLOCK_LENGTH                      (512)
@@ -151,6 +151,7 @@ extern "C" {
 #define OPENTHREAD_CONFIG_JOINER_ENABLE                              (1)
 #define OPENTHREAD_CONFIG_COMMISSIONER_ENABLE                        (1)
 #define OPENTHREAD_CONFIG_TCP_ENABLE                                 (1)
+#define OPENTHREAD_CONFIG_DNS_CLIENT_OVER_TCP_ENABLE                (1)
 #define SYS_PDS_NUM_MAX_CHILDREN_ENTRY                               (20)
 #define OPENTHREAD_CONFIG_MLE_IP_ADDRS_PER_CHILD                     (4)
 #define OPENTHREAD_CONFIG_NUM_MESSAGE_BUFFERS                        (64)
@@ -173,6 +174,7 @@ extern "C" {
 <#if OPEN_THREAD_TCP_ENABLE_CONFIG??>
 <#if OPEN_THREAD_TCP_ENABLE_CONFIG == true>
 #define OPENTHREAD_CONFIG_TCP_ENABLE                                 (1)
+#define OPENTHREAD_CONFIG_DNS_CLIENT_OVER_TCP_ENABLE                (1)
 </#if>
 </#if>
 #define OPENTHREAD_CONFIG_MLE_MAX_CHILDREN                           (${OPEN_THREAD_FTD_MLE_MAX_CHILD_CONFIG})
@@ -190,11 +192,34 @@ extern "C" {
 #define OPENTHREAD_CONFIG_DUA_ENABLE                                (1) 
 #define OPENTHREAD_CONFIG_MLR_ENABLE                                (1)
 #define OPENTHREAD_CONFIG_DNS_CLIENT_ENABLE                         (1)
+#define OPENTHREAD_CONFIG_MESSAGE_USE_HEAP_ENABLE                   (1)
+#define OPENTHREAD_CONFIG_HEAP_EXTERNAL_ENABLE                      (1)
 
+<#if DEVICE_SOC_FAMILY_TYPE == "bz3">
+#define OPENTHREAD_BARCO_SHA256_C                                   (1)
+</#if>
 
-
-
-
+#define OPENTHREAD_CONFIG_BORDER_AGENT_ENABLE                       (1)
+#define OPENTHREAD_CONFIG_BORDER_AGENT_ID_ENABLE                    (1)
+#define OPENTHREAD_CONFIG_BORDER_AGENT_EPHEMERAL_KEY_ENABLE         (1)
+#define OPENTHREAD_CONFIG_CHANNEL_MANAGER_ENABLE                    (1)
+#define OPENTHREAD_CONFIG_CHANNEL_MONITOR_ENABLE                    (1)
+#define OPENTHREAD_CONFIG_DATASET_UPDATER_ENABLE                    (1)
+#define OPENTHREAD_CONFIG_DIAG_ENABLE                               (0)
+#define OPENTHREAD_CONFIG_JAM_DETECTION_ENABLE                      (1)
+#define OPENTHREAD_CONFIG_LINK_METRICS_MANAGER_ENABLE               (1)
+#define OPENTHREAD_CONFIG_MAC_CSL_RECEIVER_ENABLE                   (0)
+#define OPENTHREAD_CONFIG_MAC_FILTER_ENABLE                         (1)
+#define OPENTHREAD_CONFIG_MESH_DIAG_ENABLE                          (1)
+#define OPENTHREAD_CONFIG_MLE_DEVICE_PROPERTY_LEADER_WEIGHT_ENABLE  (1)
+#define OPENTHREAD_CONFIG_MLE_LINK_METRICS_INITIATOR_ENABLE         (1)
+#define OPENTHREAD_CONFIG_SNTP_CLIENT_ENABLE                        (1)
+#define OPENTHREAD_CONFIG_TMF_ANYCAST_LOCATOR_ENABLE                (1)
+#define OPENTHREAD_CONFIG_TMF_NETDIAG_CLIENT_ENABLE                 (1)
+#define OPENTHREAD_CONFIG_UDP_FORWARD_ENABLE                        (1)
+#define OPENTHREAD_CONFIG_UPTIME_ENABLE                             (1)
+#define OPENTHREAD_CONFIG_MULTICAST_DNS_PUBLIC_API_ENABLE           (1)
+#define OPENTHREAD_CONFIG_DNS_CLIENT_DEFAULT_SERVER_ADDRESS_AUTO_SET_ENABLE  (1)
     
     /* Provide C++ Compatibility */
 #ifdef __cplusplus

@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2024, The OpenThread Authors.
+ *  Copyright (c) 2025, The OpenThread Authors.
  *  All rights reserved.
  *
  *  Redistribution and use in source and binary forms, with or without
@@ -28,7 +28,7 @@
 
 
 /*******************************************************************************
-* Copyright (C) [2024], Microchip Technology Inc., and its subsidiaries. All rights reserved.
+* Copyright (C) [2025], Microchip Technology Inc., and its subsidiaries. All rights reserved.
   
 * The software and documentation is provided by Microchip and its contributors 
 * "as is" and any express, implied or statutory warranties, including, but not 
@@ -114,11 +114,21 @@ extern "C" {
 
 #define NDEBUG
 #define OPENTHREAD_CONFIG_ASSERT_ENABLE                              (1)
+<#if OPEN_THREAD_RCP_HDLC_CONFIG == "UART">
 #define OPEN_THREAD_UART_ENABLE                                      (1)
+#define OPENTHREAD_CONFIG_NCP_HDLC_ENABLE                            (1)
+</#if>
+<#if OPEN_THREAD_RCP_HDLC_CONFIG == "SPI">
+#define OPENTHREAD_CONFIG_NCP_SPI_ENABLE							 (1)
+#define OPENTHREAD_CONFIG_NCP_HDLC_ENABLE                            (0)
+<#if OPEN_THREAD_LOG_SYMBOL == true>
+#define OPEN_THREAD_LOG_ENABLED                                      (1)
+#define OPENTHREAD_CONFIG_LOG_LEVEL                                  (${OPEN_THREAD_LOG_LEVEL_CONFIG})
+</#if>
+</#if>
 #define OPENTHREAD_CONFIG_ENABLE_BUILTIN_MBEDTLS                     (1)
 #define OPENTHREAD_CONFIG_ENABLE_BUILTIN_MBEDTLS_MANAGEMENT          (1)
-#define OPENTHREAD_CONFIG_NCP_HDLC_ENABLE                            (1)
-#define OPENTHREAD_CONFIG_THREAD_VERSION                             (OT_THREAD_VERSION_1_3)
+#define OPENTHREAD_CONFIG_THREAD_VERSION                             (OT_THREAD_VERSION_1_4)
 #define OPENTHREAD_SPINEL_CONFIG_OPENTHREAD_MESSAGE_ENABLE           (0)
 #define OPENTHREAD_SPINEL_CONFIG_RCP_RESTORATION_MAX_COUNT           (0)
 #define OPENTHREAD_ENABLE_NCP_VENDOR_HOOK                            (0)
