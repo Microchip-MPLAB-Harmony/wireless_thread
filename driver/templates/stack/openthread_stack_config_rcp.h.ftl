@@ -119,8 +119,9 @@ extern "C" {
 #define OPENTHREAD_CONFIG_NCP_HDLC_ENABLE                            (1)
 </#if>
 <#if OPEN_THREAD_RCP_HDLC_CONFIG == "SPI">
-#define OPENTHREAD_CONFIG_NCP_SPI_ENABLE							 (1)
+#define OPENTHREAD_CONFIG_NCP_SPI_ENABLE                             (1)
 #define OPENTHREAD_CONFIG_NCP_HDLC_ENABLE                            (0)
+#define OPENTHREAD_CONFIG_RCP_SPI_SMALL_PACKET_LEN                   (164U)
 <#if OPEN_THREAD_LOG_SYMBOL == true>
 #define OPEN_THREAD_LOG_ENABLED                                      (1)
 #define OPENTHREAD_CONFIG_LOG_LEVEL                                  (${OPEN_THREAD_LOG_LEVEL_CONFIG})
@@ -136,7 +137,7 @@ extern "C" {
 #define OPENTHREAD_CONFIG_MAC_SOFTWARE_TX_SECURITY_ENABLE            (1) 
 #define OPENTHREAD_CONFIG_LINK_RAW_ENABLE                            (1)
 #define OPENTHREAD_CONFIG_MAC_SOFTWARE_TX_TIMING_ENABLE              (1)
-#define SYS_PDS_NUM_MAX_CHILDREN_ENTRY								 (1)
+#define SYS_PDS_NUM_MAX_CHILDREN_ENTRY                               (1)
 
 /* Provide C++ Compatibility */
 #ifdef __cplusplus

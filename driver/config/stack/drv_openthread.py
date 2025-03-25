@@ -59,6 +59,8 @@ fileslistpos  = 1
 TcpEnabled = 0
 global RCP_SPI_SS_PIN
 RCP_SPI_SS_PIN = {'SPI_SS':""}
+global TcPrescalerSymbol
+TcPrescalerSymbol = []
 
 pic32cx_bz2_family = {'PIC32CX1012BZ25048',
                           'PIC32CX1012BZ25032',
@@ -655,7 +657,6 @@ def openthreadSystemconfigcallback(symbol,event):
     symbolID = event["id"]
     value = event["value"]
     global localComponent
-    global TcPrescalerSymbol
     global uartTxRingBufferSym
     localComponent = symbol.getComponent()
     componentids = Database.getActiveComponentIDs()
@@ -697,12 +698,15 @@ def openthreadSystemconfigcallback(symbol,event):
         
     elif symbolID == "SYS_TIME_PLIB":
         if value != "":
-            TcPrescalerSymbol = Database.getComponentByID(value.lower()).getSymbolByID("TC_CTRLA_PRESCALER")
-            print("Tc0Callback",value)
-            TcPrescalerSymbol.setValue(5)
-            TcPrescalerSymbol.setReadOnly(True)
+            if not TcPrescalerSymbol:
+                TcPrescalerSymbol.append(None)
+            TcPrescalerSymbol[0] = Database.getComponentByID(value.lower()).getSymbolByID("TC_CTRLA_PRESCALER")
+            print("Tc0Callback", value)
+            TcPrescalerSymbol[0].setValue(5)
+            TcPrescalerSymbol[0].setReadOnly(True)
         else:
-            TcPrescalerSymbol.setReadOnly(False)
+            if TcPrescalerSymbol and TcPrescalerSymbol[0] is not None:
+                TcPrescalerSymbol[0].setReadOnly(False)
 
 ####################################################################################
 ####################Open Thread Parser Callback###################################
@@ -812,6 +816,7 @@ def openthreadRCPConfigcallback(symbol,event):
             openthreadLogEnable.setVisible(False)
             openthreadUartConfig.setValue(True)
             openthreadrcpSpiSSPin.setVisible(False)
+            spiDependencyDMAComment.setVisible(False)
             # openthreadloglevelconfig.setVisible(False)
             if "drv_usart" not in componentids: 
                 Database.activateComponents(requiredComponent)
@@ -828,6 +833,9 @@ def openthreadRCPConfigcallback(symbol,event):
             openthreadUartConfig.setValue(False)
             openthreadLogEnable.setVisible(True)
             openthreadrcpSpiSSPin.setVisible(True)
+            spiTXRXDMA.setVisible(False)
+            spiTXRXDMA.setReadOnly(True)
+            spiDependencyDMAComment.setVisible(False)
             # openthreadloglevelconfig.setVisible(True)
             if "drv_usart" not in componentids: 
                 Database.deactivateComponents(requiredComponent)
@@ -844,7 +852,7 @@ def openthreadRCPConfigcallback(symbol,event):
         pin_num = symbol.getKeyValue(value)
         pin_val = 'BSP_PIN_'+str(pin_num)
         RCP_SPI_SS_PIN.update({"SPI_SS":pin_val})
-        Database.setSymbolValue("core", pin_val + "_FUNCTION_TYPE", "GPIO")
+        #Database.setSymbolValue("core", pin_val + "_FUNCTION_TYPE", "GPIO")
         Database.setSymbolValue("core", pin_val + "_CN", "True")
         Database.setSymbolValue("core", pin_val + "_FUNCTION_NAME", "SPI_SS")
         
@@ -936,9 +944,6 @@ def instantiateComponent(openthread):
         symbol.setReadOnly(True)
         symbol1.setReadOnly(True)
         symbol2.setReadOnly(True)
-
-    Database.setSymbolValue("core", "ZIGBEE_CLOCK_ENABLE", True)
-    # Database.setSymbolValue("core", "CONFIG_SCOM0_HSEN", "DIRECT")
     
     # print(openthreadfileRecords)
     
@@ -1003,6 +1008,12 @@ def instantiateComponent(openthread):
     # openthreadcomment1.setLabel("Enable Thread UART Parser")
     openthreadcomment1.setLabel("*****CLI is not supported with RCP*****")
     openthreadcomment1.setVisible(False)
+    
+    global isDMAPresent
+    if Database.getSymbolValue("core", "DMA_ENABLE") == None:
+        isDMAPresent = False
+    else:
+        isDMAPresent = True
     
     #############################################################################
     ## Thread Device Type Specific Handling
@@ -1349,6 +1360,8 @@ def onAttachmentConnected(source, target):
     remoteComponent = target["component"]
     remoteID = remoteComponent.getID()
     connectID = source["id"]
+    global isDMAPresent
+    
     if (connectID == "OT_WolfCrypt_Dependency"):
         # Database.connectDependencies([['lib_crypto', 'LIB_CRYPTO_WOLFCRYPT_Dependency', 'lib_wolfcrypt', 'lib_wolfcrypt']])
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_hw", True)
@@ -1403,6 +1416,18 @@ def onAttachmentConnected(source, target):
         sercomModeSymbol.clearValue()
         sercomModeSymbol.setValue(4)
         # sercomModeSymbol.setReadOnly(True)
+        
+        spiTXRXDMA.setValue(True)
+        
+        dmaChannelSym = Database.getSymbolValue("core", "DMA_CH_FOR_" + remoteID.upper() + "_Transmit")
+        dmaRequestSym = Database.getSymbolValue("core", "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit")
+        
+        # Do not change the order as DMA Channels needs to be allocated
+        # after setting the plibUsed symbol
+        # Both device and connected plib should support DMA
+        if isDMAPresent == True and dmaChannelSym != None and dmaRequestSym != None:
+            localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(False)
+            localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(True)
 
 
 def onAttachmentDisconnected(source, target):
@@ -1416,12 +1441,23 @@ def onAttachmentDisconnected(source, target):
     
     elif (connectID == "OT_SPI_dependency"):
         print("OT_SPI_dependency",remoteID,connectID)
-        openthreadrcpSpiSercomInst.setValue("")
         sercomModeSymbol = Database.getComponentByID(remoteID.lower()).getSymbolByID("SERCOM_MODE")
         sercomModeSymbol.clearValue()
         # sercomModeSymbol.setValue(4)
-    
 
+        dmaChannelSymTx = Database.getSymbolValue("core", "DMA_CH_FOR_" + remoteID.upper() + "_Transmit")
+        dmaRequestSymTx= Database.getSymbolValue("core", "DMA_CH_NEEDED_FOR_" + remoteID.upper() + "_Transmit")
+        
+        spiTXRXDMA.setValue(False)
+
+        # Do not change the order as DMA Channels needs to be cleared
+        # before clearing the plibUsed symbol
+        # Both device and connected plib should support DMA
+        if isDMAPresent == True and dmaChannelSymTx != None and dmaRequestSymTx != None:
+            localComponent.getSymbolByID("DRV_SPI_DEPENDENCY_DMA_COMMENT").setVisible(True)
+            localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setValue(False)
+            localComponent.getSymbolByID("DRV_SPI_TX_RX_DMA").setReadOnly(True)
+            
 
 def finalizeComponent(openthread):
     # pass
@@ -1438,29 +1474,10 @@ def destroyComponent(openthread):
     TcPrescalerSymbol.setReadOnly(False)
     for comp in requiredComponents:
         Database.deactivateComponents([comp])
+        
+    if Database.getSymbolValue("core", "DMA_ENABLE") != None:
+        Database.sendMessage("HarmonyCore", "ENABLE_SYS_DMA", {"isEnabled":False})
     
     
 def handleMessage(messageID, args):
-    # print(messageID, args)
-    if(messageID == 'ANTENNA_GAIN_CHANGE'):
-        component = Database.getComponentByID(args['target'])
-        if (component):
-            customGainValue = component.getSymbolByID('CUSTOM_ANT_GAIN')
-            customRegion = component.getSymbolByID('CUSTOM_ANT_REGION')
-            for arg in args:
-                Log.writeInfoMessage('{:<17}: {}: {}'.format('', arg, args[arg]))
-                if('CUSTOM_ANT_GAIN' == arg):
-                    customGainValue.setValue(args[arg])
-                if('CUSTOM_ANT_REGION' == arg):
-                    customRegion.setValue(args[arg])
-    
-    # elif(messageID == "OPEN_THREAD_CLI_ENABLED"):
-        # if openthreadrole.getValue() == 2:
-            # print("openthreadParserUpdateCallback")
-            # componentids = Database.getActiveComponentIDs()
-            # print("componentids:",componentids)
-            # Database.connectDependencies([['OPEN_THREAD_CLI','openthread_Dependency','OPEN_THREAD','openthread_Capability']])
-            # if "OPEN_THREAD_CLI" in componentids:
-                # print("Removing Cli App")
-            # Database.deactivateComponents(["OPEN_THREAD_CLI"]) 
-            # openthreadUartParser.setValue(False)
+    pass

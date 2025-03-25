@@ -71,6 +71,7 @@
 #include <openthread/platform/radio.h>
 #include <openthread/platform/entropy.h>
 #include <openthread/platform/time.h>
+#include <openthread/platform/diag.h>
 
 #include "platform-pic32cx.h"
 
@@ -87,6 +88,9 @@
 #include "config\default\driver\security\sxsymcrypt\keyref_api.h"
 #include "config\default\driver\security\sxsymcrypt\aead_api.h"
 </#if> 
+<#if DEVICE_SOC_FAMILY_TYPE == "bz2">
+#include <wolfcrypt/aes.h>
+</#if> 
 
 
 enum
@@ -97,13 +101,11 @@ enum
 #define OT_RADIO_2P4GHZ_OQPSK_CHANNEL_MIN 11U
 #define OT_RADIO_2P4GHZ_OQPSK_CHANNEL_MAX 26U
 
-#define OT_RADIO_RX_BUFFERS_NUM			  10U
+#define OT_RADIO_RX_BUFFERS_NUM			  8U
 
 #define KEY_SIZE                          16U
 #define NONCE_SIZE                        13U
 #define AES_BLOCKSIZE                     16U
-
-<#if DEVICE_SOC_FAMILY_TYPE == "bz3">
 #define MIC_SIZE                          4U
 #define SEC_CTRL_SIZE                     1U
 #define FRAME_COUNTER_SIZE                4U
@@ -119,13 +121,16 @@ enum
 #define FCF_SRC_ADDR_SHORT      2 << 14
 #define FCF_SRC_ADDR_EXT        3 << 14
 #define FCF_SRC_ADDR_MASK       3 << 14
-</#if> 
 
 /* Variable holding information on ACK frame to be transmitted */
 static otRadioFrame sTxAckFrame;
 
 /* Variable holding the details on frame to be transmitted */
 static otRadioFrame sTransmitFrame;
+
+<#if DEVICE_SOC_FAMILY_TYPE == "bz2">
+static struct Aes aes;
+</#if> 
 
 typedef struct radioReceivedFrame
 {
@@ -217,6 +222,10 @@ static uint32_t      sCslPeriod;
 static uint32_t      sCslSampleTime;
 #endif // OPENTHREAD_CONFIG_MAC_CSL_RECEIVER_ENABLE
 
+#if OPENTHREAD_CONFIG_MAC_HEADER_IE_SUPPORT
+static otRadioIeInfo sTransmitIeInfo;
+#endif
+
 /* The Uncertainty of the scheduling CSL of transmission by the parent, in ±10 us units.*/
 #define CSL_UNCERT            200          
 
@@ -230,8 +239,8 @@ extern PHY_Retval_t PHY_Tx2015Frame(PHY_FrameInfo_t *txFrame, PHY_CSMAMode_t csm
 /*******************************************************************************
  * Static
  ******************************************************************************/
+ static void radioSecureEnhAck(otRadioFrame *aFrame, const otExtAddress *aExtAddress, uint8_t ieLength);
 <#if DEVICE_SOC_FAMILY_TYPE == "bz3">
-static void radioSecureEnhAck(otRadioFrame *aFrame, const otExtAddress *aExtAddress, uint8_t ieLength);
 static void createNonce(uint8_t *noncePtr, const otExtAddress *aExtAddress, uint32_t frameCounter);
 static uint8_t getMACHeaderLength(otRadioFrame *aFrame);
 static struct sxaead aead;
@@ -384,7 +393,7 @@ static void handleEnergyScan()
 
             if (otPlatDiagModeGet())
             {
-                otPlatDiagRadioReceiveDone(sInstance, &sReceivedFrames[i], OT_ERROR_NONE);
+                otPlatDiagRadioReceiveDone(sInstance, &sReceivedFrames[i].RadioFrame, OT_ERROR_NONE);
             }
             else
 #endif
@@ -748,12 +757,7 @@ static void processTxAckSecurity(uint8_t ieLength)
 
         sTxAckFrame.mInfo.mTxInfo.mAesKey = key;  
         //Encrypt the ACK frame 
-<#if DEVICE_SOC_FAMILY_TYPE == "bz3">
         radioSecureEnhAck(&sTxAckFrame, &sExtAddr, ieLength);
-</#if> 
-<#if DEVICE_SOC_FAMILY_TYPE == "bz2">
-		otMacFrameProcessTransmitAesCcm(&sTxAckFrame, &sExtAddr);
-</#if> 
               
     }
     else
@@ -877,6 +881,10 @@ void pic32cxRadioInit(void)
     sTransmitFrame.mLength = 0;
     sTransmitFrame.mPsdu = &sTxRxBuffer[1];
 
+#if OPENTHREAD_CONFIG_MAC_HEADER_IE_SUPPORT
+    sTransmitFrame.mInfo.mTxInfo.mIeInfo = &sTransmitIeInfo;
+#endif
+
     for (uint32_t i = 0; i < OT_RADIO_RX_BUFFERS_NUM; i++)
     {
         sReceivedFrames[i].RadioFrame.mPsdu = NULL;
@@ -888,8 +896,10 @@ void pic32cxRadioInit(void)
 #endif
     
     sTxAckFrame.mPsdu = &sTxAckBuffer[1];
+#if OPENTHREAD_FTD || OPENTHREAD_RADIO
 	//Enable Enhanced Frame Pending
 	PHY_EnableEnhancedFramepending(true);
+#endif
 }
 
 /* Radio Process function - This will be called when callbacks are invoked from PHY layer. 
@@ -1141,6 +1151,24 @@ otError otPlatRadioTransmit(otInstance *aInstance, otRadioFrame *aFrame)
 #if OPENTHREAD_CONFIG_MAC_CSL_RECEIVER_ENABLE
         updateIeInfoTxFrame(aFrame);
 #endif
+
+#if OPENTHREAD_CONFIG_TIME_SYNC_ENABLE
+    if (aFrame->mInfo.mTxInfo.mIeInfo->mTimeIeOffset != 0)
+    {
+        uint8_t *timeIe = aFrame->mPsdu + aFrame->mInfo.mTxInfo.mIeInfo->mTimeIeOffset;
+        uint64_t time   = otPlatTimeGet() + aFrame->mInfo.mTxInfo.mIeInfo->mNetworkTimeOffset;
+
+        *timeIe = aFrame->mInfo.mTxInfo.mIeInfo->mTimeSyncSeq;
+
+        *(++timeIe) = (uint8_t)(time & 0xff);
+        for (uint8_t i = 1; i < sizeof(uint64_t); i++)
+        {
+            time        = time >> 8;
+            *(++timeIe) = (uint8_t)(time & 0xff);
+        }
+
+    }
+#endif // OPENTHREAD_CONFIG_TIME_SYNC_ENABLE
     
     if (otMacFrameIsSecurityEnabled(aFrame) && otMacFrameIsKeyIdMode1(aFrame) && 
         (!aFrame->mInfo.mTxInfo.mIsARetx) && (!aFrame->mInfo.mTxInfo.mIsSecurityProcessed))
@@ -1287,9 +1315,13 @@ otError otPlatRadioEnergyScan(otInstance *aInstance, uint8_t aScanChannel, uint1
 otError otPlatRadioGetTransmitPower(otInstance *aInstance, int8_t *aPower)
 {
     otError error = OT_ERROR_NONE;
+    int8_t pwr;
   
     otEXPECT_ACTION(aPower != NULL, error = OT_ERROR_INVALID_ARGS);
     PHY_PibGet(phyTransmitPower, (uint8_t *)aPower);
+    pwr  = *aPower;
+    pwr  = CONV_phyTransmitPower_TO_DBM(pwr);
+    *aPower = pwr;
 
 exit:
     return error;
@@ -1492,7 +1524,7 @@ otError otPlatRadioConfigureEnhAckProbing(otInstance          *aInstance,
     return otLinkMetricsConfigureEnhAckProbing(aShortAddress, aExtAddress, aLinkMetrics);
 }
 #endif
-<#if DEVICE_SOC_FAMILY_TYPE == "bz3">
+
 static bool isDstAddrPresent(uint16_t aFcf) 
 { 
     return (aFcf & FCF_DST_ADDR_MASK) != FCF_DST_ADDR_NONE; 
@@ -1642,8 +1674,10 @@ static void createNonce(uint8_t *noncePtr, const otExtAddress *aExtAddress, uint
 static void radioSecureEnhAck(otRadioFrame *aFrame, const otExtAddress *aExtAddress, uint8_t ieLength)
 {   
     int status = 0;
+    <#if DEVICE_SOC_FAMILY_TYPE == "bz3">
     uint8_t fedSize = 0;
     uint8_t nextSize = 0;
+    </#if>
     uint8_t nonce[NONCE_SIZE] = {0};   
     uint8_t macHdrLen = 0; 
     uint8_t macPayloadLen = 0;
@@ -1658,6 +1692,19 @@ static void radioSecureEnhAck(otRadioFrame *aFrame, const otExtAddress *aExtAddr
     macPayload = aFrame->mPsdu + macHdrLen;
     
     createNonce(nonce, aExtAddress, otMacFrameGetFrameCounter(aFrame));
+    
+    <#if DEVICE_SOC_FAMILY_TYPE == "bz2">
+    
+    wc_AesCcmSetKey(&aes, (const byte* )aFrame->mInfo.mTxInfo.mAesKey, KEY_SIZE);
+    
+    wc_AesCcmEncrypt(&aes, macPayload, macPayload, (uint32_t)macPayloadLen,
+                       nonce, NONCE_SIZE,
+                       ((aFrame->mPsdu + aFrame->mLength) - (MIC_SIZE + FCS_SIZE)),MIC_SIZE,
+                       aFrame->mPsdu, (uint32_t)macHdrLen);
+    
+    </#if>
+    
+    <#if DEVICE_SOC_FAMILY_TYPE == "bz3">
 
     /* Enable Silex/BA457 Clock */
     SX_CLK_ENABLE();
@@ -1707,6 +1754,8 @@ static void radioSecureEnhAck(otRadioFrame *aFrame, const otExtAddress *aExtAddr
     /* Disable Silex/BA457 Clock */
     SX_CLK_DISABLE();
     
+    </#if>
+    
     (void)status;
 }
-</#if>
+

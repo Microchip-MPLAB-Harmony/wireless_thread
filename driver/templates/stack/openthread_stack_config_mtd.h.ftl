@@ -195,13 +195,11 @@ extern "C" {
 #define OPENTHREAD_BARCO_SHA256_C                                   (1)
 </#if>
 
-#define OPENTHREAD_CONFIG_DIAG_ENABLE                               (0)
 #define OPENTHREAD_CONFIG_MAC_FILTER_ENABLE                         (1)
 #define OPENTHREAD_CONFIG_SNTP_CLIENT_ENABLE                        (1)
 #define OPENTHREAD_CONFIG_TMF_ANYCAST_LOCATOR_ENABLE                (1)
 #define OPENTHREAD_CONFIG_UDP_FORWARD_ENABLE                        (1)
 #define OPENTHREAD_CONFIG_UPTIME_ENABLE                             (1)
-#define OPENTHREAD_CONFIG_MLE_LINK_METRICS_SUBJECT_ENABLE           (0)
 #define OPENTHREAD_CONFIG_MULTICAST_DNS_PUBLIC_API_ENABLE           (1)
 #define OPENTHREAD_CONFIG_DNS_CLIENT_DEFAULT_SERVER_ADDRESS_AUTO_SET_ENABLE  (1)
 

@@ -62,6 +62,7 @@
 #include <openthread/platform/alarm-milli.h>
 #include <openthread/platform/alarm-micro.h>
 #include <openthread/platform/time.h>
+#include <openthread/platform/diag.h>
 #include "configuration.h"
 
 void vApplicationDaemonTaskStartupHook( void )

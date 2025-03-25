@@ -84,7 +84,7 @@ TaskHandle_t taskHandleOpenThread;
 extern OSAL_QUEUE_HANDLE_TYPE OTQueue;
 
 otInstance *instance;
-
+bool otTaskletSignalPending = false;
 <#if OPEN_THREAD_DEVICE_ROLE == "RCP">
 static QueueSetHandle_t xQueueSet;
 static QueueSetMemberHandle_t xActivatedMember;
@@ -107,7 +107,11 @@ void otTaskletsSignalPending(otInstance *aInstance)
 
     OT_Msg_T otTaskletMsg;
     otTaskletMsg.OTMsgId = OT_MSG_TASKLET_PROCESS_PENDING;
-    OSAL_QUEUE_Send(&OTQueue, &otTaskletMsg,0);
+    if(!OSAL_QUEUE_Send(&OTQueue, &otTaskletMsg,0))
+    {
+        // OT queue is full, retry after the OT queue is free.
+        otTaskletSignalPending = true;
+    }
 }
 
 bool otIsIdle(void)
@@ -204,11 +208,17 @@ pseudo_reset:
                     }
                     case OT_TASKLET_PROCESS_ID:
                     {
+                        otTaskletSignalPending = false;
                         otTaskletsProcess(instance);
                         break;
                     }
                     default:
                         break;
+                }
+				if(otTaskletSignalPending)
+                {
+                    // if the OT queue was full, the taskletSignalPending is posted again.
+                    otTaskletsSignalPending(instance);
                 }
             <#if OPEN_THREAD_DEVICE_ROLE == "RCP">
             }
