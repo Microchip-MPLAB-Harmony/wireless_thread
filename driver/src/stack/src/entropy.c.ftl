@@ -66,7 +66,7 @@
 #include "configuration.h"
 
 #include "definitions.h"
-<#if DEVICE_SOC_FAMILY_TYPE == "bz3">
+<#if DEVICE_SOC_FAMILY_TYPE == "bz3" || DEVICE_SOC_FAMILY_TYPE == "bz6">
 #include "pal.h"
 
 /*The max chunk size is defined by the sample code of TRNG */
@@ -129,6 +129,47 @@ otError otPlatEntropyGet(uint8_t *aOutput, uint16_t aOutputLength)
     }
 	SX_CLK_DISABLE();
 	
+    return OT_ERROR_NONE;
+</#if> 
+<#if DEVICE_SOC_FAMILY_TYPE == "bz6">
+    uint8_t *end = aOutput;
+    end += aOutputLength;
+
+    int length = aOutputLength;
+    int ret;
+    char rndBytes[64];
+    struct crm_trng ctx;
+    int chunkSz;
+    int i;
+
+    CRYPTO_CLK_ENABLE();
+
+    ret = CRM_TRNG_INIT(&ctx, NULL);
+    if (ret != CRM_OK)
+    {
+        return PAL_FAILURE;
+    }
+    ret = 1;
+    i = 0;
+    while (i < length)
+    {
+        chunkSz = length > APP_TRNG_MAX_CHUNK_SZ ? APP_TRNG_MAX_CHUNK_SZ : length;
+        ret = CRM_TRNG_GET(&ctx, rndBytes, chunkSz);
+        if (ret == CRM_ERR_HW_PROCESSING)
+        {
+            continue;
+        }
+        if (ret)
+        {
+            return OT_ERROR_NONE;
+        }
+
+        memcpy(aOutput, rndBytes, chunkSz);
+        aOutput += chunkSz;
+        i += chunkSz;
+    }
+    CRYPTO_CLK_DISABLE();
+    
     return OT_ERROR_NONE;
 </#if> 
 }

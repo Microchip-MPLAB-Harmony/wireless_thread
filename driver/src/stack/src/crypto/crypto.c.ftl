@@ -93,6 +93,30 @@ struct sxblkcipher blkciph;
 struct sxkeyref keyref;
 </#if> 
 
+<#if DEVICE_SOC_FAMILY_TYPE == "bz6">
+#include "config/default/driver/security/cryptosym/internal.h"
+#include "config/default/driver/security/cryptosym/blkcipher_api.h"
+#include "config/default/driver/security/cryptosym/keyref_api.h"
+#include "config/default/driver/security/cryptosym/statuscodes.h"
+#include "config/default/driver/security/cryptosym/hmac_api.h"
+#include "config/default/driver/security/cryptosym/mac_api.h"
+#include "config/default/driver/security/cryptosym/sha2_api.h"
+#include "config/default/driver/security/cryptosym/hash_api.h"
+#include "driver/security/api_table.h"
+#include "driver/security/cryptosym/internal.h"
+
+#define AES_BLOCK_SIZE   (16)
+
+#if OPENTHREAD_BARCO_SHA256_C
+struct crmmac hmacsha256Ctx;
+struct crmhash shash256;
+#endif
+
+struct crmblkcipher blkciph;
+struct crmkeyref keyref;
+
+</#if> 
+
 otError otPlatCryptoAesInit(otCryptoContext *aContext)
 {
     OT_UNUSED_VARIABLE(aContext);
@@ -124,6 +148,20 @@ otError otPlatCryptoAesSetKey(otCryptoContext *aContext, const otCryptoKey *aKey
     keyref = SX_KEYREF_LOAD_MATERIAL(aKey->mKeyLength,(const char *)aKey->mKey);
     /* Disable Silex/BA457 Clock */
     SX_CLK_DISABLE();
+</#if> 
+<#if DEVICE_SOC_FAMILY_TYPE == "bz6">
+    int ret = 0;
+
+    OT_UNUSED_VARIABLE(aContext);
+
+    otEXPECT(aKey->mKey != NULL);
+    otEXPECT(aKey->mKeyLength == 16);
+    
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    keyref = CRM_KEYREF_LOAD_MATERIAL(aKey->mKeyLength,(const char *)aKey->mKey);
+    /* Disable Silex/BA457 Clock */
+    CRYPTO_CLK_DISABLE();
 </#if>  
 
     otEXPECT(ret == 0);
@@ -157,7 +195,24 @@ otError otPlatCryptoAesEncrypt(otCryptoContext *aContext, const uint8_t *aInput,
     
     /* Disable Silex/BA457 Clock */    
     SX_CLK_DISABLE(); 
-</#if> 	
+</#if>
+<#if DEVICE_SOC_FAMILY_TYPE == "bz6">
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    
+    // Starts AES ECB Encryption 
+    ret = CRM_BLKCIPHER_CREATE_AESECB_ENC(&blkciph, &keyref);
+        
+    if(CRM_OK == ret)
+        ret = CRM_BLKCIPHER_CRYPT(&blkciph, (const char *)aInput, AES_BLOCK_SIZE, (char *)aOutput);
+    if(CRM_OK == ret)          
+        ret = CRM_BLKCIPHER_RUN(&blkciph);
+    if(CRM_OK == ret)          
+        ret  = CRM_BLKCIPHER_WAIT(&blkciph);
+    
+    /* Disable Silex/BA457 Clock */    
+    CRYPTO_CLK_DISABLE(); 
+</#if>  	
     
     otEXPECT(ret == 0);
     
@@ -269,6 +324,110 @@ otError otPlatCryptoSha256Finish(otCryptoContext *aContext, uint8_t *aHash, uint
     SX_HASH_WAIT(&shash256);
     /* Disable Silex/BA457 Clock */
     SX_CLK_DISABLE();
+
+    return OT_ERROR_NONE;
+}
+#endif
+#endif
+</#if>
+
+<#if DEVICE_SOC_FAMILY_TYPE == "bz6">
+#if !OPENTHREAD_RADIO
+#if OPENTHREAD_BARCO_SHA256_C
+// HMAC implementations
+otError otPlatCryptoHmacSha256Init(otCryptoContext *aContext)
+{
+    return OT_ERROR_NONE;
+}
+
+otError otPlatCryptoHmacSha256Deinit(otCryptoContext *aContext)
+{
+    return OT_ERROR_NONE;
+}
+
+otError otPlatCryptoHmacSha256Start(otCryptoContext *aContext, const otCryptoKey *aKey)
+{
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    struct crmkeyref keyref = CRM_KEYREF_LOAD_MATERIAL(aKey->mKeyLength, (const char *)aKey->mKey);
+    //Prepares a HMAC SHA256 MAC operation
+    CRM_MAC_CREATE_HMAC_SHA2_256(&hmacsha256Ctx, &keyref);
+    /* Disable Silex/BA457 Clock */
+    CRYPTO_CLK_DISABLE();
+
+    return OT_ERROR_NONE;
+}
+
+otError otPlatCryptoHmacSha256Update(otCryptoContext *aContext, const void *aBuf, uint16_t aBufLength)
+{
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    //Feeds data to be used for MAC generation
+    CRM_MAC_FEED(&hmacsha256Ctx, (const char *)aBuf, aBufLength);
+    /* Disable Silex/BA457 Clock */
+    CRYPTO_CLK_DISABLE();
+    return OT_ERROR_NONE;
+}
+
+otError otPlatCryptoHmacSha256Finish(otCryptoContext *aContext, uint8_t *aBuf, size_t aBufLength)
+{
+    OT_UNUSED_VARIABLE(aBufLength);
+
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    //Starts MAC generation operation
+    CRM_MAC_GENERATE(&hmacsha256Ctx,(char *)aBuf);
+    CRM_MAC_WAIT(&hmacsha256Ctx);
+    /* Disable Silex/BA457 Clock */
+    CRYPTO_CLK_DISABLE();
+    return OT_ERROR_NONE;
+}
+
+// SHA256 platform implementations
+otError otPlatCryptoSha256Init(otCryptoContext *aContext)
+{
+    return OT_ERROR_NONE;
+}
+
+otError otPlatCryptoSha256Deinit(otCryptoContext *aContext)
+{
+    return OT_ERROR_NONE;
+}
+
+otError otPlatCryptoSha256Start(otCryptoContext *aContext)
+{
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    //Prepares a SHA256 hash operation context
+    CRM_HASH_CREATE_SHA256(&shash256, sizeof(shash256));
+    /* Disable Silex/BA457 Clock */
+    CRYPTO_CLK_DISABLE();
+    return OT_ERROR_NONE;
+}
+
+otError otPlatCryptoSha256Update(otCryptoContext *aContext, const void *aBuf, uint16_t aBufLength)
+{
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    //Assign data to be hashed
+    CRM_HASH_FEED(&shash256, (const char *)aBuf, aBufLength);
+    /* Disable Silex/BA457 Clock */
+    CRYPTO_CLK_DISABLE();
+    return OT_ERROR_NONE;
+}
+
+otError otPlatCryptoSha256Finish(otCryptoContext *aContext, uint8_t *aHash, uint16_t aHashSize)
+{
+    OT_UNUSED_VARIABLE(aHashSize);
+
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    //Starts the hashing operation
+    CRM_HASH_DIGEST(&shash256, (char *)aHash);
+    //Waits until the given hash operation has finished
+    CRM_HASH_WAIT(&shash256);
+    /* Disable Silex/BA457 Clock */
+    CRYPTO_CLK_DISABLE();
 
     return OT_ERROR_NONE;
 }

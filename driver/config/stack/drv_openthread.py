@@ -73,7 +73,17 @@ pic32cx_bz3_family = {'PIC32CX5109BZ31048',
                       'PIC32CX5109BZ31032',
                       'WBZ351',
                       'WBZ350'
-                      }                          
+                      }
+pic32cx_bz6_family = {'PIC32CX2051BZ62132',
+                      'PIC32CX2051BZ62064',
+                      'PIC32CX2051BZ66048',
+                      'WBZ653',
+                      'WBZ652',
+                      'WBZ651',
+                      'PIC32WM_BZ6204',
+                      'PIC32WM_BZ6203',
+                      'PIC32WM_BZ6602',
+                      }
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ OPEN THREAD FILE GENERATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #-------------------------------------------------------------------------------
@@ -781,12 +791,18 @@ def openthreadMtdConfigcallback(symbol,event):
             elif (deviceName in pic32cx_bz3_family):
                 Database.sendMessage("pic32cx_bz3_devsupport", "DEEP_SLEEP_ENABLE", {"target": "pic32cx_bz3_devsupport",
                                                         "source": "OPEN_THREAD","isEnabled":True})
+            elif (deviceName in pic32cx_bz6_family):
+                Database.sendMessage("pic32cx_bz6_devsupport", "DEEP_SLEEP_ENABLE", {"target": "pic32cx_bz6_devsupport",
+                                                        "source": "OPEN_THREAD","isEnabled":True})
         elif value == False:
             if (deviceName in pic32cx_bz2_family):
                 Database.sendMessage("pic32cx_bz2_devsupport", "DEEP_SLEEP_ENABLE", {"target": "pic32cx_bz2_devsupport",
                                                         "source": "OPEN_THREAD","isEnabled":False})
             elif (deviceName in pic32cx_bz3_family):
                 Database.sendMessage("pic32cx_bz3_devsupport", "DEEP_SLEEP_ENABLE", {"target": "pic32cx_bz3_devsupport",
+                                                        "source": "OPEN_THREAD","isEnabled":False})
+            elif (deviceName in pic32cx_bz6_family):
+                Database.sendMessage("pic32cx_bz6_devsupport", "DEEP_SLEEP_ENABLE", {"target": "pic32cx_bz6_devsupport",
                                                         "source": "OPEN_THREAD","isEnabled":False})
             
     # elif symbolID == "OPEN_THREAD_MTD_JOINER_ENABLE":
@@ -929,6 +945,8 @@ def instantiateComponent(openthread):
          Database.setSymbolValue("core", "AES_CLOCK_ENABLE", True)
     elif (deviceName in pic32cx_bz3_family):
          requiredComponents.extend(["pic32cx_bz3_devsupport"])
+    elif (deviceName in pic32cx_bz6_family):
+          requiredComponents.extend(["pic32cx_bz6_devsupport"])
     for component in requiredComponents:
         res = Database.activateComponents([component])
  
@@ -956,6 +974,8 @@ def instantiateComponent(openthread):
         deviceSocFamilyType.setDefaultValue("bz2")
     elif deviceName in pic32cx_bz3_family:
         deviceSocFamilyType.setDefaultValue("bz3")
+    elif deviceName in pic32cx_bz6_family:
+        deviceSocFamilyType.setDefaultValue("bz6") 
     
     #############################################################################
     ## Thread Core Config options

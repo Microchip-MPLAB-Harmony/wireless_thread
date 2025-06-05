@@ -88,6 +88,10 @@
 #include "config\default\driver\security\sxsymcrypt\keyref_api.h"
 #include "config\default\driver\security\sxsymcrypt\aead_api.h"
 </#if> 
+<#if DEVICE_SOC_FAMILY_TYPE == "bz6">
+#include "config\default\driver\security\cryptosym\keyref_api.h"
+#include "config\default\driver\security\cryptosym\aead_api.h"
+</#if> 
 <#if DEVICE_SOC_FAMILY_TYPE == "bz2">
 #include <wolfcrypt/aes.h>
 </#if> 
@@ -245,7 +249,13 @@ static void createNonce(uint8_t *noncePtr, const otExtAddress *aExtAddress, uint
 static uint8_t getMACHeaderLength(otRadioFrame *aFrame);
 static struct sxaead aead;
 static struct sxkeyref keyref;
-</#if> 
+</#if>
+<#if DEVICE_SOC_FAMILY_TYPE == "bz6">
+static void createNonce(uint8_t *noncePtr, const otExtAddress *aExtAddress, uint32_t frameCounter);
+static uint8_t getMACHeaderLength(otRadioFrame *aFrame);
+static struct crmaead aead;
+static struct crmkeyref keyref;
+</#if>  
 
 static void __attribute__((used)) radioAssertError(bool condition)
 {
@@ -1674,7 +1684,7 @@ static void createNonce(uint8_t *noncePtr, const otExtAddress *aExtAddress, uint
 static void radioSecureEnhAck(otRadioFrame *aFrame, const otExtAddress *aExtAddress, uint8_t ieLength)
 {   
     int status = 0;
-    <#if DEVICE_SOC_FAMILY_TYPE == "bz3">
+    <#if DEVICE_SOC_FAMILY_TYPE == "bz3" || DEVICE_SOC_FAMILY_TYPE == "bz6">
     uint8_t fedSize = 0;
     uint8_t nextSize = 0;
     </#if>
@@ -1753,6 +1763,58 @@ static void radioSecureEnhAck(otRadioFrame *aFrame, const otExtAddress *aExtAddr
     
     /* Disable Silex/BA457 Clock */
     SX_CLK_DISABLE();
+    
+    </#if>
+	
+	<#if DEVICE_SOC_FAMILY_TYPE == "bz6">
+
+    /* Enable Silex/BA457 Clock */
+    CRYPTO_CLK_ENABLE();
+    
+    keyref = CRM_KEYREF_LOAD_MATERIAL(KEY_SIZE,(const char *)aFrame->mInfo.mTxInfo.mAesKey);
+    
+    // Initializations required for AEAD CCM operation
+    status = CRM_AEAD_CREATE_AESCCM_ENC(&aead, &keyref, (char *)nonce, NONCE_SIZE, MIC_SIZE, macHdrLen, macPayloadLen);
+  
+    // Initialization required for AAD
+    status = CRM_AEAD_FEED_AAD(&aead, (char *)aFrame->mPsdu, macHdrLen);
+    
+    if(macPayloadLen >= AES_BLOCKSIZE)
+        nextSize = AES_BLOCKSIZE;
+    else
+        nextSize = macPayloadLen;
+    do
+    {
+      //Adds next chunk of data to be encrypted or decrypted
+      status = CRM_AEAD_CRYPT(&aead, (char *)macPayload, nextSize, (char *)macPayload);
+      if(!macPayloadLen)
+          break;
+      fedSize += nextSize;
+      macPayload = macPayload + nextSize;
+      if(aFrame->mLength - fedSize > AES_BLOCKSIZE)
+        nextSize = AES_BLOCKSIZE;
+      else
+        nextSize = macPayloadLen - fedSize;
+
+      // state handling for Intermediary and last chunks
+      if(fedSize < macPayloadLen)
+      {
+        status = CRM_AEAD_SAVE_STATE(&aead);
+
+        status = CRM_AEAD_WAIT(&aead);
+
+        status = CRM_AEAD_RESUME_STATE(&aead);
+
+       }
+    }while(fedSize < macPayloadLen);
+    
+    // Starts AEAD encryption and tag computation
+    status = CRM_AEAD_PRODUCE_TAG(&aead,(char *)((aFrame->mPsdu + aFrame->mLength) - (MIC_SIZE + FCS_SIZE)));
+
+    status = CRM_AEAD_WAIT(&aead);
+    
+    /* Disable Silex/BA457 Clock */
+    CRYPTO_CLK_DISABLE();
     
     </#if>
     

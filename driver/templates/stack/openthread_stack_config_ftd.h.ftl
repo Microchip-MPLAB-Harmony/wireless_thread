@@ -195,7 +195,7 @@ extern "C" {
 #define OPENTHREAD_CONFIG_MESSAGE_USE_HEAP_ENABLE                   (1)
 #define OPENTHREAD_CONFIG_HEAP_EXTERNAL_ENABLE                      (1)
 
-<#if DEVICE_SOC_FAMILY_TYPE == "bz3">
+<#if DEVICE_SOC_FAMILY_TYPE == "bz3"  || DEVICE_SOC_FAMILY_TYPE == "bz6">
 #define OPENTHREAD_BARCO_SHA256_C                                   (1)
 </#if>
 
