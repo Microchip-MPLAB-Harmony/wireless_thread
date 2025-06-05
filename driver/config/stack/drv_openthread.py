@@ -61,6 +61,8 @@ global RCP_SPI_SS_PIN
 RCP_SPI_SS_PIN = {'SPI_SS':""}
 global TcPrescalerSymbol
 TcPrescalerSymbol = []
+global uartTxRingBufferSym
+uartTxRingBufferSym = []
 
 pic32cx_bz2_family = {'PIC32CX1012BZ25048',
                           'PIC32CX1012BZ25032',
@@ -676,7 +678,7 @@ def openthreadSystemconfigcallback(symbol,event):
     localComponent = symbol.getComponent()
     componentids = Database.getActiveComponentIDs()
     requiredComponent = ["drv_usart"]
-    # print("componentids:",componentids)
+    
     if symbolID == "OPEN_THREAD_UART_SERVICE":
         if value == True:
             localComponent.setDependencyEnabled("OT_CONSOLE_dependency", False)
@@ -685,8 +687,7 @@ def openthreadSystemconfigcallback(symbol,event):
             componentids = Database.getActiveComponentIDs()
             localComponent.setDependencyEnabled("OT_USART_dependency",True)
             Database.connectDependencies([['OPEN_THREAD','OT_USART_dependency','drv_usart_0','drv_usart']])
-            if Database.getSymbolValue("drv_usart","DRV_USART_COMMON_MODE") != "Asynchronous":
-                Database.setSymbolValue("drv_usart", "DRV_USART_COMMON_MODE", "Asynchronous")
+            Database.sendMessage("drv_usart", "DRV_USART_OPERATING_MODE_CONFIG", {"mode": "Asynchronous" ,"isReadOnly" : True ,"isLocked":True})
             HandleUsartDependencies(True)
                 
         elif value == False:
@@ -704,12 +705,15 @@ def openthreadSystemconfigcallback(symbol,event):
     elif symbolID == "SYS_CONSOLE_DEVICE":
         print("componentids",componentids)
         if value != "":
+            if not uartTxRingBufferSym:
+                uartTxRingBufferSym.append(None)
             print("SercomConnectedCallback",value)
-            uartTxRingBufferSym = Database.getComponentByID(value.lower()).getSymbolByID("USART_TX_RING_BUFFER_SIZE")
-            uartTxRingBufferSym.setValue(1024)
-            uartTxRingBufferSym.setReadOnly(True)
+            uartTxRingBufferSym[0] = Database.getComponentByID(value.lower()).getSymbolByID("USART_TX_RING_BUFFER_SIZE")
+            uartTxRingBufferSym[0].setValue(1024)
+            uartTxRingBufferSym[0].setReadOnly(True)
         else:
-            uartTxRingBufferSym.setReadOnly(False)
+            if uartTxRingBufferSym and uartTxRingBufferSym[0] is not None:
+                uartTxRingBufferSym[0].setReadOnly(False)
         
     elif symbolID == "SYS_TIME_PLIB":
         if value != "":
@@ -844,8 +848,7 @@ def openthreadRCPConfigcallback(symbol,event):
             componentids = Database.getActiveComponentIDs()
             localComponent.setDependencyEnabled("OT_USART_dependency",True)
             Database.connectDependencies([['OPEN_THREAD','OT_USART_dependency','drv_usart_0','drv_usart']])
-            if Database.getSymbolValue("drv_usart","DRV_USART_COMMON_MODE") != "Asynchronous":
-                Database.setSymbolValue("drv_usart", "DRV_USART_COMMON_MODE", "Asynchronous")
+            Database.sendMessage("drv_usart", "DRV_USART_OPERATING_MODE_CONFIG", {"mode": "Asynchronous" ,"isReadOnly" : True ,"isLocked":True})
             
         elif value == 1:
             localComponent.setDependencyEnabled("OT_SPI_dependency", True)
@@ -1399,8 +1402,7 @@ def onAttachmentConnected(source, target):
         Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_cbc_hw", True)
         
     elif (connectID == "OT_USART_dependency"):
-        if Database.getSymbolValue("drv_usart","DRV_USART_COMMON_MODE") != "Asynchronous":
-            Database.setSymbolValue("drv_usart", "DRV_USART_COMMON_MODE", "Asynchronous")
+        Database.sendMessage("drv_usart", "DRV_USART_OPERATING_MODE_CONFIG", {"mode": "Asynchronous" ,"isReadOnly" : True ,"isLocked":True})
         openthreadUartConfig.setValue(True)
         # Database.connectDependencies([['OPEN_THREAD','OT_USART_dependency','drv_usart_0','drv_usart']])
     
@@ -1462,6 +1464,7 @@ def onAttachmentDisconnected(source, target):
     connectID = source["id"]
     
     if (connectID == "OT_USART_dependency"):
+        Database.sendMessage("drv_usart", "DRV_USART_OPERATING_MODE_CONFIG", {"mode": "Asynchronous" ,"isReadOnly" : False ,"isLocked":False})
         openthreadUartConfig.setValue(False)
     
     elif (connectID == "OT_SPI_dependency"):
