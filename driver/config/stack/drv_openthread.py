@@ -63,6 +63,7 @@ global TcPrescalerSymbol
 TcPrescalerSymbol = []
 global uartTxRingBufferSym
 uartTxRingBufferSym = []
+global configurationWolfcryptSymbols
 
 pic32cx_bz2_family = {'PIC32CX1012BZ25048',
                           'PIC32CX1012BZ25032',
@@ -902,6 +903,33 @@ def sort_alphanumeric(l):
     convert = lambda text: int(text) if text.isdigit() else text.lower()
     alphanum_key = lambda key: [ convert(c) for c in re.split('([0-9]+)', key) ]
     return sorted(l, key = alphanum_key)
+    
+def configurationWolfcryptSymbols():
+    if(deviceName in pic32cx_bz2_family):
+          Database.sendMessage("pic32cx_bz2_devsupport", "WOLFCRYPT_SYMBOL_CONFIG", {"target": "pic32cx_bz2_devsupport",
+                                                    "source": "OPEN_THREAD",
+                                                    "wolfcrypt_hw": True,
+                                                    "wolfcrypt_md5": False,
+                                                    "wolfcrypt_sha1": False,
+                                                    "wolfcrypt_sha256": True,
+                                                    "wolfcrypt_hmac": False,
+                                                    "wolfcrypt_tdes": False,
+                                                    "wolfcrypt_aes": True,
+                                                    "wolfcrypt_aes_hw": True,
+                                                    "wolfcrypt_aes_128": True,
+                                                    "wolfcrypt_aes_192": False,
+                                                    "wolfcrypt_aes_256": False,
+                                                    "wolfcrypt_aes_ecb": True,
+                                                    "wolfcrypt_aes_ecb_hw": True,
+                                                    "wolfcrypt_aes_cbc": True,
+                                                    "wolfcrypt_aes_cbc_hw": True,
+                                                    "wolfcrypt_aes_ctr": False,
+                                                    "wolfcrypt_aes_gcm": False,
+                                                    "wolfcrypt_aes_ccm": True,
+                                                    "wolfcrypt_ecc": False,
+                                                    "wolfcrypt_rsa": False,
+                                                    "wolfcrypt_oaep": False,
+                                                    "wolfcrypt_asn1": False})
 
 #-------------------------------------------------------------------------------
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ COMPONENT ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -950,7 +978,8 @@ def instantiateComponent(openthread):
          ]
     if (deviceName in pic32cx_bz2_family):
          requiredComponents.extend(["lib_wolfcrypt", "pic32cx_bz2_devsupport", "lib_crypto"])
-         Database.setSymbolValue("core", "AES_CLOCK_ENABLE", True)
+         if(Database.getSymbolValue("core", "AES_CLOCK_ENABLE") != True) :
+              Database.sendMessage("core", "AES_CLOCK_ENABLE", {"isEnabled":True})
     elif ((deviceName in pic32cx_bz3_family) or (deviceName in pic32cx_bz36_family)):
          requiredComponents.extend(["pic32cx_bz3_devsupport"])
     elif (deviceName in pic32cx_bz6_family):
@@ -1391,15 +1420,35 @@ def onAttachmentConnected(source, target):
     global isDMAPresent
     
     if (connectID == "OT_WolfCrypt_Dependency"):
-        # Database.connectDependencies([['lib_crypto', 'LIB_CRYPTO_WOLFCRYPT_Dependency', 'lib_wolfcrypt', 'lib_wolfcrypt']])
-        Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_hw", True)
-        Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes", True)
-        Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_hw", True)
-        Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_128", True)
-        Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ecb", True)
-        Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ecb_hw", True)
-        Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_cbc", True)
-        Database.setSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_cbc_hw", True)
+        print("openthread:onAttachmentConnected configuring lib_wolfcrypt")
+        activeList = Database.getActiveComponentIDs()
+        bleLoaded = False
+        if "BLE_STACK_LIB" in activeList:
+            bleLoaded = True
+        if bleLoaded != True:
+            Database.clearSymbolValue('lib_wolfcrypt', "wolfcrypt_hw")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_md5")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_sha1")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_sha256")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_hmac")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_tdes")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_hw")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_128")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_192")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_256")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ecb")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ecb_hw")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_cbc")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_cbc_hw")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ctr")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_gcm")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_aes_ccm")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_ecc")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_rsa")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_oaep")
+            Database.clearSymbolValue("lib_wolfcrypt", "wolfcrypt_asn1")
+        configurationWolfcryptSymbols()
         
     elif (connectID == "OT_USART_dependency"):
         Database.sendMessage("drv_usart", "DRV_USART_OPERATING_MODE_CONFIG", {"mode": "Asynchronous" ,"isReadOnly" : True ,"isLocked":True})
