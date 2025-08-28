@@ -68,7 +68,7 @@
 
 #include <utils/code_utils.h>
 
-const char __attribute__((section(".text"),used)) otLicense[] = " \
+const char __attribute__((section(".rodata"),used)) otLicense[] = " \
                             Copyright (c) 2023, The OpenThread Authors.\
                             All rights reserved.\
                                                 \

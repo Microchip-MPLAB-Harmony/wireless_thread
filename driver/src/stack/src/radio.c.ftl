@@ -563,7 +563,7 @@ static uint8_t updateIeInfoAckFrame(otRadioFrame *aFrame, uint8_t *ieData)
     
     
 #if OPENTHREAD_CONFIG_MLE_LINK_METRICS_SUBJECT_ENABLE
-    if (linkMetricsData != NULL && linkMetricsDataLen > 0)
+    if (linkMetricsDataLen > 0)
     {
         /* Fill ieData with Link Metrics IE if Link metrics data is available*/
         offset += otMacFrameGenerateEnhAckProbingIe(ieData, linkMetricsData, linkMetricsDataLen);
@@ -1025,6 +1025,7 @@ void otPlatRadioSetPanId(otInstance *aInstance, uint16_t aPanId)
 void otPlatRadioSetExtendedAddress(otInstance *aInstance, const otExtAddress *aAddress)
 {
     OT_UNUSED_VARIABLE(aInstance);
+	PibValue_t pibValue;
     
     radioTrxOff();
 #if OPENTHREAD_CONFIG_MAC_HEADER_IE_SUPPORT
@@ -1034,7 +1035,8 @@ void otPlatRadioSetExtendedAddress(otInstance *aInstance, const otExtAddress *aA
     }
 #endif
     
-    PHY_PibSet(macIeeeAddress, (PibValue_t *) aAddress);
+    memcpy(&pibValue.pib_value_64bit, aAddress, sizeof(uint64_t));
+    PHY_PibSet(macIeeeAddress, &pibValue);
     
     radioRestore();
 
