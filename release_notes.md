@@ -3,6 +3,26 @@
 
 # Microchip MPLAB® Harmony 3 Wireless Thread Release Notes
 
+## Release v1.3.0
+
+### Features/Bug Fixes
+
+-  Added support for PIC32CXBZ3 device.
+-  Added support for PIC32CXBZ6 device.
+-  Thread v1.4.0 Pre-Certified library for FTD and MTD with [openthread] (https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/mchp_harmony_wireless_thread_v1.3.0).
+-  MCC severity issue fixes(with latest MCC plugin revisions).
+-  Added RCP-SPI support.
+
+## Development Tools
+-   [MPLAB X v6.25 or higher](https://www.microchip.com/mplab/mplab-x-ide)
+-   [MPLAB® XC32 C/C++ Compiler v4.60 or higher](https://www.microchip.com/mplab/compilers)
+-   MPLAB® X IDE plug-ins: MPLAB® Code Configurator (MCC) v5.5.3 and above
+-   Device Pack: PIC32CX-BZ2-DFP (1.4.243), PIC32CX-BZ2-DFP (1.3.216), PIC32CX-BZ6-DFP (1.3.38)
+
+
+## Notes
+-   [Thread®](https://www.threadgroup.org/) is registered Trademark of Thread Group.
+
 ## Release v1.2.0
 
 ### Features

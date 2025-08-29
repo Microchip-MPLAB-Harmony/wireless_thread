@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Package name="wireless_thread">
     <Dependencies>
-        <Dependency name="wireless_15_4_phy" version="v1.4.0-rc.2"/>
-        <Dependency name="openthread" version="OT_v1.4.0_RC2"/>
+        <Dependency name="wireless_15_4_phy" version="v1.4.0"/>
+        <Dependency name="openthread" version="mchp_harmony_wireless_thread_v1.3.0"/>
     </Dependencies>
 </Package>
