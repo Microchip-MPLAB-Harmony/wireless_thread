@@ -70,16 +70,15 @@
 static struct Aes wcAes;
 </#if> 
 <#if DEVICE_SOC_FAMILY_TYPE == "bz3">
-#include "config/default/driver/security/sxsymcrypt/internal.h"
-#include "config/default/driver/security/sxsymcrypt/blkcipher_api.h"
-#include "config/default/driver/security/sxsymcrypt/keyref_api.h"
-#include "config/default/driver/security/sxsymcrypt/statuscodes.h"
-#include "config/default/driver/security/sxsymcrypt/hmac_api.h"
-#include "config/default/driver/security/sxsymcrypt/mac_api.h"
-#include "config/default/driver/security/sxsymcrypt/sha2_api.h"
-#include "config/default/driver/security/sxsymcrypt/hash_api.h"
-#include "driver/security/api_table.h"
 #include "driver/security/sxsymcrypt/internal.h"
+#include "driver/security/sxsymcrypt/blkcipher_api.h"
+#include "driver/security/sxsymcrypt/keyref_api.h"
+#include "driver/security/sxsymcrypt/statuscodes.h"
+#include "driver/security/sxsymcrypt/hmac_api.h"
+#include "driver/security/sxsymcrypt/mac_api.h"
+#include "driver/security/sxsymcrypt/sha2_api.h"
+#include "driver/security/sxsymcrypt/hash_api.h"
+#include "driver/security/api_table.h"
 
 #define AES_BLOCK_SIZE   (16)
 
@@ -94,16 +93,15 @@ struct sxkeyref keyref;
 </#if> 
 
 <#if DEVICE_SOC_FAMILY_TYPE == "bz6">
-#include "config/default/driver/security/cryptosym/internal.h"
-#include "config/default/driver/security/cryptosym/blkcipher_api.h"
-#include "config/default/driver/security/cryptosym/keyref_api.h"
-#include "config/default/driver/security/cryptosym/statuscodes.h"
-#include "config/default/driver/security/cryptosym/hmac_api.h"
-#include "config/default/driver/security/cryptosym/mac_api.h"
-#include "config/default/driver/security/cryptosym/sha2_api.h"
-#include "config/default/driver/security/cryptosym/hash_api.h"
-#include "driver/security/api_table.h"
 #include "driver/security/cryptosym/internal.h"
+#include "driver/security/cryptosym/blkcipher_api.h"
+#include "driver/security/cryptosym/keyref_api.h"
+#include "driver/security/cryptosym/statuscodes.h"
+#include "driver/security/cryptosym/hmac_api.h"
+#include "driver/security/cryptosym/mac_api.h"
+#include "driver/security/cryptosym/sha2_api.h"
+#include "driver/security/cryptosym/hash_api.h"
+#include "driver/security/api_table.h"
 
 #define AES_BLOCK_SIZE   (16)
 
