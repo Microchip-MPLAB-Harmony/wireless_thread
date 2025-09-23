@@ -15,14 +15,14 @@ This repository contains the MPLAB® Harmony 3 Wireless Thread solutions, based 
 
 - [Release Notes](./release_notes.md)
 - [MPLAB® Harmony License](Microchip_SLA001.md)
-- [MPLAB® Harmony 3 Wireless Thread API Help](https://onlinedocs.microchip.com/oxy/GUID-2DB248AF-C243-496D-9819-969E43CA63BC-en-US-3/index.html)
+- [MPLAB® Harmony 3 Wireless Thread API Help](https://onlinedocs.microchip.com/oxy/GUID-2DB248AF-C243-496D-9819-969E43CA63BC-en-US-4/index.html)
 
 # Contents Summary
 
 | Folder     | Description                                                     |
 | ---        | ---                                                             |
 | config     | wireless Thread Component configuration file                    |
-| docs       | [Wireless Thread  help documentation](https://onlinedocs.microchip.com/oxy/GUID-2DB248AF-C243-496D-9819-969E43CA63BC-en-US-3/index.html)       |
+| docs       | [Wireless Thread  help documentation](https://onlinedocs.microchip.com/oxy/GUID-2DB248AF-C243-496D-9819-969E43CA63BC-en-US-4/index.html)       |
 | driver     | Driver/Firmware files for Wireless Thread Component             |
 
 
