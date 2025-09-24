@@ -10,7 +10,7 @@
 -  Added support for PIC32CXBZ3 device.
 -  Added support for PIC32CXBZ6 device.
 -  Thread v1.4.0 Pre-Certified library for FTD and MTD with [openthread] (https://github.com/Microchip-MPLAB-Harmony/openthread/releases/tag/mchp_harmony_wireless_thread_v1.3.0).
--  MCC severity issue fixes(with latest MCC plugin revisions).
+-  General Enhancements to Thread MCC Component..
 -  Added RCP-SPI support.
 
 ## Development Tools
