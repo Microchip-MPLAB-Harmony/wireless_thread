@@ -28,7 +28,7 @@ This repository contains the MPLAB® Harmony 3 Wireless Thread solutions, based 
 
 ## Documentation
 
-Click [here](https://onlinedocs.microchip.com/g/GUID-2DB248AF-C243-496D-9819-969E43CA63BC) to view the online documentation of csp repository.
+Click [here](https://onlinedocs.microchip.com/g/GUID-2DB248AF-C243-496D-9819-969E43CA63BC) to view the online documentation of wireless_thread repository.
 
 To view the documentation offline, follow these steps:
  - Download the publication as a zip file from [here](https://onlinedocs.microchip.com/download/GUID-2DB248AF-C243-496D-9819-969E43CA63BC?type=webhelp).
