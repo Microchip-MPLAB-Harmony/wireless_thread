@@ -14,7 +14,7 @@ MPLAB® Harmony 3 is an extension of the MPLAB® ecosystem for creating embedded
 This repository contains the MPLAB® Harmony 3 Wireless Thread solutions, based on openthread, for PIC32CX_BZx platform devices. Quickly incorporate connectivity to your designs with Wireless Thread ICs, modules, software and development kits that make connecting effortless for your customers. Our comprehensive Wireless Thread portfolio has the technology to meet your range, data rate, interoperability, frequency and topology needs. Refer to the following links for release notes, training materials, and interface reference information.
 
 - [Release Notes](./release_notes.md)
-- [MPLAB® Harmony License](Microchip_SLA001.md)
+- [License](License.md)
 - [MPLAB® Harmony 3 Standalone wireless Thread Wiki](https://github.com/Microchip-MPLAB-Harmony/wireless_thread/wiki)
 - [MPLAB® Harmony 3 Wireless Thread API Help](https://onlinedocs.microchip.com/oxy/GUID-2DB248AF-C243-496D-9819-969E43CA63BC-en-US-4/index.html)
 
@@ -26,10 +26,17 @@ This repository contains the MPLAB® Harmony 3 Wireless Thread solutions, based 
 | docs       | [Wireless Thread  help documentation](https://onlinedocs.microchip.com/oxy/GUID-2DB248AF-C243-496D-9819-969E43CA63BC-en-US-4/index.html)       |
 | driver     | Driver/Firmware files for Wireless Thread Component             |
 
+## Documentation
 
+Click [here](https://onlinedocs.microchip.com/g/GUID-2DB248AF-C243-496D-9819-969E43CA63BC) to view the online documentation of csp repository.
+
+To view the documentation offline, follow these steps:
+ - Download the publication as a zip file from [here](https://onlinedocs.microchip.com/download/GUID-2DB248AF-C243-496D-9819-969E43CA63BC?type=webhelp).
+ - Extract the zip file into a folder.
+ - Navigate to the folder and open **index.html** in a web browser of your choice.
 ____
 
-[![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/wireless_thread/blob/master/mplab_harmony_license.md)
+[![License](https://img.shields.io/badge/license-Harmony%20license-orange.svg)](https://github.com/Microchip-MPLAB-Harmony/wireless_thread/blob/master/License.md)
 [![Latest release](https://img.shields.io/github/release/Microchip-MPLAB-Harmony/wireless_thread.svg)](https://github.com/Microchip-MPLAB-Harmony/wireless_thread/releases/latest)
 [![Latest release date](https://img.shields.io/github/release-date/Microchip-MPLAB-Harmony/wireless_thread.svg)](https://github.com/Microchip-MPLAB-Harmony/wireless_thread/releases/latest)
 [![Commit activity](https://img.shields.io/github/commit-activity/y/Microchip-MPLAB-Harmony/wireless_thread.svg)](https://github.com/Microchip-MPLAB-Harmony/wireless_thread/graphs/commit-activity)
